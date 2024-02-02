@@ -10,7 +10,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/global.js"></script>
+
 <style>
 .table-styled {
 border-collapse: collapse
@@ -30,18 +31,23 @@ border-collapse: collapse
 </body>
 </html>
 <script type="text/javascript">
-var student_name= sessionStorage.getItem("studentUserName");
+var student_name= sessionStorage.getItem("username");
 var userRole = sessionStorage.getItem('userRole');
 window.onload = function() {
-	 verifytoken();
 	getApiData();
 }
 	
 function getApiData()
 {
 	let studentid = sessionStorage.getItem("studentid");
-	const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/sparc/";
+	const teacher_url = dotnet_endpoint+"api/Teacher/"+studentid+"/sparc/";
 
+
+$.ajaxSetup({
+   headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   }
+});
 	$.get(teacher_url, function(data, status){
 		buildLessonList(data);
 	});

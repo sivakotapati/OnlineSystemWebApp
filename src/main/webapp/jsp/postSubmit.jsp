@@ -11,12 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>
-	  <script src="../js/verifytoken.js" type="text/javascript"></script>
- <script type="text/javascript">
-    $(function(){
-      verifytoken();
-    });
-  </script>
+	 
     
 </head>
 
@@ -26,9 +21,9 @@
     <section id="nextbutton" class="container">
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
-   <div id="message-div" class="alert" role="alert">
- <p id="next-step-link"></p>
-</div>
+			   <div id="message-div" class="alert" role="alert">
+			 		<p id="next-step-link"></p>
+				</div>
             </div>
         </div>
     </section>
