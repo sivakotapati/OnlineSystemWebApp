@@ -1486,9 +1486,7 @@
 				<div class="d-flex justify-content-between">
 					<a class="btn btn-primary"
 						onclick="gotoPrevious(4, 0, 'version-1-course-lds-lesson-4-page-34', false, -1)">
-						Previous </a> <a class="btn btn-primary"
-						onclick="gotoNext(4, 0, 'version-1-course-lds-lesson-4-page-34', false, -1)">
-						Next </a>
+						Previous </a> 
 				</div>
 			</div>
 		</div>
