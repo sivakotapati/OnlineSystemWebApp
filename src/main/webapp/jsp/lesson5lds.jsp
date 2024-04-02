@@ -2339,7 +2339,7 @@ Input/parameters of function <code>matrix:</code></p>
 	<!-- onlineSPARC -->
 	<!-- skipped 23,24,25 pages -->
 	<%@ include file="footer.jsp"%>
-	<%@ include file="footer.jsp"%>
+	<%@ include file="footer1.jsp"%>
 	<script src="../js/lesson5lds/validations.js" type="text/javascript">
 		
 	</script>

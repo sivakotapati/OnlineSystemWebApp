@@ -183,7 +183,7 @@
 
     <!-- onlineSPARC -->
     <!-- skipped 23,24,25 pages -->
-    <%@ include file="footer.jsp"%>
+    <%@ include file="footer1.jsp"%>
 </body>
 
 
