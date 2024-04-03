@@ -414,9 +414,11 @@
             <div class="container" >
            
             <h1 style="text-align:center"> End of Lesson </h1> <br>
-           <div class="d-flex justify-content-between"><!--
-           
-                                <button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)">Next</button> -->
+     
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)">Previous</button>
+    
                                 <a class="btn btn-primary" href="../jsp/lesson11.jsp" onclick="reInitiateFreshPage()">Next</a>
                             </div>
             </div>
