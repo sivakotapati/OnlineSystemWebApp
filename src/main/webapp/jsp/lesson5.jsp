@@ -91,6 +91,15 @@
   			 currentSection.hidden = false;
   		}           
     });     
+    function gotoPage(pageId) {
+        // Hiding all sections
+        document.querySelectorAll('.container').forEach(function(el) {
+            el.hidden = true;
+        });
+        // Showing the specified page
+        document.getElementById(pageId).hidden = false;
+        console.log("something")
+    }
     </script>
 	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-5-page-1" hidden>
@@ -122,6 +131,7 @@
 				<div class="d-flex justify-content-between">
 					<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 					onclick="gotoPrevious(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)">Previous</button>
+					<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-5-page-1')">Finish</button>
 					<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 					onclick="gotoNext(5, 0, 'version-1-course-x-lesson-5-page-2', false, -1)">Next</button>
 				</div> 
@@ -173,6 +183,7 @@
 			<div class="d-flex justify-content-between">
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-5-page-1')">Finish</button>
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-6', false, -1)">Next</button>
 			</div> 
@@ -211,6 +222,7 @@
              <div class="d-flex justify-content-between">
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoPrevious(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-5-page-1')">Finish</button>
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" id="kNextBtn"
 				onclick="gotoNext(5, 1, 'version-1-course-x-lesson-5-page-7', false, -1)" disabled>Next</button>
 			</div> 
@@ -273,8 +285,9 @@
             <div class="d-flex justify-content-between">
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoPrevious(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-5-page-1')">Finish</button>
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-				onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1">Next</button>
+				onclick="gotoNext(5, 2, 'version-1-course-x-lesson-5-page-11', false, -1)">Next</button>
 			</div> 
             </div>
         </div>
@@ -370,19 +383,21 @@
      <!-- learning outcome 4 -->
     <section id="version-1-course-x-lesson-5-page-20" hidden>
         <div class="row">
+        
             <div class="container">
    <h2>Learning outcome 3: A cell in a periodic table </h2>
             <ul class="lesson-list">
             		<li class="main-point">Can you ask a question similar to our earlier ones?</li> 
+            		
             		<div id="elementSymbol" class="form-group">
 				  		<input id="elementBox" type="text" class="form-control" required>
-					</div>     
+					</div>      
 					    		
             		<div>
             			<img  id = "randomImageDisplay" class = "element" src="../images/lesson5/elements/17.png" alt="Image" width="105" height="120">
             		</div>
             </ul>
-            
+               
             <div>
             	<p>Would you like to try it out for another element 
             		<a href="#" onclick="changeImageRandomly(); return false;"><b><i>click here</i></b></a>
@@ -392,6 +407,7 @@
             <div class="d-flex justify-content-between">
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoPrevious(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-5-page-1')">Finish</button>
 				<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
 				onclick="gotoNext(5, 4, 'version-1-course-x-lesson-5-page-20', false, -1)">Next</button>
 			</div> 
