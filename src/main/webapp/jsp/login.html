@@ -44,6 +44,10 @@
                         <input type="password" class="form-control" id="password" placeholder="Password">
                         <label for="password">Password</label>
                       </div>
+                      <div>
+                            <label for="showPasswordCheckbox">Show Password</label>
+                            <input type="checkbox" id="showPasswordCheckbox" onclick="togglePasswordVisibility()"></div>      
+                      </div>
                       <div class="mt-2 text-end">
                         <a href="forgotPassword.jsp" class="text-primary fw-bold text-decoration-none">Forgot Password?</a>
                       </div>
@@ -55,11 +59,25 @@
                         <img src="../images/google-icon.svg" class="img-fluid me-3" style="height: 18px; width: 18px;">Continue with Google</a>
 
                         <a href="#" class="btn btn-light login_with w-100 mb-3 disabled-link"  id="loginViaLinkedIn">
-                            <img src="../images/linkedin-icon.svg" class="img-fluid me-3" style="height: 18px; width: 18px;">Continue with LinkedIn</a>
-                </form>
-            </div>
-        </div>
+            
+                          <img src="../images/linkedin-icon.svg" class="img-fluid me-3" style="height: 18px; width: 18px;">Continue with LinkedIn</a>
+         </form>
+       </div> 
     </section>
+ <!-- toggle password -->  
+    <script>
+    function togglePasswordVisibility() {
+    	var passwordInput = document.getElementById("password");
+    	var checkbox = document.getElementById("showPasswordCheckbox");
+    	if (checkbox.checked) {
+    	    passwordInput.type = "text";
+    	} else {
+    	    passwordInput.type = "password";
+    	}
+    }	
+</script>
+               
+
 </body>
  <script type="text/javascript">
     var form=document.getElementById('form');
