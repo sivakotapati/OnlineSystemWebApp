@@ -106,15 +106,6 @@ $(function(){
         		ans.style.backgroundColor="red"
         	}
         }
-	function gotoPage(pageId) {
-        // Hiding all sections
-        document.querySelectorAll('.container').forEach(function(el) {
-            el.hidden = true;
-        });
-        // Showing the specified page
-        document.getElementById(pageId).hidden = false;
-        console.log("something")
-    }
     </script>
 	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-8-page-1" hidden>
@@ -167,7 +158,6 @@ $(function(){
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)"> Previous
                 </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
                 <a class="btn btn-primary pull-right"
                     onclick="gotoNext(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)"> Next 
                 </a>
@@ -199,7 +189,6 @@ $(function(){
 				
 				<div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)">Previous</button>
-	<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
         <button class="btn btn-primary" onclick="gotoNext(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)">Next</button>
     </div>
 				
@@ -233,7 +222,6 @@ $(function(){
                 <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)"> Previous
                 </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
                 <a class="btn btn-primary pull-right"
                     onclick="gotoNext(8, 0, 'version-1-course-x-lesson-8-page-2', false, -1)"> Next 
                 </a>
@@ -259,7 +247,6 @@ $(function(){
                     
                     <div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(7, 0, 'version-1-course-x-lesson-8-page-3', false, -1)">Previous</button>
-	<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
         <button class="btn btn-primary" onclick="gotoNext(7, 0, 'version-1-course-x-lesson-7-page-4', false, -1)">Next</button>
     </div>
                   <!--    <a class="btn btn-primary pull-left"
@@ -296,7 +283,6 @@ $(function(){
                				
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-6', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-6', false, -1)"> Next </a>
             </div>
@@ -354,7 +340,6 @@ $(function(){
 				   
 				<div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-10', false, -1)">Previous</button>
-	<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
         <button class="btn btn-primary" onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-10', false, -1)">Next</button>
     </div>
           <!--   <a class="btn btn-primary pull-left"
@@ -389,7 +374,6 @@ $(function(){
     </div>  
          <!--    <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-11', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-11', false, -1)"> Next </a>
             </div>-->
@@ -421,7 +405,6 @@ $(function(){
     </div>    
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-12', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-12', false, -1)"> Next </a> -->
             </div>
@@ -443,7 +426,6 @@ $(function(){
     </div>      
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-13', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-13', false, -1)"> Next </a> -->
             </div>
@@ -461,11 +443,10 @@ $(function(){
 			
                 <div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)">Previous</button>
-        <button class="btn btn-primary" onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"disabled>Next</button>
+        <button class="btn btn-primary" onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)">Next</button>
     </div>    
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 1, 'version-1-course-x-lesson-8-page-14', false, -1)"> Next </a> -->
             </div>
@@ -523,7 +504,6 @@ $(function(){
     </div>     
            <!--  <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-17', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-17', false, -1)"> Next </a> -->
             </div>
@@ -549,7 +529,6 @@ $(function(){
     </div>      
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right" 
                 onclick="gotoNext(8, 2, 'version-1-course-x-lesson-8-page-18', false, -1)"> Next </a> -->
             </div>
@@ -605,12 +584,10 @@ $(function(){
        		
                 <div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)">Previous</button>
-	<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
         <button class="btn btn-primary" onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)">Next</button>
     </div>   
             <!-- <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)"> Previous </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-22', false, -1)"> Next </a> -->
             </div>
@@ -631,7 +608,6 @@ $(function(){
 					<div id="exAnswer"></div>		  
                 <div class="d-flex justify-content-between">
         <button class="btn btn-primary" onclick="gotoPrevious(8, 3, 'version-1-course-x-lesson-8-page-23', false, -1)">Previous</button>
-	<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-8-page-1')">Finish</button>
         <button class="btn btn-primary" onclick="gotoNext(8, 3, 'version-1-course-x-lesson-8-page-23', false, -1)">Next</button>
     </div>      
            <!--  <a class="btn btn-primary pull-left"

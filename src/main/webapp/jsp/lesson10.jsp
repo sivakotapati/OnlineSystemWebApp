@@ -142,15 +142,6 @@
   			 currentSection.hidden = false;
   		}           
     });    
-    function gotoPage(pageId) {
-        // Hiding all sections
-        document.querySelectorAll('.container').forEach(function(el) {
-            el.hidden = true;
-        });
-        // Showing the specified page
-        document.getElementById(pageId).hidden = false;
-        console.log("something")
-    }
     </script>
 	<%@ include file = "header1.jsp" %>
   <!--   <section id="version-1-course-x-lesson-10-page-1" class="container" hidden>
@@ -203,13 +194,11 @@
                <!--  <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)"> Previous
                 </a>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
                 <a class="btn btn-primary pull-right"
                     onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)"> Next 
                 </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Previous</button>
-				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
         			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Next</button>
     			</div>
             </div>
@@ -249,7 +238,6 @@
                 </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Previous</button>
-				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
         			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Next</button>
     			</div>
             </div>
@@ -313,7 +301,6 @@
                 onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Previous</button>
-				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
         			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Next</button>
     			</div>
             </div>
@@ -362,7 +349,6 @@
                 onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Previous</button>
-				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
         			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Next</button>
     			</div>
             </div>
@@ -417,7 +403,6 @@
                 onclick="gotoNext(10, 2, 'version-1-course-x-lesson-10-page-6', false, -1)"> Next </a> -->
             <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Previous</button>
-				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Finish</button>
         			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Next</button>
     			</div>
             </div>

@@ -89,15 +89,6 @@
   			 currentSection.hidden = false;
   		}           
     });    
-    function gotoPage(pageId) {
-        // Hiding all sections
-        document.querySelectorAll('.container').forEach(function(el) {
-            el.hidden = true;
-        });
-        // Showing the specified page
-        document.getElementById(pageId).hidden = false;
-        console.log("something")
-    }
     </script>
 	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-6-page-1" hidden>
@@ -121,7 +112,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-2', false, -1)"> Previous
                 </button>
-<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-2', false, -1)"> Next 
                 </button>
@@ -152,7 +142,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-3', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-3', false, -1)"> Next
                 </button>
@@ -177,7 +166,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-4', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-4', false, -1)"> Next
                 </button>    
@@ -201,7 +189,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-5', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-5', false, -1)"> Next
                 </button>   
@@ -232,7 +219,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-6', false, -1)"> Next
                 </button>    
@@ -274,7 +260,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-7', false, -1)"> Next
                 </button>    
@@ -304,7 +289,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-8', false, -1)"> Next
                 </button>
@@ -336,7 +320,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-9', false, -1)"> Next
                 </button>    
@@ -370,7 +353,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-10', false, -1)"> Next
                 </button>  
@@ -404,7 +386,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-11', false, -1)"> Next
                 </button>    
@@ -439,7 +420,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-12', false, -1)"> Next
                 </button>    
@@ -477,7 +457,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-13', false, -1)"> Next
                 </button>    
@@ -505,7 +484,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-14', false, -1)"> Next
                 </button>  
@@ -529,7 +507,6 @@
                 <button class="btn btn-primary pull-left" style="background-color :#1b84f5;"
                     onclick="gotoPrevious(6, 0, 'version-1-course-x-lesson-6-page-15', false, -1)"> Previous
                 </button>
-		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Finish</button>
                 <button class="btn btn-primary pull-right" style="background-color :#1b84f5;"
                     onclick="gotoNext(6, 0, 'version-1-course-x-lesson-6-page-15', false, -1)"> Next
                 </button> 
