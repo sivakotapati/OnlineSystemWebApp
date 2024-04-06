@@ -78,10 +78,10 @@
 	        
 	        var pwdObj = document.getElementById('password').value;
 	        //password validation 
-	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
 	        if (!passwordValidation.test(pwdObj)) {
-	            alert("Password must contain at least 8 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
+	            alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
 	            return; 
 	        }
 	        var isactive=false;
