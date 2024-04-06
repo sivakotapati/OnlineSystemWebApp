@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
     <script src="../js/script.js"></script>    
+     <script type="text/javascript">
+    function reInitiateFreshPage(){
+            sessionStorage.setItem("pageIdToShow",'version-1-course-x-lesson-2-page-1');
+    }
+    
+  </script>
 </head>
 
 <body>
@@ -421,10 +427,10 @@ father(bob, sarah)
             <a class="btn btn-primary pull-left"
                 onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-12', false, -1)"> Previous
             </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)"> Next 
-            </a>
-        </div>
+           
+                <a class="btn btn-primary pull-right" href="../jsp/lesson2.jsp" onclick="reInitiateFreshPage()">Next</a>
+                            </div>
+        
     </div>
 </section>
   
