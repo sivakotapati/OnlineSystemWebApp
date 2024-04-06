@@ -40,13 +40,26 @@
                <p>Useremail</p>
                <input type="email" placeholder="Useremail" id="email" required>
                <p>Password</p>
-               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>  
+               <p style="text-align:center">Show Password</p>
+               <input type="checkbox"  onclick="myFunction()"> 
                
                <input type="submit" value="Register"> <a href="login.jsp">Already
                have Account?</a>
             </form>
          </div>
       </div>
+       <!-- toggle password -->  
+     <script>
+         function myFunction() {
+         var x = document.getElementById("password");
+         if(x.type==="password") {
+             x.type = "text";}
+         else {
+           x.type = "password";
+          }
+     }
+  </script>
       <br>
       <%@ include file="footer.jsp"%>
    </body>

@@ -29,6 +29,9 @@
 	    <br>
  	    <label for="password">Password</label>
 	    <input type="password" placeholder="Password" id="password" required>
+	     <label for="showPasswordCheckbox">Show Password</label>
+         <input type="checkbox" id="showPasswordCheckbox" onclick="togglePasswordVisibility()">     
+                     
  	    <br>
 	    <br>
             <input type="submit"  value="Login" >  <br>
@@ -39,6 +42,18 @@
 	</div>
       </div>
     </div>
+    <!-- toggle password -->  
+    <script>
+    function togglePasswordVisibility() {
+    	var passwordInput = document.getElementById("password");
+    	var checkbox = document.getElementById("showPasswordCheckbox");
+    	if (checkbox.checked) {
+    	    passwordInput.type = "text";
+    	} else {
+    	    passwordInput.type = "password";
+    	}
+    }	
+</script>
     <%@ include file = "footer.jsp" %>
   </body>
   <script type="text/javascript">
