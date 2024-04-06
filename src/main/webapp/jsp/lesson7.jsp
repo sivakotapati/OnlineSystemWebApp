@@ -100,7 +100,16 @@
   			 let currentSection = document.getElementById(pageIdToShow);
   			 currentSection.hidden = false;
   		}           
-    });    
+    });
+    function gotoPage(pageId) {
+        // Hiding all sections
+        document.querySelectorAll('.container').forEach(function(el) {
+            el.hidden = true;
+        });
+        // Showing the specified page
+        document.getElementById(pageId).hidden = false;
+        console.log("something")
+    }
     </script>
 	<%@ include file = "header1.jsp" %>
   <!--  <section id="version-1-course-x-lesson-7-page-1" class="container" hidden>
@@ -141,6 +150,7 @@
                 <!-- <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(7, 0, 'version-1-course-x-lesson-7-page-2', false, -1)"> Previous
                 </a>
+		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
                 <a class="btn btn-primary pull-right"
                     onclick="gotoNext(7, 0, 'version-1-course-x-lesson-7-page-2', false, -1)"> Next 
                 </a> -->
@@ -184,6 +194,7 @@
                <!--  <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(7, 0, 'version-1-course-x-lesson-7-page-3', false, -1)"> Previous
                 </a>
+		<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
                 <a class="btn btn-primary pull-right"
                     onclick="gotoNext(7, 0, 'version-1-course-x-lesson-7-page-3', false, -1)"> Next
                 </a> -->
@@ -257,6 +268,7 @@
                 onclick="gotoNext(7, 1, 'version-1-course-x-lesson-7-page-7', false, -1)"> Next </a> -->
                <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 1, 'version-1-course-x-lesson-7-page-7', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 1, 'version-1-course-x-lesson-7-page-7', false, -1)">Next</button>
     			</div>
             </div>
@@ -306,6 +318,7 @@
 					Next </a> -->
 					 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary"  id="yBoxNextButton" style="background-color:#1b84f5;" onclick="gotoNext(7, 1, 'version-1-course-x-lesson-7-page-8', false, -1)" >Next</button>
     			</div>
 			</div>
@@ -367,6 +380,7 @@
                 onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-12', false, -1)"> Next </a> -->
                  <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 2, 'version-1-course-x-lesson-7-page-12', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-12', false, -1)">Next</button>
     			</div>
                 
@@ -393,6 +407,7 @@
                 onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-13', false, -1)"> Next </a> -->
                  <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 2, 'version-1-course-x-lesson-7-page-13', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-13', false, -1)">Next</button>
     			</div>
     			
@@ -413,6 +428,7 @@
                 onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-14', false, -1)"> Next </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 2, 'version-1-course-x-lesson-7-page-14', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-14', false, -1)">Next</button>
     			</div>
             </div>
@@ -431,6 +447,7 @@
                 onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-15', false, -1)"> Next </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 2, 'version-1-course-x-lesson-7-page-15', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-15', false, -1)">Next</button>
     			</div>
             </div>
@@ -472,6 +489,7 @@
                 onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-16', false, -1)"> Next </a> -->
                 <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 2, 'version-1-course-x-lesson-7-page-16', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 2, 'version-1-course-x-lesson-7-page-16', false, -1)">Next</button>
     			</div>
             </div>
@@ -536,6 +554,7 @@
                 onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-20', false, -1)"> Next </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 3, 'version-1-course-x-lesson-7-page-20', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-20', false, -1)">Next</button>
     			</div>
             </div>
@@ -560,6 +579,7 @@
                 onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-21', false, -1)"> Next </a> -->
                <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 3, 'version-1-course-x-lesson-7-page-21', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-21', false, -1)">Next</button>
     			</div>
             </div>
@@ -578,6 +598,7 @@
                 onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-22', false, -1)"> Next </a> -->
             <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 3, 'version-1-course-x-lesson-7-page-22', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-22', false, -1)">Next</button>
     			</div>
             </div>
@@ -615,6 +636,7 @@
                 onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-23', false, -1)"> Next </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 3, 'version-1-course-x-lesson-7-page-23', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 3, 'version-1-course-x-lesson-7-page-23', false, -1)">Next</button>
     			</div>
             </div>
@@ -682,6 +704,7 @@
                 onclick="gotoNext(7, 4, 'version-1-course-x-lesson-7-page-27', false, -1)"> Next </a> -->
               <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(7, 4, 'version-1-course-x-lesson-7-page-27', false, -1)">Previous</button>
+				<button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Finish</button>
         			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoNext(7, 4, 'version-1-course-x-lesson-7-page-27', false, -1)">Next</button>
     			</div>
             </div>
