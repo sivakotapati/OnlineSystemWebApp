@@ -40,7 +40,7 @@
                <p>Useremail</p>
                <input type="email" placeholder="Useremail" id="email" required>
                <p>Password</p>
-               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>  
+               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}" title="Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character" required>  
                <p style="text-align:center">Show Password</p>
                <input type="checkbox"  onclick="myFunction()"> 
                
@@ -80,7 +80,7 @@
 	        //password validation 
 	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
-	        if (!passwordValidation.test(pwdObj)) {
+	        if (!passwordValidation.test(password)) {
 	            alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
 	            return; 
 	        }

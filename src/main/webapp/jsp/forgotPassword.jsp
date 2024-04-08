@@ -48,7 +48,7 @@
     //password validation 
       var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
-      if (!passwordValidation.test(pwdObj)) {
+      if (!passwordValidation.test(newPassword)) {
           alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
           return; 
       }
