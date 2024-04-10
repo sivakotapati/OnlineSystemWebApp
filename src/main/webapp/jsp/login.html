@@ -22,9 +22,30 @@
 	 		padding-top: 10px;
 	 		padding-bottom: 10px;
 	 }
+	 .dialogue-box{
+		position: absolute;
+		display: block;
+		top: 1px;
+		left: 50%;
+		transform: translate(-50%,0);
+		width: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	 }
+	 .dialogue-box.hide{
+	 	display: none;
+	 }
+	 .dialogue-box.show.success{
+	 	border-bottom: 3px green solid;
+	 }
+	 .dialogue-box.show.error{
+	 	border-bottom: 3px red solid;
+	 }
 	</style>
 </head>
 <body>
+	<div class="shadow p-3 rounded dialogue-box hide" id="login-attempt-msg"></div>
     <section class="wrapper">
         <div class="row container">
             <div class="col-4" style="margin-top: 10rem;">
@@ -67,6 +88,7 @@
       e.preventDefault()
       var username=document.getElementById('username').value;
       var password=document.getElementById('password').value;
+      var loginAttemptMsg = document.getElementById('login-attempt-msg');
       //fetch post request
       const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
       const signInAPI = dotnet_endpoint+"api/User/Login";
@@ -84,6 +106,10 @@
         console.log(resp)
         if(response.status==200){
             resp.then((data)=>{
+            	loginAttemptMsg.classList.add('show')
+            	loginAttemptMsg.classList.add('success')
+            	loginAttemptMsg.classList.remove('hide')
+            	loginAttemptMsg.innerHTML = 'Login Successful'
                 sessionStorage.setItem("username",data.content.username)
                 sessionStorage.setItem("userId",data.content.id)
 		sessionStorage.setItem("token",data.content.accessToken)
@@ -101,16 +127,28 @@
         else{
             if(response.status==404){
                 resp.then((data)=>{
-                    alert(data.message)
+                	loginAttemptMsg.classList.add('show')
+                	loginAttemptMsg.classList.add('error')
+                	loginAttemptMsg.classList.remove('hide')
+                	loginAttemptMsg.innerHTML = data.message
                 })
             }
             else if (response.status=401){
             	resp.then((data)=>{
-            		alert(data.message)
+                	loginAttemptMsg.classList.add('show')
+                	loginAttemptMsg.classList.add('error')
+                	loginAttemptMsg.classList.remove('hide')
+                	loginAttemptMsg.innerHTML = data.message
             	})
             }
         }
     }).then(function(data){
+    	console.log(data)
+    }).catch(function(error){
+    	loginAttemptMsg.classList.add('show')
+    	loginAttemptMsg.classList.add('error')
+    	loginAttemptMsg.classList.remove('hide')
+    	loginAttemptMsg.innerHTML = error
     });
 })
 </script>

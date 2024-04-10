@@ -32,7 +32,16 @@
   			 let currentSection = document.getElementById(pageIdToShow);
   			 currentSection.hidden = false;
   		}           
-    });    
+    });  
+    function gotoPage(pageId) {
+        // Hiding all sections
+        document.querySelectorAll('.container').forEach(function(el) {
+            el.hidden = true;
+        });
+        // Showing the specified page
+        document.getElementById(pageId).hidden = false;
+        console.log("something")
+    }
     </script>
 	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-1-page-1" class="container" hidden>
@@ -69,6 +78,7 @@
 	            <a class="btn btn-primary pull-right"
 	                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-2', false, -1)"> Next 
 	            </a>
+	            <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-1-page-1')">Finish</button>
 	        </div>
 	    </div>
 	</section>
