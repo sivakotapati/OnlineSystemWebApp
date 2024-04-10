@@ -1,155 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Online LPK12 Course</title>
     <!-- BootStrap 5 CDN Link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript" src="../static/global.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="../static/global.js"></script>
     <!-- Custom CSS link -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/style.css" />
     <style>
-		.disabled-link{ 
-			pointer-events: none;
-			cursor: not-allowed;
-		}
-			 .scrollableDiv{
-	 		height: 600px;
-	 		overflow-y:auto;
-	 		overflow-x:hidden;
-	 		padding-top: 10px;
-	 		padding-bottom: 10px;
-	 }
-	 .dialogue-box{
-		position: absolute;
-		display: block;
-		top: 1px;
-		left: 50%;
-		transform: translate(-50%,0);
-		width: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	 }
-	 .dialogue-box.hide{
-	 	display: none;
-	 }
-	 .dialogue-box.show.success{
-	 	border-bottom: 3px green solid;
-	 }
-	 .dialogue-box.show.error{
-	 	border-bottom: 3px red solid;
-	 }
-	</style>
-</head>
-<body>
-	<div class="shadow p-3 rounded dialogue-box hide" id="login-attempt-msg"></div>
+      .form-container {
+        padding: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .img-container {
+        text-align: center;
+      }
+
+      .img-container img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+      }
+
+      .scrollableDiv {
+        height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      #error-message {
+        color: red;
+        display: none;
+      }
+
+      /* Adjust input box sizes */
+      .form-floating input[type="text"],
+      .form-floating input[type="password"] {
+        width: calc(100% - 32px); /* Adjusted width */
+      }
+      .centered-text {
+        text-align: center;
+      }
+      .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* This ensures the container takes the full height of the viewport */
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="shadow p-3 rounded dialogue-box hide"
+      id="login-attempt-msg"
+    ></div>
     <section class="wrapper">
-        <div class="row container">
-            <div class="col-4" style="margin-top: 10rem;">
-                <img src="../images/education.png" class="img-fluid"/>
-            </div>
-            <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 text-center ms-auto scrollableDiv" style="margin-top: 5rem;">
-                <form class="rounded bg-white shadow p-5" id="form">
-                    <h3 class="text-dark fw-bolder fs-4 mb-2">Online LPK12</h3>
-                    <div class="fw-normal text-muted mb-4">
-                        New to Online LPK12? <a href="register.html"text-primary fw-bold text-decoration-none">Create an Account</a>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" id="username" class="form-control" placeholder="UserName">
-                        <label for="username">User Name</label>
-                      </div>
-                      <div class="form-floating">
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                        <label for="password">Password</label>
-                      </div>
-                      <div class="mt-2 text-end">
-                        <a href="forgotPassword.jsp" class="text-primary fw-bold text-decoration-none">Forgot Password?</a>
-                      </div>
-                      <button type="submit" class="btn btn-primary submit_btn w-100 my-4">Login</button>
-
-                      <div class="text-center text-muted text-uppercase mb-3">Or</div>
-
-                      <a href="#" class="btn btn-light login_with w-100 mb-3 disabled-link" id="loginViaGoogle">
-                        <img src="../images/google-icon.svg" class="img-fluid me-3" style="height: 18px; width: 18px;">Continue with Google</a>
-
-                        <a href="#" class="btn btn-light login_with w-100 mb-3 disabled-link"  id="loginViaLinkedIn">
-                            <img src="../images/linkedin-icon.svg" class="img-fluid me-3" style="height: 18px; width: 18px;">Continue with LinkedIn</a>
-                </form>
-            </div>
+      <div class="row justify-content-center">
+        <div class="col-4 img-container" style="margin-top: 10rem">
+          <img src="../images/education.png" class="img-fluid" />
         </div>
+        <div
+          class="col-sm-12 col-md-6 col-lg-6 col-xl-6 form-container scrollableDiv"
+          style="margin-top: 5rem"
+        >
+          <form class="rounded bg-white shadow p-8" id="form">
+            <h3 class="text-dark fw-bolder fs-4 mb-2 centered-text">
+              Online LPK12
+            </h3>
+            <div class="fw-normal text-muted mb-4 centered-text">
+              New to Online LPK12?
+              <a
+                href="register.html"
+                class="text-primary fw-bold text-decoration-none"
+                >Create an Account</a
+              >
+            </div>
+            <div class="form-floating mb-3 centered-text">
+              <input
+                type="text"
+                id="username"
+                class="form-control"
+                placeholder="UserName"
+              />
+              <label for="username">User Name</label>
+            </div>
+            <div class="form-floating centered-text">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+              />
+              <label for="password">Password</label>
+            </div>
+            <div id="error-message" style="display: none"></div>
+            <div>
+              <label for="showPasswordCheckbox">Show Password</label>
+              <input
+                type="checkbox"
+                id="showPasswordCheckbox"
+                onclick="togglePasswordVisibility()"
+              />
+            </div>
+
+            <div class="mt-2 text-end">
+              <a
+                href="forgotPassword.jsp"
+                class="text-primary fw-bold text-decoration-none"
+                >Forgot Password?</a
+              >
+            </div>
+            <div class="centered-container">
+              <button
+                type="submit"
+                class="btn btn-primary submit_btn w-50 my-4 centered-text"
+              >
+                Login
+              </button>
+            </div>
+
+            <div class="text-center text-muted text-uppercase mb-3">Or</div>
+
+            <a
+              href="#"
+              class="btn btn-light login_with w-100 mb-3 disabled-link"
+              id="loginViaGoogle"
+            >
+              <img
+                src="../images/google-icon.svg"
+                class="img-fluid me-3"
+                style="height: 18px; width: 18px"
+              />Continue with Google</a
+            >
+
+            <a
+              href="#"
+              class="btn btn-light login_with w-100 mb-3 disabled-link"
+              id="loginViaLinkedIn"
+            >
+              <img
+                src="../images/linkedin-icon.svg"
+                class="img-fluid me-3"
+                style="height: 18px; width: 18px"
+              />Continue with LinkedIn</a
+            >
+          </form>
+        </div>
+      </div>
     </section>
-</body>
- <script type="text/javascript">
-    var form=document.getElementById('form');
-    form.addEventListener('submit',function(e){
-      e.preventDefault()
-      var username=document.getElementById('username').value;
-      var password=document.getElementById('password').value;
-      var loginAttemptMsg = document.getElementById('login-attempt-msg');
+    <!-- toggle password -->
+    <script>
+      function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var checkbox = document.getElementById("showPasswordCheckbox");
+        if (checkbox.checked) {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
+    </script>
+  </body>
+  <script type="text/javascript">
+    var form = document.getElementById("form");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      var errorMessage = document.getElementById("error-message");
       //fetch post request
       const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-      const signInAPI = dotnet_endpoint+"api/User/Login";
-      fetch(signInAPI,{
-        method:'POST',
+      const signInAPI = dotnet_endpoint + "api/User/Login";
+      fetch(signInAPI, {
+        method: "POST",
         body: JSON.stringify({
-            "username":username,
-            "password":password
+          username: username,
+          password: password,
         }),
-        headers:{
-          'Content-Type':'application/json; charset=UTF-8'
-        }
-      }).then(function(response){
-        var resp=response.json();
-        console.log(resp)
-        if(response.status==200){
-            resp.then((data)=>{
-            	loginAttemptMsg.classList.add('show')
-            	loginAttemptMsg.classList.add('success')
-            	loginAttemptMsg.classList.remove('hide')
-            	loginAttemptMsg.innerHTML = 'Login Successful'
-                sessionStorage.setItem("username",data.content.username)
-                sessionStorage.setItem("userId",data.content.id)
-		sessionStorage.setItem("token",data.content.accessToken)
-                console.log(sessionStorage.getItem("userId"))	
-              	if(data.content.roles=="Teacher"){
-		  sessionStorage.setItem("userRole","Teacher")
-              	  location.href='hometeacher.jsp'
-              	}
-              	else if(data.content.roles=='Student'){
-		 sessionStorage.setItem("userRole","Student")
-              	  location.href='home.jsp'
-              	}
-            })
-        }
-        else{
-            if(response.status==404){
-                resp.then((data)=>{
-                	loginAttemptMsg.classList.add('show')
-                	loginAttemptMsg.classList.add('error')
-                	loginAttemptMsg.classList.remove('hide')
-                	loginAttemptMsg.innerHTML = data.message
-                })
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      })
+        .then(function (response) {
+          var resp = response.json();
+          console.log(resp);
+          if (response.status == 200) {
+            resp.then((data) => {
+              loginAttemptMsg.classList.add("show");
+              loginAttemptMsg.classList.add("success");
+              loginAttemptMsg.classList.remove("hide");
+              loginAttemptMsg.innerHTML = "Login Successful";
+              sessionStorage.setItem("username", data.content.username);
+              sessionStorage.setItem("userId", data.content.id);
+              sessionStorage.setItem("token", data.content.accessToken);
+              console.log(sessionStorage.getItem("userId"));
+              if (data.content.roles == "Teacher") {
+                sessionStorage.setItem("userRole", "Teacher");
+                location.href = "hometeacher.jsp";
+              } else if (data.content.roles == "Student") {
+                sessionStorage.setItem("userRole", "Student");
+                if (data.content.enrolledCourses == "OnlineLPK12") {
+                  sessionStorage.setItem("enrolledCourses", "OnlineLPK12");
+                  location.href = "home_student_onlinelpk12.jsp";
+                } else if (data.content.enrolledCourses == "LPK12") {
+                  sessionStorage.setItem("enrolledCourses", "LPK12");
+                  location.href = "home_student_logicds.jsp";
+                } else {
+                  sessionStorage.setItem("enrolledCourses", "home.jsp");
+                  location.href = "home.jsp";
+                }
+              }
+            });
+          } else {
+            if (response.status == 404) {
+              resp.then((data) => {
+                loginAttemptMsg.classList.add("show");
+                loginAttemptMsg.classList.add("error");
+                loginAttemptMsg.classList.remove("hide");
+                loginAttemptMsg.innerHTML = data.message;
+              });
+            } else if (response.status == 401) {
+              resp.then((data) => {
+                loginAttemptMsg.classList.add("show");
+                loginAttemptMsg.classList.add("error");
+                loginAttemptMsg.classList.remove("hide");
+                loginAttemptMsg.innerHTML = data.message;
+              });
+            } else if (response.status == 400) {
+              errorMessage.innerText = "Invalid Password"; // Set error message
+              errorMessage.style.display = "block"; // Display error message
             }
-            else if (response.status=401){
-            	resp.then((data)=>{
-                	loginAttemptMsg.classList.add('show')
-                	loginAttemptMsg.classList.add('error')
-                	loginAttemptMsg.classList.remove('hide')
-                	loginAttemptMsg.innerHTML = data.message
-            	})
-            }
-        }
-    }).then(function(data){
-    	console.log(data)
-    }).catch(function(error){
-    	loginAttemptMsg.classList.add('show')
-    	loginAttemptMsg.classList.add('error')
-    	loginAttemptMsg.classList.remove('hide')
-    	loginAttemptMsg.innerHTML = error
+          }
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          loginAttemptMsg.classList.add("show");
+          loginAttemptMsg.classList.add("error");
+          loginAttemptMsg.classList.remove("hide");
+          loginAttemptMsg.innerHTML = error;
+        });
     });
-})
-</script>
+  </script>
 </html>

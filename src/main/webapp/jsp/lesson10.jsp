@@ -8,6 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function reInitiateFreshPage(){
+            sessionStorage.setItem("pageIdToShow",'version-1-course-x-lesson-11-page-1');
+    }
+  </script>
 	
 	 <link rel="stylesheet" href="../styles/lesson2.css">
 
@@ -409,8 +414,13 @@
             <div class="container" >
            
             <h1 style="text-align:center"> End of Lesson </h1> <br>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)"> Next </a>
+     
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)">Previous</button>
+    
+                                <a class="btn btn-primary" href="../jsp/lesson11.jsp" onclick="reInitiateFreshPage()">Next</a>
+                            </div>
             </div>
         </div>
     </section>

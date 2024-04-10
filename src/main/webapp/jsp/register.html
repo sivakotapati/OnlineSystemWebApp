@@ -5,221 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online LPK12 Course</title>
     <!-- BootStrap 5 CDN Link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom CSS link -->
-    <link rel="stylesheet" href="newstyle.css">
+    <!-- <link rel="stylesheet" href="newstyle.css"> -->
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-                <form class="mx-1 mx-md-4" id="form" method="post">
-					<div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-						<select class="select" id="role" name="role">
-							<option value="Student">Student</option>
-							<option value="Teacher">Teacher</option>
-						</select>
-					 </div>
-					</div>
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="firstname" class="form-control" />
-                      <label class="form-label" for="firstname">First Name</label>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                <form class="mx-1 mx-md-4" id="form" method="post">
+                                    <!-- Role Dropdown -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <select class="form-select" id="role" name="role">
+                                                <option value="">Select Role</option>
+                                                <option value="Student">Student</option>
+                                                <option value="Teacher">Teacher</option>
+                                            </select>
+                                            <span id="role-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Course Checkbox -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <h6> COURSE </h6>
+                                            <div>
+                                                <input type="checkbox" id="LPK12" name="Course" value="LPK12"> LPK12
+                                                <input type="checkbox" id="OnlineLPK12" name="Course" value="OnlineLPK12"> OnlineLPK12
+                                            </div>
+                                            <span id="course-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- First Name -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="firstname" class="form-control" />
+                                            <label class="form-label" for="firstname">First Name</label>
+                                            <span id="firstname-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="lastname" class="form-control" />
+                                            <label class="form-label" for="lastname">Last Name</label>
+                                            <span id="lastname-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Username -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="username" class="form-control" />
+                                            <label class="form-label" for="username">User Name</label>
+                                            <span id="username-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="email" id="email" class="form-control" />
+                                            <label class="form-label" for="email">Email</label>
+                                            <span id="email-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Password -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}" title="Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character"/>
+                                            <label class="form-label" for="password">Password</label>
+                                            <i class="bi bi-eye-slash" id="togglePassword"></i> 
+                                            <span id="password-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Repeat Password -->
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="repeatpassword" class="form-control" />
+                                            <label class="form-label" for="repeatpassword">Confirm Password</label>
+                                            <i class="bi bi-eye-slash" id="togglerepeatPassword"></i> 
+                                            <span id="repeatpassword-error" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <!-- Terms of Service -->
+                                    <div class="form-check d-flex justify-content-center mb-5">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                        <label class="form-check-label" for="form2Example3">
+                                            I agree all statements in <a href="#!">Terms of service</a>
+                                        </label>
+                                    </div>
+                                    <!-- Submit Button -->
+                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="submit" value="Register" class="btn btn-primary btn-lg">Register</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                     class="img-fluid" alt="Sample image">
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="lastname" class="form-control" />
-                      <label class="form-label" for="lastname">Last Name</label>
-                    </div>
-                  </div>
-                  
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="username" class="form-control" />
-                      <label class="form-label" for="username">User Name</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="email" id="email" class="form-control" />
-                      <label class="form-label" for="email">Email</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="password" class="form-control" />
-                      <label class="form-label" for="password">Password</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="repeatpassword" class="form-control" />
-                      <label class="form-label" for="repeatpassword">Repeat your password</label>
-                    </div>
-                  </div>
-
-                  <div class="form-check d-flex justify-content-center mb-5">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                    <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                  </div>
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="submit" value="Register" class="btn btn-primary btn-lg">Register</button>
-                  </div>
-
-                </form>
-
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                  class="img-fluid" alt="Sample image">
-
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>
-</body>
-<script type="text/javascript">
-	    var form=document.getElementById('form');
-	    form.addEventListener('submit', function(e){
-	    	e.preventDefault()
-		 	var firstname=document.getElementById('firstname').value;
-	        var lastname=document.getElementById('lastname').value;
-	       
-			var roles=document.getElementById('role').value;
-	        var username=document.getElementById('username').value;
-	
-	        var email=document.getElementById('email').value;
-	        var courseId=document.getElementById('course').value;
-	        
-	        var pwdObj = document.getElementById('password').value;
-	       	if (roles=='Student'){
-	    	   var isactive=true;
-	       	}
-	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-	        hashObj.update(pwdObj.value);
-	        var hash = hashObj.getHash("HEX");
-	        pwdObj.value = hash;
-	        console.log(pwdObj)-- */
-	
-	      /*--  var role=[];
-	        for(var i=0;i<roles.length;i++){
-	        	role.push({roles[i]})
-	        }-- */
-	        
-	
-	     /*   var isStudent=false;
-	
-	        if(role=="Student"){
-	
-	            isStudent=true;
-	
-	        }
-	
-	        console.log(isStudent)--
-	        */
-	
-	        console.log([roles])
-	
-	        //fetch post request
-			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-             const signUpAPI = dotnet_endpoint+"api/User/Register";
-	        fetch(signUpAPI,{
-	            method:'POST',
-	            body: JSON.stringify({
-					"firstname":firstname,
-					"lastname":lastname,
-	                "username":username,
-	                "EmailId":email,
-					"isactive":isactive,
-	                "password":pwdObj,
-	            }),
-		        headers:{
-		            "Content-Type":"application/json"
-		        }
-	        }).then(function(response){
-	            var resp=response.json();
-	       		if(response.status==200){
-	       			//US-13
-	       			resp.then((data)=>{       			 
-	       			 var userid = parseInt(data.content);
-	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
-	       			 var createRootFolderApi = new URL(createRootFolderAPI);
-	       			 var body = {
-	       					 		userId :userid
-	       					 	} // or:
-	       					 			
-	       			 //createRootFolderApi.search = new URLSearchParams(params).toString();
-					 console.log(createRootFolderApi);
-	       			 fetch(createRootFolderApi,{
-	       				 method:'POST',
-	       				 body: JSON.stringify(body),
-	       				headers: {
-	       				    'Content-type': 'application/json; charset=UTF-8',
-	       				  }
-	       			 }).then(function(response){
-	       				if(response.status==200){
-	       					console.log(data)
-	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
-	       						method: 'GET',
-	       						headers: {
-	    	       				    'Content-type': 'application/json; charset=UTF-8',
-	    	       				  }
-	       					}).then(function(response)
-	       							{
-	       						if(response.status==200){
-	       							console.log(data)
-	       							location.href="login.jsp"
-	       						}
-	       							}
-	       							)
-							
-	       				}
-	       			 });	       			
-	       			});
-	           	}
-	            else{
-	                if(response.status==400){
-	                	resp.then((data)=>{
-	                		alert(data.message)
-	                        location.href="register.jsp"
-	                    })
-	                }
-	            }   
-	            return response.json();
-	        }).then(function(data){
-	            console.log(data);
-	        })
-	    })
-	</script>
+<!--Toggle password -->
+<script>
+   document.getElementById('togglePassword').addEventListener('click', function() {
+       var password1Input = document.getElementById('password');
+       var icon = document.getElementById('togglePassword');
+       if (password1Input.type === 'password') {
+           password1Input.type = 'text';
+           icon.classList.remove('bi-eye-slash');
+           icon.classList.add('bi-eye');
+       } else {
+           password1Input.type = 'password';
+           icon.classList.remove('bi-eye');
+           icon.classList.add('bi-eye-slash');
+       }
+   });
+</script>
+<script>
+   document.getElementById('togglerepeatPassword').addEventListener('click', function() {
+       var password2Input = document.getElementById('repeatpassword');
+       var icon = document.getElementById('togglerepeatPassword');
+       if (password2Input.type === 'password') {
+           password2Input.type = 'text';
+           icon.classList.remove('bi-eye-slash');
+           icon.classList.add('bi-eye');
+       } else {
+           password2Input.type = 'password';
+           icon.classList.remove('bi-eye');
+           icon.classList.add('bi-eye-slash');
+       }
+   });
+</script>
 
+<script type="text/javascript">
+    document.getElementById('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Validate each field and display error messages
+        validateFields();
+    });
+
+    function validateFields() {
+        validateField('role', 'role-error', 'Please select a role.');
+        validateCourse();
+        validateField('firstname', 'firstname-error', 'First name is required.');
+        validateField('lastname', 'lastname-error', 'Last name is required.');
+        validateField('username', 'username-error', 'User name is required.');
+        validateField('email', 'email-error', 'Email is required.');
+        validateField('password', 'password-error', 'Password is required.');
+        validatePasswordMatch();
+    }
+
+    function validateField(fieldName, errorId, errorMessage) {
+        var fieldValue = document.getElementById(fieldName).value.trim();
+        var errorElement = document.getElementById(errorId);
+        if (fieldValue === '') {
+            errorElement.textContent = errorMessage;
+        } else {
+            errorElement.textContent = '';
+        }
+    }
+
+    function validatePasswordMatch() {
+        var password = document.getElementById('password').value.trim();
+        var repeatPassword = document.getElementById('repeatpassword').value.trim();
+        var errorElement = document.getElementById('repeatpassword-error');
+        if (password !== repeatPassword) {
+            errorElement.textContent = 'Passwords do not match.';
+        } else {
+            errorElement.textContent = '';
+        }
+    }
+
+    function validateCourse() {
+        var LPK12Checked = document.getElementById('LPK12').checked;
+        var OnlineLPK12Checked = document.getElementById('OnlineLPK12').checked;
+        var errorElement = document.getElementById('course-error');
+        if (!LPK12Checked && !OnlineLPK12Checked) {
+            errorElement.textContent = 'Please select at least one course.';
+        } else {
+            errorElement.textContent = '';
+        }
+    }
+</script>
+</body>
 </html>
