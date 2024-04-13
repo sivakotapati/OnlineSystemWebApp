@@ -104,6 +104,10 @@
 		 sessionStorage.setItem("userRole","Student")
               	  location.href='home.jsp'
               	}
+              	else if(data.content.roles=='Course developer'){
+         sessionStorage.setItem("userRole","courseDeveloper")
+                  location.href='home.jsp'
+                }
             })
         }
         else{
