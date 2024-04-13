@@ -128,25 +128,25 @@
 	    	e.preventDefault()
 		 	var firstname=document.getElementById('firstname').value;
 	        var lastname=document.getElementById('lastname').value;
-	       
+	        var roles='';
 			/* var roles=document.getElementById('role').value; */
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
 	        /* var courseId=document.getElementById('course').value; */
 	        if (document.getElementById('student').checked){
-	        	roles=document.getElementById('student').value;
+	        	roles+='Student';
 	        }
-	        else if (document.getElementById('teacher').checked){
-	        	roles=document.getElementById('teacher').value;
+	        if (roles=='Student'){
+		    	   var isactive=true;
+		    	   }
+	        if (document.getElementById('teacher').checked){
+	        	roles+=',Teacher';
 	        }
-	        else if (document.getElementById('courseDeveloper').checked){
-	        	roles=document.getElementById('courseDeveloper').value;
+	        if (document.getElementById('courseDeveloper').checked){
+	        	roles+=',Course Developer';
 	        }
-	        var pwdObj = document.getElementById('password').value;
-	       	if (roles=='student'){
-	    	   var isactive=true;
-	       	}
+	        var pwdObj = document.getElementById('password').value;	       	
 	       	
 	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
 	        hashObj.update(pwdObj.value);
@@ -171,8 +171,7 @@
 	        console.log(isStudent)--
 	        */
 	
-	        console.log([roles])
-	
+	        console.log([roles]);
 	        //fetch post request
 			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
              const signUpAPI = dotnet_endpoint+"api/User/Register";
@@ -185,7 +184,7 @@
 	                "emailId":email,
 					"isactive":isactive,
 	                "password":pwdObj,
-	                "roles":roles
+	                "role":roles
 	            }),
 		        headers:{
 		            "Content-Type":"application/json"
