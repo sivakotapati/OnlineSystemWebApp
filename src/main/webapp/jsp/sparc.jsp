@@ -559,6 +559,30 @@ window.addEventListener('popstate', function (event) {
     	    elementEditor.style.marginLeft ='-485px';
     	}
     });
+    $(document).ready(function() {
+        // Define JavaScript Functions
+        function createNewFile() {
+            let fileName = prompt("Enter the name of the new file:");
+            if (fileName) {
+                let ul = $('#directory ul');
+                let li = $('<li>').text(fileName + ".txt");
+                ul.append(li);
+            }
+        }
+
+        function createNewFolder() {
+            let folderName = prompt("Enter the name of the new folder:");
+            if (folderName) {
+                let ul = $('#directory ul');
+                let li = $('<li>').text(folderName).append($('<ul>'));
+                ul.append(li);
+            }
+        }
+
+        // Attach Click Events
+        $('#newFile').on('click', createNewFile);
+        $('#newFolder').on('click', createNewFolder);
+    }); 
 
 </script>
 	<%@ include file="sparc-footer.jsp"%>

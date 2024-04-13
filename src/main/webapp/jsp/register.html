@@ -22,7 +22,7 @@
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
                                 <form class="mx-1 mx-md-4" id="form" method="post">
                                     <!-- Role Dropdown -->
-                                    <div class="d-flex flex-row align-items-center mb-4">
+                                    <!-- <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <select class="form-select" id="role" name="role">
@@ -32,15 +32,16 @@
                                             </select>
                                             <span id="role-error" class="error-message"></span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- Course Checkbox -->
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <h6> COURSE </h6>
+                                            <!-- <h6> COURSE </h6> -->
                                             <div>
-                                                <input type="checkbox" id="LPK12" name="Course" value="LPK12"> LPK12
-                                                <input type="checkbox" id="OnlineLPK12" name="Course" value="OnlineLPK12"> OnlineLPK12
+                                                <input type="checkbox" id="student" name="role" value="student"> Student
+                                                <input type="checkbox" id="teacher" name="role" value="teacher"> Teacher
+                                            	<input type="checkbox" id="courseDeveloper" name="role" value="courseDeveloper"> Course Developer
                                             </div>
                                             <span id="course-error" class="error-message"></span>
                                         </div>
@@ -85,7 +86,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}" title="Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character"/>
+                                            <input type="password" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
                                             <label class="form-label" for="password">Password</label>
                                             <i class="bi bi-eye-slash" id="togglePassword"></i> 
                                             <span id="password-error" class="error-message"></span>
