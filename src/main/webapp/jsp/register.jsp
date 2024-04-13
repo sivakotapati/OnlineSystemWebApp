@@ -80,7 +80,7 @@
 	        //password validation 
 	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
-	        if (!passwordValidation.test(password)) {
+	        if (passwordValidation.test(password)==true) {
 	            alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
 	            return; 
 	        }
@@ -116,6 +116,7 @@
 	        //fetch post request
 			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
              const signUpAPI = dotnet_endpoint+"api/User/Register";
+             console.log(dotnet_endpoint)
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
@@ -126,7 +127,7 @@
 					"isStudent":isactive,
 	                "password":pwdObj,
 	            }),
-		        headers:{
+		        headers:{key
 		            "Content-Type":"application/json"
 		        }
 	        }).then(function(response){
