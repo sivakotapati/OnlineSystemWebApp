@@ -48,7 +48,7 @@
                     <textarea id='editor' rows='10' cols='1000'></textarea>
                     
                     <div class="d-flex justify-content-end">
-                    <button type='button' id='compile' class='btn btn-secondary'>Compile</button>
+                    <button type='button' id='compile' class='btn btn-primary'>Compile</button>
                 </div>
                 </div>
             </div>
@@ -77,11 +77,18 @@
 
     <!-- Bootstrap and other scripts (if needed) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <!-- Add any other scripts you require here -->
 
     <!-- Your custom JavaScript logic (if needed) -->
     <script>
         // Add your JavaScript logic here
+        $(document).ready(function() {
+            $('#compile').click(function() {
+                var htmlContent = $('#editor').val();
+                $('#preview').html(htmlContent);
+            });
+        });
         // For example, handling button clicks, compiling content, etc.
     </script>
 </body>
