@@ -9,6 +9,7 @@
 
     <!-- Custom CSS link -->
     <link rel="stylesheet" href="newstyle.css">
+    <script type="text/javascript" src="../static/global.js"></script>
 </head>
 <body>
 <section class="vh-100" style="background-color: #eee;">
@@ -128,16 +129,25 @@
 		 	var firstname=document.getElementById('firstname').value;
 	        var lastname=document.getElementById('lastname').value;
 	       
-			var roles=document.getElementById('role').value;
+			/* var roles=document.getElementById('role').value; */
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
-	        var courseId=document.getElementById('course').value;
-	        
+	        /* var courseId=document.getElementById('course').value; */
+	        if (document.getElementById('student').checked){
+	        	roles=document.getElementById('student').value;
+	        }
+	        else if (document.getElementById('teacher').checked){
+	        	roles=document.getElementById('teacher').value;
+	        }
+	        else if (document.getElementById('courseDeveloper').checked){
+	        	roles=document.getElementById('courseDeveloper').value;
+	        }
 	        var pwdObj = document.getElementById('password').value;
-	       	if (roles=='Student'){
+	       	if (roles=='student'){
 	    	   var isactive=true;
 	       	}
+	       	
 	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
 	        hashObj.update(pwdObj.value);
 	        var hash = hashObj.getHash("HEX");
@@ -169,10 +179,10 @@
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
-					"firstname":firstname,
-					"lastname":lastname,
-	                "username":username,
-	                "EmailId":email,
+					"firstName":firstname,
+					"lastName":lastname,
+	                "userName":username,
+	                "emailId":email,
 					"isactive":isactive,
 	                "password":pwdObj,
 	                "roles":roles
