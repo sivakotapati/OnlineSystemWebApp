@@ -582,7 +582,7 @@ window.addEventListener('popstate', function (event) {
         // Attach Click Events
         $('#newFile').on('click', createNewFile);
         $('#newFolder').on('click', createNewFolder);
-    });
+    }); 
 
 </script>
 	<%@ include file="sparc-footer.jsp"%>
