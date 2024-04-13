@@ -100,7 +100,7 @@
 
     <div class="main">
         <input type="text" id="slideTitleInput" placeholder="Slide Title">
-        <div class="richTextEditor" contenteditable="true" id="slideContentInput"></div>
+        <input class="richTextEditor" contenteditable="true" id="slideContentInput"></input>
         <button id="compile">Compile</button>
         <button id="save">Save</button>
     </div>
@@ -114,13 +114,21 @@
 </div>
 
 <script>
-$(function(){
-    $("#includedContent").load("header1.jsp"); 
-  });
+
+	window.addEventListener("load", (event) => {
+	  	var allSlides = loadFromStorage()
+	  	for (const key in allSlides) {
+  			if (allSlides.hasOwnProperty(key)) {
+    			console.log(`${key}: ${allSlides[key]}`);
+    			addSlide(key, allSlides[key])
+  			}
+		}
+	});
+
     document.getElementById('newSlide').addEventListener('click', function() {
         var slideTitle = prompt("Enter the slide title:");
         if(slideTitle) {
-            addSlide(slideTitle);
+            addSlide(slideTitle, '');
         }
     });
 
@@ -137,14 +145,62 @@ $(function(){
 
     document.getElementById('save').addEventListener('click', function() {
         // Add functionality to save the slide
+        var slideTitleInput = document.getElementById('slideTitleInput')
+        
+        var slideContentInput = document.getElementById('slideContentInput')
+        
+       	if(slideTitleInput.value === '') return alert('please enter a non-empty title')
+       	
+       	console.log(slideContentInput.value)
+       	
+       	saveToStorage(slideTitleInput.value, slideContentInput.value)
+       	
     });
 
-    function addSlide(title) {
+    function saveToStorage(key, value){
+    	try{
+    		localStorage.setItem(key, JSON.stringify(value))
+    		console.log('data saved')
+    	}catch(error){
+    		console.log('data could not be saved' + error)
+    	}
+    }
+    
+    function loadFromStorage(){
+    	const items = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key); // Define value here for accessibility in catch block
+            try {
+                items[key] = JSON.parse(value);
+            } catch (error) {
+                console.error('Failed to load item for key:', key, error);
+                items[key] = value; // Store raw value if it's not JSON
+            }
+        }
+        return items;
+    }
+    
+    function addSlide(title, content) {
         var slidesList = document.getElementById('slidesList');
+        var childNodes = Array.from(slidesList.childNodes).slice(3);
+        var flag = false
+        
+        for(var i = 0; i<childNodes.length; i++){
+        	if(childNodes[i].getAttribute('id') == title){
+        		alert('The title already exists, please enter another title')
+        		flag = true
+        		break;
+        	}
+        }
+        if (flag == true) return
         var slideElement = document.createElement('div');
         slideElement.innerText = title;
+        slideElement.setAttribute('id', title);
+        slideElement.setAttribute('data-content', content)
         slideElement.onclick = function() {
             document.getElementById('slideTitleInput').value = title;
+            document.getElementById('slideContentInput').value = content;
             // To handle selecting and displaying existing content, you'll need additional logic
         };
         slidesList.appendChild(slideElement);
