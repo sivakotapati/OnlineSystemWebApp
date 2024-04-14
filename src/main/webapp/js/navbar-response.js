@@ -1,32 +1,37 @@
-var ajaxurl = 'ajax.php';
+import {dotnet_endpoint} from "../static/global.js"
+//let ajaxurl = 'ajax.php';
 
 /* Fluents for navigation of file system 
    They are changed by easyTree.js, and used by other js 
 */
-var sthSelected=false; // true if some item is selected
-var selectedItem=""; // it can be a full path file name or 
+let sthSelected=false; // true if some item is selected
+let selectedItem=""; // it can be a full path file name or 
 		     // folder name or "" - nothing selected
-var selectedItemType = ""; // the type of the selected item
+let selectedItemType = ""; // the type of the selected item
 			   // is either folder or file or 
 			   // "" - nothing selected
 
-var currentFolder=""; // the most recently selected folder
-var currentFile="";  // the most recently selected file
-
+let currentFolder=""; // the most recently selected folder
+let currentFile="";  // the most recently selected file
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
 
 /*
     refreshDirectory() : empties the directory, refills with
         accessible directory for session username
 */
 var refreshDirectory = function() {
-	let userid = sessionStorage.getItem("userId");
+	let userid = getUserId();
+	const getAllFilesForldersAPI = dotnet_endpoint+"api/SparcFileSystem/getallfoldersfiles";
     //var data = {'action': "getAccessibleDirectory"};
 	//US-13
 	$.ajax({
 	        type: 'GET',
-	        url: 'https://onlinelpk12dotnetapi.azurewebsites.net/api/SparcFileSystem/getallfoldersfiles',
+	        url: getAllFilesForldersAPI,
 	        jsonpCallback: 'jsonCallback',
 	        dataType: 'json',
+            headers: {
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
 	        data : "userId="+userid+"",
 	        jsonp: false,
 	        success: function (response) {
@@ -51,12 +56,19 @@ var refreshDirectory = function() {
         to the folder folderName and then updates current folder
         on front-end
 */
+function setRootAsDefaultFolder(){
+	let currentFolderValue = getCurrentFolder();
+	if(currentFolderValue =="" || currentFolderValue==null){
+		setCurrentFolder(getCurrentUsername()+"/");
+	} else if(currentFolderValue != ""){
+		setCurrentFolder(currentFolderValue);
+	}	
+};
+
 var setCurrentFolderNew = function(folderName) {
     if (sthSelected) {
        currentFolder = folderName;
-       var data = {'action': "setCurrentFolder",
-                   'currentfolder': folderName};
-       $.post(ajaxurl, data, function(response) {}); 
+       sessionStorage.setItem("currentFolder",currentFolder);
 
        $('#span_currentfolderid').empty();
        $('#span_currentfolderid').append(currentFolder);
@@ -73,19 +85,17 @@ var setCurrentFolderNew = function(folderName) {
 var setCurrentFileNew = function(fileName) {
     if (sthSelected) {
       currentFile = fileName; // same as fileName 
-      var data = {'action': "setCurrentFile",
-                  'currentfile': fileName};
-      $.post(ajaxurl, data, function(response) {
-        $('#span_currentfileid').empty();
-
-        if (!currentFile) {
-            $('#span_currentfileid').append("");
-            $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(currentFile);
-            $('#span_currentfileid').data("value", currentFile);
-        }
-      });
+      sessionStorage.setItem("currentFile",currentFile);
+	  $('#span_currentfileid').empty();
+	
+	  if (!currentFile) {
+		  $('#span_currentfileid').append("");
+		  $('#span_currentfileid').data("value", "");
+	  }
+	  else {
+		  $('#span_currentfileid').append(currentFile);
+	      $('#span_currentfileid').data("value", currentFile);
+	  }  
     }
 };
 
@@ -96,17 +106,21 @@ var setCurrentFileNew = function(fileName) {
         on front-end
 */
 var setCurrentFolder = function(folderName) {
-    var data = {'action': "setCurrentFolder",
-                'currentfolder': folderName};
-    $.post(ajaxurl, data, function(response) {
-        
-        var folderurl = response;
-        $('#span_currentfolderid').empty();
-        $('#span_currentfolderid').append(folderurl);
-        $('#span_currentfolderid').data("value", folderurl); 
-    });
+    sessionStorage.setItem("currentFolder",folderName);
+    
+    let folderurl = getCurrentFolder();
+    $('#span_currentfolderid').empty();
+    $('#span_currentfolderid').append(folderurl);
+    $('#span_currentfolderid').data("value", folderurl); 
 };
 
+var getCurrentFolder = function(){
+	return sessionStorage.getItem("currentFolder");
+}
+
+var getUserId = function(){
+	return sessionStorage.getItem("userId");
+}
 /*
     deleteFileOrFolder(name) :
         nothing needs to be done if name is home folder  
@@ -120,10 +134,11 @@ var setCurrentFolder = function(folderName) {
 */
 
 var deleteFileOrFolder = function(name) {
+	let userid = getUserId();
     //precondition: either a file or folder have to be selected. 	
     
-    var userName = getCurrentUsername();
-    var homeFolder = userName + "/";
+    let userName = getCurrentUsername();
+    let homeFolder = userName + "/";
     if (name == homeFolder){
 	// home folder cannot be deleted, we do nothing.
         return; 
@@ -131,28 +146,57 @@ var deleteFileOrFolder = function(name) {
 	
     // update front end info about current folder / file and vars of currentFolder/File
     if (sthSelected) {
-	var currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0); 
-
-        if (selectedItemType == "folder") 
-	   setCurrentFolderNew("");
-	if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
-	   setCurrentFileNew(""); 
-    	   // clear the editor content
-    	   var editor = ace.edit("editor");
-    	   editor.setValue("", -1);
-	}
+    	let currentFileiInCurrentFolder = (currentFile.indexOf(currentFolder) == 0);
+    	if (selectedItemType == "folder"){
+    		setCurrentFolderNew("");
+    		
+    		//Stroy 24
+    		let index =  name.lastIndexOf("/");
+    		let ApiFolderNameParam = name.substring(index+1);
+    		let ApiParentURIParam = name.substring(0,index);
+    		let data = {
+				   		'userId': userid,
+				   		'folderName':ApiFolderNameParam,
+				   		'parentUrl': ApiParentURIParam
+    			    	};
+    		
+    		//const folderDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefolder"+decodeURIComponent($.param(data,encodeData=false));
+    		const folderDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefolder";
+    		
+    		postSparcData(folderDeletionAPI, data).then(resp =>{
+    			console.log('response from post method: ', resp);
+    			if (resp.errors.length==0) {
+    				console.log(resp.content);
+                }
+    		})
+    		.catch(x => console.log(x));
+    		
+    	}
+        if ((selectedItemType == "file") || currentFileiInCurrentFolder) {
+        	setCurrentFileNew("");
+        	// clear the editor content
+        	let editor = ace.edit("editor");
+        	editor.setValue("", -1);
+        	
+        	let index =  name.lastIndexOf("/");
+        	let ApiFileNameParam = name.substring(index+1);
+    		let ApiFolderNameParam = name.substring(0,index);
+        	let data = {
+			   		'userId': userid,
+			   		'fileName':ApiFileNameParam,
+			   		'folderUrl': ApiFolderNameParam
+			    	};
+        	
+        	const fileDeletionAPI = dotnet_endpoint+"api/SparcFileSystem/deletefile?"+decodeURIComponent($.param(data,encodeData=false));
+        	postSparcData(fileDeletionAPI, data).then(resp =>{
+    			console.log('response from post method: ', resp);
+    			if (resp.errors.length==0) {
+    				console.log(resp.content);
+                }
+    		})
+    		.catch(x => console.log(x));        	
+        }
     }
-
-    // delete the file from server side 
-    var data = {
-	   'action': "deleteFileOrFolder",
-	   'fname': name
-    };
-
-    $.post(ajaxurl, data, function(response) {
-            //setResultsToString(response);
-    });
-
     // set selected data structure
     sthSelected = false;
     selectedItem = "";
@@ -168,26 +212,26 @@ var deleteFileOrFolder = function(name) {
 var renameFile = function(newName) {
     // precondition: the newName must be a new name of currentFile 
     
-    var oldfileurl = currentFile;
-    var newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
+    // let oldfileurl = currentFile;
+    // let newfileurl = oldfileurl.substring(0, oldfileurl.lastIndexOf("/")+1) + newName;
     
-    if (oldfileurl == newfileurl) { //do nothing if the name is not changed
-	return; 
-    }
-    // rename file at back end 
-    var data = {
-           'action': "renameFile",
-           'oldfileurl': oldfileurl,
-	   'newfileurl': newfileurl
-    };
+    // if (oldfileurl == newfileurl) { //do nothing if the name is not changed
+	// return; 
+    // }
+    // // rename file at back end 
+    // let data = {
+    //        'action': "renameFile",
+    //        'oldfileurl': oldfileurl,
+	//    'newfileurl': newfileurl
+    // };
 
-    $.post(ajaxurl, data, function(response) {
-            // setResultsToString(response);
-    });
+    // $.post(ajaxurl, data, function(response) {
+    //         // setResultsToString(response);
+    // });
   
-    // update the current file 
-    selectedItem = newfileurl; 
-    setCurrentFileNew(newfileurl); 
+    // // update the current file 
+    // selectedItem = newfileurl; 
+    // setCurrentFileNew(newfileurl); 
 }
 
 /*
@@ -213,20 +257,18 @@ var updateCurrentFolder = function() {
     returns : nothing
 */
 var updateCurrentFile = function() {
-    var data = {'action': "getCurrentFile"};
-    $.post(ajaxurl, data, function(response) {
-        var fileurl = response;
-        $('#span_currentfileid').empty();
+    let data = {'action': "getCurrentFile"};
+    let fileurl = sessionStorage.getItem("currentFile");
+    $('#span_currentfileid').empty();
 
-        if (!fileurl) {
-            //TODO do we want untitled
-            $('#span_currentfileid').append("");
-	    $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(fileurl);
-            $('#span_currentfileid').data("value", fileurl);
-        }
-    });
+    if (!fileurl) {
+        //TODO do we want untitled
+        $('#span_currentfileid').append("");
+    $('#span_currentfileid').data("value", "");
+    } else {
+        $('#span_currentfileid').append(fileurl);
+        $('#span_currentfileid').data("value", fileurl);
+    }
 };
 
 /*
@@ -236,26 +278,26 @@ var updateCurrentFile = function() {
  returns : nothing
  */
 var updateSetting = function() {
-    var data = {'action': "getSetting"};
-    $.post(ajaxurl, data, function(response) {
-           // get timeout
-           var setting = JSON.parse(response);
-           // $('#printSetting').append("timeout = " + setting.timeout + "#sets = " + setting.sets);
-           // $('#printSetting').append(response);
-           // $('#printSetting').show(); 
+    // let data = {'action': "getSetting"};
+    // $.post(ajaxurl, data, function(response) {
+    //        // get timeout
+    //        let setting = JSON.parse(response);
+    //        // $('#printSetting').append("timeout = " + setting.timeout + "#sets = " + setting.sets);
+    //        // $('#printSetting').append(response);
+    //        // $('#printSetting').show(); 
 
-           // altert(setting);
-           $('#setting_timeout').val(setting.timeout);
-           if (setting.sets === "other"){
-               $('#setting_sets_2').prop('checked',true);
-           }
-           else{
-             if (setting.sets === "all"){
-               $('#setting_sets_1').prop('checked',true);
-             }
-             else $('#setting_sets_0').prop('checked',true);
-           }
-       });
+    //        // altert(setting);
+    //        $('#setting_timeout').val(setting.timeout);
+    //        if (setting.sets === "other"){
+    //            $('#setting_sets_2').prop('checked',true);
+    //        }
+    //        else{
+    //          if (setting.sets === "all"){
+    //            $('#setting_sets_1').prop('checked',true);
+    //          }
+    //          else $('#setting_sets_0').prop('checked',true);
+    //        }
+    //    });
 };
 
 
@@ -266,19 +308,18 @@ var updateSetting = function() {
         back-end
 */
 var setCurrentFile = function(fileName) {
-    var data = {'action': "setCurrentFile",
-            'currentfile': fileName};
-    $.post(ajaxurl, data, function(response) {
-        $('#span_currentfileid').empty();
+   sessionStorage.setItem("currentFile",fileName);
+   $('#span_currentfileid').empty();
 
-        if (!fileName) {
-            $('#span_currentfileid').append("");
-	    $('#span_currentfileid').data("value", "");
-        } else {
-            $('#span_currentfileid').append(fileName);
-	    $('#span_currentfileid').data("value", fileName);
-        } 
-    });
+   if (!fileName) {
+	   $('#span_currentfileid').append("");
+	   $('#span_currentfileid').data("value", "");
+   } 
+   else {
+	   $('#span_currentfileid').append(fileName);
+	   $('#span_currentfileid').data("value", fileName);
+   } 
+    
 };
 
 /*
@@ -287,16 +328,31 @@ var setCurrentFile = function(fileName) {
 */
 var setEditorToFile = function(fileName) {
 
+	let userId = getUserId();
     setCurrentFileNew(fileName);
     if (!fileName) {
         fileName = "_templates/sparc.sp";
     }
 
-    var data = {'action': "getFileContent",
-                'fileurl': fileName};    
-    $.post(ajaxurl, data, function(response) {
-        var editor = ace.edit("editor");
-        editor.setValue(response, -1);
+    let folderurl = fileName.substring(0, fileName.lastIndexOf("/"));
+    let fileNameParam = fileName.substring(fileName.lastIndexOf("/")+1);
+    
+    let data = {
+    			 'userId': userId,
+                 'fileName': fileNameParam,
+                 'folderUrl':folderurl,
+               };   
+    
+    const getFileAPI = dotnet_endpoint+"api/SparcFileSystem/getfile?"+($.param(data,encodeData=false));
+    $.ajaxSetup({
+        headers:{
+           'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        }
+     });
+    $.get(getFileAPI, data, function(response) {
+    	console.log((response.content.program)?response.content.program:"empty program");
+        let editor = ace.edit("editor");
+        editor.setValue(response.content.program, -1);
     });
 }
 
@@ -307,15 +363,15 @@ var setEditorToFile = function(fileName) {
     returns : nothing
 */
 var setEditorToCurrentFile = function() {
-    var data = {'action': "getCurrentFile"};
+    // let data = {'action': "getCurrentFile"};
 
-    $.post(ajaxurl, data, function(response) {
-        if (!response) {
-            response = "";
-        }
-        setEditorToFile(response);
-    });
-    return;
+    // $.post(ajaxurl, data, function(response) {
+    //     if (!response) {
+    //         response = "";
+    //     }
+    //     setEditorToFile(response);
+    // });
+    // return;
 }
 
 var setEditorFontSize = function(font_size) {
@@ -332,7 +388,7 @@ var setEditorFontSize = function(font_size) {
 
 var getCurrentUsername = function() {
     //var username = $("#login").html();
-    var username = $('#login').attr('data-username');
+    let username = sessionStorage.getItem("username");
     if (!username || username === "Log-in") {
         return "";
     }
@@ -340,7 +396,7 @@ var getCurrentUsername = function() {
 }
 
 var isResponseError = function(response) {
-    var errorMessage = "Something went wrong";
+    let errorMessage = "Something went wrong";
     if (response.indexOf(errorMessage) == 0) {
         return true;
     }
@@ -349,7 +405,7 @@ var isResponseError = function(response) {
 
 var setResultsToString = function(string) {
     $('#results').empty();
-    var clearResults = '<center> <button onclick="clearResults()" > \
+    let clearResults = '<center> <button onclick="clearResults()" > \
                         Clear the Results \
                     </button> </center>';
     $('#results').append(clearResults);
@@ -397,9 +453,9 @@ var closeDirectory = function() {
 function resizeAce(){
   // $('#editor').height($(window).height()-112);
   $('#editor').height($(window).height()-140);
-  var editor = ace.edit("editor")
-  //var program = editor.getValue();
-  //var cursor = editor.getCursorPosition();
+  let editor = ace.edit("editor")
+  //let program = editor.getValue();
+  //let cursor = editor.getCursorPosition();
   editor.resize();
   // editor.setValue(program, cursor);
   return;
@@ -409,7 +465,7 @@ function resizeAce(){
 // When the DOM is ready
 $(document).ready(function() {
 
-    var editor = ace.edit("editor");
+    let editor = ace.edit("editor");
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/sparc");
 
@@ -434,212 +490,232 @@ $(document).ready(function() {
     // Get Query button handler
     $('#btn_getQuery').click(function(e) {
         e.preventDefault();
-        var editorValue = editor.getValue();
-        var queryValue = $('#txt_query').val();
+        let editorValue = editor.getValue();
+        let queryValue = $('#txt_query').val();
 	// RE - Fixed 3/9/20 10:44 ams
 	queryValue = queryValue.replace(/\?/g, "");
 
-        var data = {'action': "getQuery",
+        let data = {'action': "getQuery",
                     'query': queryValue,
                     'editor': editorValue};
 
         // Expected response : answer sets
+        $.ajaxSetup({
+            headers:{
+               'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            }
+         });
         $.post(ajaxurl, data, function(response) {
             setResultsToString(response);
         });
     });
 
     // Get Answer Sets button handler
-    $('#btn_getAnswerSets').click(function(e) {
-        var editorValue = editor.getValue();
-        var data = {'action': "getAnswerSets",
-                   'editor': editorValue};
+    // $('#btn_getAnswerSets').click(function(e) {
+    //     let editorValue = editor.getValue();
+    //     let data = {'action': "getAnswerSets",
+    //                'editor': editorValue};
         
-	// $('#results').append("hello");
+	// // $('#results').append("hello");
 
-        // Expected response : answer sets in XML
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-        });
-    });
+    //     // Expected response : answer sets in XML
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //     });
+    // });
 
 	    // Animate button handler
-    $('#btn_getAnimation').click(function(e) {
-        var editorValue = editor.getValue();
-        var data = {'action': "getAnimation",
-                    'editor': editorValue};
+    // $('#btn_getAnimation').click(function(e) {
+    //     let editorValue = editor.getValue();
+    //     let data = {'action': "getAnimation",
+    //                 'editor': editorValue};
 
-        // Expected response : answer sets in XML
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-        });
-    });
+    //     // Expected response : answer sets in XML
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //     });
+    // });
 	
     // New folder button
     $('#newFolder').click(function(e) {
         e.preventDefault();
-        var currentFolder = $("#span_currentfolderid").data("value");
+        let parentURL = $("#span_currentfolderid").data("value");
 
-	if (currentFolder == "") {
-	   alert("Please select a folder from the directory panel.");
-	   return;
-	}	
+		if (currentFolder == "") {
+		   alert("Please select a folder from the directory panel.");
+		   return;
+		}	
 
-        var folderName = prompt("Please enter folder name");
-        data = {'action': "addNewFolder",
-                'newfolder': folderName,
-		'currentFolder': currentFolder};
-
-        // Expected response : success message
-        $.post(ajaxurl, data, function(response) {
-            if (!isResponseError(response)) {
+        let folderName = prompt("Please enter folder name").toLowerCase();
+        let userId = getUserId();
+        parentURL = parentURL.slice(0,-1);
+        data = {'userId': userId,
+            	'folderName': folderName,
+            	'parentUrl': parentURL
+            	};
+        const folderCreationAPI = dotnet_endpoint+"api/SparcFileSystem/createfolder";
+        
+        postSparcData(folderCreationAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+				console.log(resp.content);
                 refreshDirectory();
                 setCurrentFolderNew(currentFolder+folderName+"/");
                 updateCurrentFolder();
             } else {
-                setResultsToString(response);
+                setResultsToString(resp);
             }
-        });
+		})
+		.catch(x => console.log(x)); 
+            
     });
 
     // New file button
     $('#newFile').click(function(e) {
+    	let userId = getUserId();
         e.preventDefault();
-        var fileName = prompt("Please enter file name");
-        // var editorValue = editor.getValue();
-	var editorValue = ""; // we set the new file to be empty
-        data = {'action': "addNewFile",
+        let fileName = prompt("Please enter file name").toLowerCase();
+        // let editorValue = editor.getValue();
+        let editorValue = ""; // we set the new file to be empty
+        /*data = {'action': "addNewFile",
                 'newfile': fileName,
-                'editor': editorValue};
+                'editor': editorValue};*/
+        let folderUrl = currentFolder.slice(0,-1);
+        data = {
+        		 'userId': userId,
+                'fileName': fileName,
+                'folderUrl': folderUrl
+               };
 
+        const fileCreationAPI = dotnet_endpoint+"api/SparcFileSystem/createfile";
         // Expected response : success message
-        $.post(ajaxurl, data, function(response) {
-
-            if (!isResponseError(response)) {
-                refreshDirectory();
-                setEditorToFile(response);
+        postSparcData(fileCreationAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+				refreshDirectory();
+                setEditorToFile(currentFolder+fileName);
                 updateCurrentFile();
             } else {
-                setResultsToString(response);
+                setResultsToString(resp);
             }
-            //setCurrentFile(response);
-        });
+		})
+		.catch(x => console.log(x));
+        
     });
 
     // Delete button -- we don't hvae delete  button of #btn_delete. We have a delete button in easyTree.js
-    $("#btn_delete").click(function(e) {
-        e.preventDefault();
-        // TODO configure this
-        data = {'action': "deleteFolder",
-                'folderurl': "christian/deletefolder/"};
+    // $("#btn_delete").click(function(e) {
+    //     e.preventDefault();
+    //     // TODO configure this
+    //     data = {'action': "deleteFolder",
+    //             'folderurl': "christian/deletefolder/"};
 
-        $.post(ajaxurl, data, function(response) {
-            setResultsToString(response);
-            //$('#results').append(response + "</br>");
-        });
-    });
+    //     $.post(ajaxurl, data, function(response) {
+    //         setResultsToString(response);
+    //         //$('#results').append(response + "</br>");
+    //     });
+    // });
 
     // Share button
-    $("#btn_share").click(function(e) {
-        e.preventDefault();
-        var currentFile = $("#span_currentfileid").html();
-        var otherUser = $("#share_username").val();
-        data = {'action': "shareFile",
-                'fileurl': currentFile,
-                'username2': otherUser,
-                'permissions': "1"};
+    // $("#btn_share").click(function(e) {
+    //     e.preventDefault();
+    //     let currentFile = $("#span_currentfileid").html();
+    //     let otherUser = $("#share_username").val();
+    //     data = {'action': "shareFile",
+    //             'fileurl': currentFile,
+    //             'username2': otherUser,
+    //             'permissions': "1"};
 
-        $.post(ajaxurl, data, function(response) {
+    //     $.post(ajaxurl, data, function(response) {
 
-            if (response === "1") {
-                //alert("Share successful!");
-                $('#shareModal').modal("hide");
-            } else {
-                //alert("Error sharing file");
-                $('#shareModal').modal("hide");
-            }
+    //         if (response === "1") {
+    //             //alert("Share successful!");
+    //             $('#shareModal').modal("hide");
+    //         } else {
+    //             //alert("Error sharing file");
+    //             $('#shareModal').modal("hide");
+    //         }
 
-        });
-    });
+    //     });
+    // });
 
 // Setting  button XY
-    $("#btn_changesetting").click(function(e) {
+//     $("#btn_changesetting").click(function(e) {
 
-        e.preventDefault();
-        var timeout = $("#setting_timeout").val();
-        var sets = $("input:radio[name=setting_sets]:checked").val();
-        var otherNumSets = $("#setting_numSets").val();
+//         e.preventDefault();
+//         let timeout = $("#setting_timeout").val();
+//         let sets = $("input:radio[name=setting_sets]:checked").val();
+//         let otherNumSets = $("#setting_numSets").val();
                   
-          $("#changeSetting_fail").empty();
-          $("#changeSetting_fail").hide();
+//           $("#changeSetting_fail").empty();
+//           $("#changeSetting_fail").hide();
                                   
-          if($.isNumeric(timeout)){
-              if(parseInt(timeout)>50){
-                $("#changeSetting_fail").append("Error: your timeout is greater than the limit of 50s.");
-                $("#changeSetting_fail").show();
-              }
-              else {
-                  data = {'action': "changeSetting",
-                  'timeout': timeout,
-                  'sets': sets,
-		  'otherNumSets': otherNumSets};
-                  //    $('#settingModal').modal("hide");
-                  $.post(ajaxurl, data, function(response) {
-                         //   alert(response);
-                         //   $('#setting_timeout').val(50);
-                         //   $('#setting_sets_0').prop('checked',true)
+//           if($.isNumeric(timeout)){
+//               if(parseInt(timeout)>50){
+//                 $("#changeSetting_fail").append("Error: your timeout is greater than the limit of 50s.");
+//                 $("#changeSetting_fail").show();
+//               }
+//               else {
+//                   data = {'action': "changeSetting",
+//                   'timeout': timeout,
+//                   'sets': sets,
+// 		  'otherNumSets': otherNumSets};
+//                   //    $('#settingModal').modal("hide");
+//                   $.post(ajaxurl, data, function(response) {
+//                          //   alert(response);
+//                          //   $('#setting_timeout').val(50);
+//                          //   $('#setting_sets_0').prop('checked',true)
                          
-                         // $("#changeSetting_fail").append("repsonse=",response);
-                         // $("#changeSetting_fail").show();
-                         if (response === "1") {
-                         //alert("setting change successful!");
-                         $('#settingModal').modal("hide");
-                         } else {
-                         //alert("Error sharing file");
-                         //$("changeSetting_fail").show();
-                         }
-                });
+//                          // $("#changeSetting_fail").append("repsonse=",response);
+//                          // $("#changeSetting_fail").show();
+//                          if (response === "1") {
+//                          //alert("setting change successful!");
+//                          $('#settingModal').modal("hide");
+//                          } else {
+//                          //alert("Error sharing file");
+//                          //$("changeSetting_fail").show();
+//                          }
+//                 });
 
-              }
-           }
-           else{
-                 $("#changeSetting_fail").append("Error: your timeout is not a number.");
-                 $("#changeSetting_fail").show();
-           }
-    });
-  $("#btn_cancelsetting").click(function(e) {
-    e.preventDefault();
-    $('#settingModal').modal("hide");
-    });
+//               }
+//            }
+//            else{
+//                  $("#changeSetting_fail").append("Error: your timeout is not a number.");
+//                  $("#changeSetting_fail").show();
+//            }
+//     });
+//   $("#btn_cancelsetting").click(function(e) {
+//     e.preventDefault();
+//     $('#settingModal').modal("hide");
+//     });
 
     //End of Setting XY
 
     // Issues button
-    $("#navbar_btn_issues").click(function(e) {
-        var issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
-        var data = {'action': "addIssue",
-                    'issue': issue};
+    // $("#navbar_btn_issues").click(function(e) {
+    //     let issue = prompt("What is your issue? Please give details as to what you did before you received an error.");
+    //     let data = {'action': "addIssue",
+    //                 'issue': issue};
 
-        $.post(ajaxurl, data, function(response) {
-            alert("Thank you for your contribution.");
-        });
-    });
+    //     $.post(ajaxurl, data, function(response) {
+    //         alert("Thank you for your contribution.");
+    //     });
+    // });
 
     // Save button
     $("#btn_save").click(function(e) {
+    	let userId = getUserId();
         // TODO check if currentuser is null then show log-in button
-                         
-
-        var editorValue = editor.getValue();
-    
+    	let editorValue = editor.getValue();
+    	console.log("this is editor.getValue() :"+editorValue);
         updateCurrentFile();
-        var currentFile = $("#span_currentfileid").data("value");
+        let currentFile = $("#span_currentfileid").data("value");
 
         updateCurrentFolder();
-        var currentFolder = $("#span_currentfolderid").data("value");
+        let currentFolder = $("#span_currentfolderid").data("value");
 
         // save an untitled file
-	var newFile = false; 
+        let newFile = false; 
         if (!currentFile || currentFile == "") {
             currentFile = prompt("Please enter a file name");
 	    if (currentFile === null) {// user canceled the input box. 
@@ -649,30 +725,39 @@ $(document).ready(function() {
 	    newFile = true; 
             currentFile = currentFolder.trim() + currentFile.trim();
         }
-        var currentFileurl = currentFile;
+        let index =  currentFile.lastIndexOf("/");
+        let currentFileName = currentFile.substring(index+1);
+        let folderUrl = currentFolder.slice(0,-1);
 
-        data = {'action': "saveFile",
-                'fileurl': currentFileurl,
-                'editor': editorValue};
-
-        // setResultsToString("current file is:" + currentFileurl); 
-        $.post(ajaxurl, data, function(response) {
-            // setResultsToString(response);
-
-            if (!isResponseError(response)) {
-                setCurrentFile(currentFileurl);
-                updateCurrentFile();
-		if (newFile) 
-		   refreshDirectory();
-            }
-        });
+        data = {
+        		'userId': userId,
+                'fileName': currentFileName,
+                'folderUrl': folderUrl,
+                'program' : editorValue 
+               };
+        
+        console.log("data : ",data);
+        const saveFileAPI = dotnet_endpoint+"api/SparcFileSystem/savefile";
+        postSparcData(saveFileAPI, data).then(resp =>{
+			console.log('response from post method: ', resp);
+			if (resp.errors.length==0) {
+                	setCurrentFile(currentFile);
+                	updateCurrentFile();
+					if (newFile){ 
+		   				refreshDirectory();
+					}
+            	}
+		})
+		.catch(x => console.log(x));
+        
+        alert("The program saved successfully to file "+currentFileName);
     });
 
     $(document).on("click", ".dir-item", function() {
-        var fileurl = $(this).data("value");
+        let fileurl = $(this).data("value");
         setEditorToFile(fileurl);
 
-        var folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
+        let folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
         setCurrentFile(fileurl);
         setCurrentFolder(folderurl);
         setCurrentFile(fileurl);
@@ -682,12 +767,15 @@ $(document).ready(function() {
 
     /* when an item is CLICKED (which may select or unselect the item from the file system */
     $(document).on("click", ".dir-item-text", function(e) {
-        var isFolder = $(this).parent().parent().hasClass('dir-folder');
-        var fileurl = $(this).parent().parent().data("value");
+        let isFolder = $(this).parent().parent().hasClass('dir-folder');
+        let fileurl = $(this).parent().parent().data("value");
+        if(isFolder){
+            fileurl=fileurl+"/";        	
+        }
 
         // if the selected file/folder is clicked, sthSelected will be toggled
 	// otherwise sth is selectged 
-        var sameSelectionAsBefore = (fileurl == selectedItem); 
+        let sameSelectionAsBefore = (fileurl == selectedItem); 
 	
 	if (sthSelected && sameSelectionAsBefore){
 		sthSelected = false;
@@ -708,7 +796,7 @@ $(document).ready(function() {
 
           setEditorToFile(fileurl); // change the content of the editor to currentfile
 
-          var folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
+          let folderurl = fileurl.substring(0, fileurl.lastIndexOf("/")+1);
 	  
           setCurrentFolderNew(folderurl);
           setCurrentFileNew(fileurl);
@@ -722,7 +810,7 @@ $(document).ready(function() {
     });
 
     $(document).on("change", "#select_fontsize", function() {
-        var font_size = $(this).val();
+        let font_size = $(this).val();
         setEditorFontSize(font_size);
     });
     
@@ -737,34 +825,24 @@ $(document).ready(function() {
 
         document.getElementById('editor').style.fontSize=''+font_size+'px';
     }
-
-    /* This does not work 
-    $(document).on("click", ".dir-folder parent_li", function() {
-        var folderurl = $(this).data("value");
-        alert("This fires");
-        setCurrentFolder(folderurl);
-    }); */
-    
-
-    // TODO: remove
-
-    /*
-    function displayResults(xml) {
-        var xsl = loadXMLDoc("compiler/SPARC/parser/NoQuery.xsl");
-        // code for IE
-        if (window.ActiveXObject|| xhttp.responseType == "msxml-document") {
-            var ex = xml.transformNode(xsl);
-            document.getElementById("result").innerHTML = ex;
-        }
-        // code for Chrome, Firefox, Opera, etc.
-        else if (document.implementation && document.implementation.createDocument) {
-            var xsltProcessor = new XSLTProcessor();
-            xsltProcessor.importStylesheet(xsl);
-            resultDocument = xsltProcessor.transformToFragment(xml, document);
-            document.getElementById("result").appendChild(resultDocument);
-            ("#result").append(resultDocument);
-        }
-    }
-
-    */
 });
+
+function postSparcData(url, data){
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+          type:'POST',
+          url:url,
+          data:JSON.stringify(data),
+          headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
+          contentType: "application/json; charset=utf-8",
+          success: function (response) {
+            resolve(response);
+          },
+          error: function (error) {
+            reject(error);
+          },
+        });
+    });
+}

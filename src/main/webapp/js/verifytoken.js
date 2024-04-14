@@ -1,8 +1,10 @@
-	
+	//const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
 	function verifytoken(){
-		
+
 	if(sessionStorage.getItem("userRole")=="Student"){
-	fetch("https://onlinelpk12node.azurewebsites.net/api/test/student",{
+		
+        const studentAPI = "http://localhost:8083/api/test/student";		
+	fetch(studentAPI,{
 
 				headers:{
 				
@@ -35,7 +37,8 @@
     });
     }
     else if(sessionStorage.getItem("userRole")=="Teacher"){
-	fetch("https://onlinelpk12node.azurewebsites.net/api/test/teacher",{
+        const teacherAPI = "http://localhost:8083/api/test/teacher";
+	fetch(teacherAPI,{
 
 				headers:{
 				

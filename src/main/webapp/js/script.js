@@ -1,4 +1,4 @@
-let total_learning_outcomes = 3;
+//let total_learning_outcomes = 3;
 let current_lesson_number = -1;
 let current_assessment_number = -1;
 function disableElement(id) {
@@ -8,7 +8,7 @@ function disableElement(id) {
     }
 }
 
-const apiBaseUrl = "https://onlinelpk12appservice.azurewebsites.net/api";
+const apiBaseUrl = "https://localhost:7155/api";
 const lessonsUrl = "/onlineSystem/lessonnumber.jsp"
 
 let userIdFromSession = 0;
@@ -34,16 +34,24 @@ let quizContent = null;
 function gotoNext(currentLessonNumber, currentLearningOutcomeNumber, currentPageId, isNextPageQuiz, nextAssessmentNumber) {
     sessionStorage.setItem(sessionKeyCurrentLessonNumber, currentLessonNumber.toString());
     sessionStorage.setItem(sessionKeyCurrentLearningOutcomeNumber, currentLearningOutcomeNumber.toString()); 
+    sessionStorage.setItem(sessionKeyShowPageId, currentPageId.toString())
 
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let nextPageId = currentPageDetails.nextPageId;
-
-    let currentPage = document.getElementById(currentPageId);
-    let nextPage = document.getElementById(nextPageId);
-
-    currentPage.hidden = true;
-    nextPage.hidden = false;
     
+    //#119 Workbook Integration
+    let nextPageDetails = getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId);
+    if(nextPageDetails.pageType!="SparcPage"){		
+	    let currentPage = document.getElementById(currentPageId);
+	    let nextPage = document.getElementById(nextPageId);
+	
+	    currentPage.hidden = true;
+	    nextPage.hidden = false;	    
+	       	
+	}else{
+		window.open(sparcPage, "_self");
+	}
+	sessionStorage.setItem(sessionKeyShowPageId, nextPageId.toString())	 
     SaveStudentLessonsProgressThroughAPI(currentLessonNumber, currentLearningOutcomeNumber, currentPageId);
 }
 
@@ -55,11 +63,11 @@ function gotoPrevious(currentLessonNumber, currentLearningOutcomeNumber, current
     let currentPageDetails = getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,currentPageId);
     let previousPageId = currentPageDetails.previousPageId;
    
-   
     let currentSection = document.getElementById(currentPageId);
     let previousSection = document.getElementById(previousPageId);
     currentSection.hidden = true;
     previousSection.hidden = false;
+    sessionStorage.setItem(sessionKeyShowPageId, previousPageId.toString())	
 }
 
 function gotoOnlineSparc(currentLessonNumber, learningOutcomeNumber, currentPageId, isNextSectionQuiz, nextAssessmentNumber, sparcPageValue) {
@@ -89,6 +97,20 @@ function getCurrentPageDetailsFromJSON(currentLessonNumber, currentLearningOutco
     return currentPageDetails;
 }
 
+//119 
+function getNextPageDetailsFromJSON(currentLessonNumber, currentLearningOutcomeNumber,nextPageId){
+    let nextPageDetails = null;
+    let currentLessonDetails = lessonsJson.lessons.filter(lesson => lesson.lessonId == currentLessonNumber)[0];
+    if (currentLearningOutcomeNumber == currentLessonDetails.rootLearningOutcome.learningOutcomeId) {
+        nextPageDetails = currentLessonDetails.rootLearningOutcome.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    else{
+        let learningOutcomeDetails = currentLessonDetails.rootLearningOutcome.subLearningOutcomes.filter(x=> x.learningOutcomeId == currentLearningOutcomeNumber)[0];
+        nextPageDetails =  learningOutcomeDetails.pages.filter(page => page.pageId == nextPageId)[0];
+    }
+    return nextPageDetails;
+}
+
 
 const studentLevel = ["good", "average", "lessgood"]
 const result = ["pass", "fail"]
@@ -104,32 +126,25 @@ function getGrading(studentLevel, input, answer) {
     //return result[getRandomInt(result.length)]
 }
 
-function submitAssessment(currentPageId, textAreaId){
+function submitAssessment(currentPageId, consoleOutput, isSparcPassed){
  SaveStudentLessonsProgressThroughAPI(parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)), parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)), currentPageId);
      
-  let submittedAnswer = document.getElementById(textAreaId).value;
+  let submittedAnswer = consoleOutput;
   let isAssessmentPassed = null;
   let assessmentStatus = null;
-  let question = null;
   let score = 0;
+  let actualQuestionAns = null;
   if(submittedAnswer == null || submittedAnswer == undefined || submittedAnswer.trim().length == 0){
     isAssessmentPassed = false;
   }
   else{
-    let answer = null;
-    if(textAreaId == "program0" || textAreaId == "program3"){
-        question = "Extent your model for the relation of mom";
-        answer = "%Joaan is the mother of peter mother (joaan, peter)"   
-    }
-    else if(textAreaId == "program1"){
-        question = "Extend Family Model for Parent of Peter";
-        answer = "%John is a parent of Peter parent(john, peter)";
-    }
-    else if(textAreaId == "program2"){
-        question = "Extend your Model for dad of peter";
-        answer = "%John is the dad of peter dad(john, peter)";
-    }
-    score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, answer);
+    let currentLessonNumber = parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber));
+    let currentLearningOutcomeNumber =  parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber));
+    //actualQuestionAns =  getAssessmentQuestionAndAnswer(currentLessonNumber, programId);
+    actualQuestionAns =  getActivityInformation(currentLessonNumber, currentLearningOutcomeNumber);
+    
+    //score = getGrading(studentLevel[getRandomInt(studentLevel.length)], submittedAnswer, actualQuestionAns.answer);
+    score = isSparcPassed ? 100 : 50;
       if(score >= 70){
         isAssessmentPassed = true;
         assessmentStatus = "pass"
@@ -142,18 +157,158 @@ function submitAssessment(currentPageId, textAreaId){
     
     Promise.all(
         [SaveStudentAssessmentStatusThroughAPI(score, 100, assessmentStatus),
-        SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer)])
+        SaveStudentAssessmentSubmissionThroughAPI(actualQuestionAns.question, submittedAnswer),
+        saveSparcGrade(score,actualQuestionAns,submittedAnswer,assessmentStatus)])
         .then(function (responses) {
             return Promise.all(responses.map(function (response) { return response; }));
         }).then(function (data) {
             //	console.log(data);
+            return data;
         })
         .catch(function (error) {
             // console.log(error);
+            return error;
         });
+
     
-    window.open(nextStepPage, "_self");
+    //window.open(nextStepPage, "_self");
 }
+
+function getAssessmentQuestionAndAnswer(currentLessonNumber, programId)
+{
+    let question = null;
+    let answer = null;
+    if(currentLessonNumber == 2)
+    {
+        if(programId == "program0" || programId == "program3"){
+            question = "Extent your model for the relation of mom";
+            answer = "%Joaan is the mother of peter mother (joaan, peter)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend Family Model for Parent of Peter";
+            answer = "%John is a parent of Peter parent(john, peter)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your Model for dad of peter";
+            answer = "%John is the dad of peter dad(john, peter)";
+        }
+    }
+    else if(currentLessonNumber == 3)
+    {
+        if(programId == "program0"){
+            question = "who is the mother of Peter?";
+            answer = "%Joaan is the mother of peter mother(Joaan, peter)";  
+        }
+        else if(programId == "program1"){
+            question = "Extend your model for who is the father of Peter?";
+            answer = "%John is a father of Peter father(John, peter)";
+        }
+        else if(programId == "program2"){
+            question = 'Extend your Model for "Whom is John the father of?"';
+            answer = "%John is the father of peter father(john, peter)";
+        }
+        else if(programId == "program3")
+        {
+            question = 'Extend your Model for "Who is the Dad of Peter?"';
+            answer = "%John is the dad of peter dad(john, peter)";
+        }
+    }
+    else if(currentLessonNumber == 4)
+    {
+        if(programId == "program0" || programId == "program3"){
+            question = 'Extend your model for "parent" rule';
+            answer = "%Joaan is the parent of peter parent (joaan, peter)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend your model for dad rule";
+            answer = "%John is a dad of Peter dad(john, peter)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your model for mon rule";
+            answer = "%Jooan is the mom of peter mom(Jooan, peter)";
+        }
+        else if(programId == "program3")
+        {
+            question = "Extend your model for parent rule";
+            answer = "%John is the parent of peter parent(john, peter)";
+        }
+    }
+    else if(currentLessonNumber == 5)
+    {
+    	let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementName = sessionStorage.getItem("elementName");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+        if(programId == "program0" || programId == "program4"){
+            question = 'Extend your model for one of the first 20 elements in the periodic table';
+            answer = "% The chemical symbol for helium is He symbolFor(helium, he)"   
+        }
+        else if(programId == "program1"){
+            question = "Extend your model for Hydrogen";
+            answer = "% The chemical symbol for hydrogen is H symbolFor(hydrogen, h)";
+        }
+        else if(programId == "program2"){
+            question = "Extend your model for Carbon";
+            answer = "% The chemical symbol for carbon is C symbolFor(carbon, c)";
+        }
+        else if(programId == "program3" && elementSelectedFlag)
+        {
+            question = "Extend your model for any element";
+            answer = "% The chemical symbol for "+elementName+" is "+symbolSelected+" symbolFor("+elementName+", "+symbolSelected+")";
+        }
+        else if(programId == "program3" && !elementSelectedFlag){
+        	question = "Extend your model for Phosphorus";
+            answer = "% The chemical symbol for helium is He symbolFor(helium, he)";        
+        }
+    }
+    else if(currentLessonNumber == 6){
+		let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementName = sessionStorage.getItem("elementName");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+		if(programId == "program0"){
+            question = 'What is the proton and atomic number of carbon ?';
+            answer = "% The atomic number of carbon is 6 atomicNumber(carbon, 6)";   
+        }
+        else if(programId == "program1"){
+			question = 'What is the proton and atomic number of hydrogen ?';
+            answer = "% The atomic number of hydrogen is 1 atomicNumber(hydrogen, 1)";   
+		}
+		else if(programId == "program2"){
+			question = 'What is the proton and atomic number of oxygen ?';
+            answer = "% The atomic number of oxygen is 8 atomicNumber(oxygen, 8)";
+		}
+		else if(programId == "program3" && elementSelectedFlag){			
+    		question = "Extend your model for any element";
+            answer = "% The atomic number of "+elementName+" is "+symbolSelected+" atomicNumber("+elementName+", "+symbolSelected+")";
+		}
+	}
+    else if(currentLessonNumber == 7){
+		let elementSelectedFlag = sessionStorage.getItem("elementSelected");
+    	let elementProtonNumber = sessionStorage.getItem("elementProtonNumber");
+    	let symbolSelected = sessionStorage.getItem("elementSymbol");
+		if(programId == "program0"){
+            question = 'write the relation rule protron and atomic number of hydrogen?';
+            answer = "% protonsOf(E, N) :- atomicNumber(E, N).";   
+        }
+        else if(programId == "program1"){
+			question = 'Write query about protrons of  hydrogen ?';
+            answer = "% The proton number of hydrogen is 1 protonsOf(H,1)";   
+		}
+		else if(programId == "program2"){
+			question = 'write the relation between proton and atomic number of the hydrogen of element H?';
+            answer = "% N is the atomic number of the element E if N is the number of protons of element E protonsOf(E, N) :- atomicNumber(E, N)";
+		}
+		else if(programId == "program3"){
+			question = 'write the relation between atomic and protron number of the hydrogen of element H?';
+            answer = "% N is the atomic number of the element. if N is the number of protons of element E. atomicNumber(E, N) :- protonsOf(E, N).";
+		}
+		else if(programId == "program4" && elementSelectedFlag){			
+    		question = "write the relation between atomic and proton number of the element";
+            answer = "% The number of protons of the atom of an element"+symbolSelected+" is "+elementProtonNumber+", if "+elementProtonNumber+" is the atomic number of the element "+symbolSelected+".protonsOf("+symbolSelected+","+elementProtonNumber+") :- atomicNumber("+symbolSelected+", "+elementProtonNumber+")."+elementProtonNumber+" is the atomic number of the element "+symbolSelected+" if "+elementProtonNumber+" is the number of protons of element "+symbolSelected+".atomicNumber("+symbolSelected+", "+elementProtonNumber+") :- protonsOf("+symbolSelected+", "+elementProtonNumber+").";
+		}
+	}
+   return {"question" : question, "answer" : answer}; 
+}
+
 
 function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {    
     let assessmentSubmissionRequest = {
@@ -169,12 +324,15 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
         ]
     }
 
-    const saveStudentAssessmentSubmissionAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
+    const saveStudentAssessmentSubmissionAPIUrl = apiBaseUrl+ "/Student/" + assessmentSubmissionRequest.studentId + "/assessmentDetails";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(assessmentSubmissionRequest),
         dataType: 'json',
         type: 'POST',
+        headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
         url: saveStudentAssessmentSubmissionAPIUrl,
         success: function (data) {
             return data;
@@ -196,6 +354,68 @@ function SaveStudentAssessmentSubmissionThroughAPI(question, submittedAnswer) {
     });
 }
 
+
+function saveSparcGrade(score,actualQuestionAns,submittedAnswer,assessmentStatus)
+{
+    let grades = null;
+    let sparcGrade = null;
+    if(score >= 95)
+    {
+        grades = "A+";
+    }
+    if(score >= 90 && score <= 94)
+    {
+        grades = "A";
+    }
+    if(score >= 70 && score <= 89)
+    {
+        grades = "B";
+    }
+    if(score >= 50 && score <= 69)
+    {
+        grades = "C";
+    }
+    if(score <=49){
+        grades = "D";
+    }
+    sparcGrade =  {
+        grade: grades,
+        userId: parseInt(sessionStorage.getItem("userId")),
+        lessonId: parseInt(sessionStorage.getItem(sessionKeyCurrentLessonNumber)),
+        learningOutcome:  parseInt(sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber)),
+        action: actualQuestionAns.question,
+        editor: null,
+        query : submittedAnswer,
+        fileUrl: null,
+        isGrading : assessmentStatus != null ? true : false
+      }
+      const submitSpracGradeAPIUrl = apiBaseUrl+ "/Sparc/submitgrade";
+  $.ajax({
+      contentType: 'application/x-www-form-urlencoded',
+      data : sparcGrade,
+      dataType: 'json',
+      type: 'POST',
+      url: submitSpracGradeAPIUrl,
+     success: function (data) {
+            return data;
+        },
+        statusCode: {
+            400: function (error) {
+                return error;
+            },
+            404: function (error) {
+                return error;
+            },
+            500: function (error) {
+                return error;
+            }
+        },
+        error: function (error) {
+            return error;
+        }  
+  });
+}
+
 function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStatus){   
     let assessmentStatusRequest =  {
         assessmentId: 0,
@@ -207,27 +427,34 @@ function SaveStudentAssessmentStatusThroughAPI(score, totalScore, assessmentStat
         totalScore: totalScore
       }
 
-    const saveStudentAssessmentStatusAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
+    const saveStudentAssessmentStatusAPIUrl = apiBaseUrl+ "/Student/"+assessmentStatusRequest.studentId+"/assessmentStatus";
   $.ajax({
       contentType: 'application/json',
       data: JSON.stringify(assessmentStatusRequest),
       dataType: 'json',
       type: 'POST',
+      headers: {
+        'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
       url: saveStudentAssessmentStatusAPIUrl,
       success: function (data) {
-         
-      },
-      statusCode: {
-          400: function (error) {
-          },
-          404: function (error) {
-          },
-          500: function (error) {
-          }
-      },
-      error: function (error) {
-      }       
-  });
+        return data;
+    },
+    statusCode: {
+        400: function (error) {
+            return error;
+        },
+        404: function (error) {
+            return error;
+        },
+        500: function (error) {
+            return error;
+        }
+    },
+    error: function (error) {
+        return error;
+    }
+});
 }
 
 
@@ -284,12 +511,15 @@ function similarity(s1, s2) {
           activityTime: null
         };
       
-      const saveStudentProgressAPIUrl = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
+      const saveStudentProgressAPIUrl = apiBaseUrl+ "/Student/"+studentLessonProgressRequest.studentId+"/lessonprogress";
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(studentLessonProgressRequest),
         dataType: 'json',
         type: 'POST',
+        headers: {
+            'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        },
         url: saveStudentProgressAPIUrl,
         success: function (data) {
            
@@ -308,7 +538,7 @@ function similarity(s1, s2) {
   }
 // above functions are used now.
 
-function gotoNextAfterAssessment(isAssessmentPassed) {
+/*function gotoNextAfterAssessment(isAssessmentPassed) {
     if (isAssessmentPassed && (current_assessment_number == 0 || current_assessment_number == total_learning_outcomes)) {
         let nextLessonUrl = "lesson" + (current_lesson_number + 1) + ".html"
         window.open(nextLessonUrl, "_self");
@@ -609,3 +839,4 @@ function showScoreToUser(score) {
 function isNullOrUndefined(input) {
     return input == null || input == undefined;
 }
+*/
