@@ -45,6 +45,15 @@
         cursor: pointer;
         border-radius: 4px;
     }
+    
+    #slidesList div.selected{
+    	background: #8095aa;
+    }
+    
+    #slidesList div.unselected{
+    	background: #34495e;
+    }
+    
     #slidesList div:hover {
         background-color: #4e6a85;
     }
@@ -52,6 +61,8 @@
         color: white;
         background-color: #3498DB;
         padding: 10px;
+        margin-bottom: .5rem;
+        margin-top: .3rem;
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -66,6 +77,8 @@
         border-radius: 4px;
         padding: 10px;
         height: 150px;
+        width: 100%;
+        box-sizing: border-box;
         overflow-y: auto;
     }
     .richTextEditor:focus {
@@ -114,15 +127,8 @@
 </div>
 
 <script>
-
 	window.addEventListener("load", (event) => {
-	  	var allSlides = loadFromStorage()
-	  	for (const key in allSlides) {
-  			if (allSlides.hasOwnProperty(key)) {
-    			console.log(`${key}: ${allSlides[key]}`);
-    			addSlide(key, allSlides[key])
-  			}
-		}
+	  	displayAllTitles()
 	});
 
     document.getElementById('newSlide').addEventListener('click', function() {
@@ -134,11 +140,18 @@
 
     document.getElementById('deleteSlide').addEventListener('click', function() {
         // Add functionality to delete a slide
+        const slidesList = document.getElementById('slidesList')
+        var title;
+        for(const child of slidesList.children){
+        	if (child.classList.contains('selected')) title = child.getAttribute('id')
+        }
+        deleteSlide(title)
+	    displayAllTitles();
     });
 
     document.getElementById('compile').addEventListener('click', function() {
         var title = document.getElementById('slideTitleInput').value;
-        var content = document.getElementById('slideContentInput').innerHTML;
+        var content = document.getElementById('slideContentInput').value;
         document.getElementById('previewTitle').innerText = title;
         document.getElementById('previewContent').innerHTML = content;
     });
@@ -181,8 +194,28 @@
         return items;
     }
     
+    function deleteSlide(title){
+    	if (localStorage.getItem(title) !== null) {
+    	    localStorage.removeItem(title);
+    	} else {
+    	    alert('Item not found');
+    	}
+    }
+    
+    function displayAllTitles(){
+    	var allSlides = loadFromStorage()
+	  	for (const key in allSlides) {
+  			if (allSlides.hasOwnProperty(key)) {
+    			console.log(`${key}: ${allSlides[key]}`);
+    			addSlide(key, allSlides[key])
+  			}
+		}
+    }
+    
+    
     function addSlide(title, content) {
         var slidesList = document.getElementById('slidesList');
+        var DomChildNodes = slidesList.childNodes
         var childNodes = Array.from(slidesList.childNodes).slice(3);
         var flag = false
         
@@ -202,6 +235,14 @@
             document.getElementById('slideTitleInput').value = title;
             document.getElementById('slideContentInput').value = content;
             // To handle selecting and displaying existing content, you'll need additional logic
+			for (const child of slidesList.children) {
+  				if(child.getAttribute('id') === title){
+  					child.classList.add('selected')
+  				}else {
+  					if(child.classList.contains('selected')) child.classList.remove('selected')
+  				}
+			}
+            
         };
         slidesList.appendChild(slideElement);
     }
