@@ -575,6 +575,33 @@ window.addEventListener('popstate', function (event) {
     	    elementEditor.style.marginLeft ='-485px';
     	}
     });
+    document.getElementById("newFolder").addEventListener("click", function() {
+        var folderName = prompt("Enter folder name:");
+        if (folderName !== null) {
+            // You can't directly create folders, but you can create empty files with unique names to represent folders
+            createFile(folderName);
+        }
+    });
+
+    document.getElementById("newFile").addEventListener("click", function() {
+        var fileName = prompt("Enter file name:");
+        if (fileName !== null) {
+            var fileContent = prompt("Enter file content:");
+            if (fileContent !== null) {
+                createFile(fileName, fileContent);
+            }
+        }
+    });
+
+    function createFile(fileName, content = "") {
+        var blob = new Blob([content], { type: "text/plain" });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+    }
+
+
 
 </script>
 	<%@ include file="sparc-footer.jsp"%>
