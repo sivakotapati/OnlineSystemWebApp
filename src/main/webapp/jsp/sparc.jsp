@@ -38,7 +38,7 @@
 	position: fixed;
 	margin: 0;
 	float: left;
-	width: 40%;
+	width: 58%;
 	height: 100%;
 	top: 50;
 }
@@ -457,23 +457,7 @@ window.addEventListener('popstate', function (event) {
 		else return false;
 		
 	}
-	 $(document).on("change", "#select_fontsize", function() {
-	        let font_size = $(this).val();
-	        setEditorFontSize(font_size);
-	    });
-	    
-	    var setEditorFontSize = function(font_size) {
-	        if (font_size < 0) {
-	            return;
-	        }
-
-	        if (font_size > 72) {
-	            return;
-	        }
-
-	        document.getElementById('editor').style.fontSize=''+font_size+'px';
-	    }
-	});
+	
 	function getPosition(string, subString, index) {
 		  return string.split(subString, index).join(subString).length;
 	} 
@@ -575,33 +559,6 @@ window.addEventListener('popstate', function (event) {
     	    elementEditor.style.marginLeft ='-485px';
     	}
     });
-    document.getElementById("newFolder").addEventListener("click", function() {
-        var folderName = prompt("Enter folder name:");
-        if (folderName !== null) {
-            // You can't directly create folders, but you can create empty files with unique names to represent folders
-            createFile(folderName);
-        }
-    });
-
-    document.getElementById("newFile").addEventListener("click", function() {
-        var fileName = prompt("Enter file name:");
-        if (fileName !== null) {
-            var fileContent = prompt("Enter file content:");
-            if (fileContent !== null) {
-                createFile(fileName, fileContent);
-            }
-        }
-    });
-
-    function createFile(fileName, content = "") {
-        var blob = new Blob([content], { type: "text/plain" });
-        var link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        link.click();
-    }
-
-
 
 </script>
 	<%@ include file="sparc-footer.jsp"%>
