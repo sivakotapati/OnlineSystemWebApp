@@ -19,10 +19,60 @@
     }
     
   </script>
+  <style>
+        /* Styles for lesson navigation */
+        .lesson-nav {
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }
+
+        .slide-btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #337ab7; /* Bootstrap primary color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slide-btn:hover {
+            background-color: #286090; /* Darker shade of primary color */
+        }
+
+        /* Styles for lesson slides */
+        .lesson-slides {
+            float: left;
+            width: 80%; /* Adjust width as needed */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .lesson-slides section {
+            display: none;
+        }
+
+        /* Show the first slide initially */
+        .lesson-slides section:first-child {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
     <script type="text/javascript"> 
+    $(document).ready(function() {
+        // Add event listener for slide buttons
+        $('.slide-btn').click(function() {
+            var slideId = $(this).data('slide-id');
+            $('.lesson-slides section').hide(); // Hide all slides
+            $('#' + slideId).show(); // Show the clicked slide
+        });
+    });
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -41,7 +91,27 @@
     });    
     </script>
 	<%@ include file = "header1.jsp" %>
-    <section id="version-1-course-x-lesson-1-page-1" class="container" hidden>
+	<div class="lesson-nav">
+            <!-- Include navigation content -->
+            <!-- You can implement navigation buttons here -->
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-1">Slide 1</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-2">Slide 2</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-3">Slide 3</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-4">Slide 4</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-5">Slide 5</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-6">Slide 6</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-7">Slide 7</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-8">Slide 8</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-9">Slide 9</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-10">Slide 10</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-11">Slide 11</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-1-page-12">Slide 12</button>
+            <!-- Include other slide buttons similarly -->
+        </div>
+        <div class="lesson-slides">
+            <!-- Include lesson slides content -->
+            <!-- This is where the lesson slides will be displayed -->
+            <section id="version-1-course-x-lesson-1-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
             <h1 style="text-align:center"><b>Modeling Methodology</b></h1> 
@@ -49,14 +119,11 @@
             <div class="text-center">
         		<p>Page 1 of 12</p>
     		</div>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-1', false, -1)"> Next </a>
+            
             </div>
         </div>
     </section>
-
-
-	    <section id="version-1-course-x-lesson-1-page-2" class="container" hidden>
+    <section id="version-1-course-x-lesson-1-page-2" class="container" hidden>
 	    <div class="row">
 	        <div class="col-md-6 content" style="margin-left:35rem">
 	            <h1 class="text-primary" style="text-align:center"> Modeling Methodology </h1>
@@ -76,12 +143,7 @@
 	            <div class="text-center">
         				<p>Page 2 of 12</p>
     			</div>
-	            <a class="btn btn-primary pull-left"
-	                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-2', false, -1)">Previous
-	            </a>
-	            <a class="btn btn-primary pull-right"
-	                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-2', false, -1)">Next 
-	            </a>
+	            
 	        </div>
 	    </div>
 	</section>
@@ -98,12 +160,7 @@
             <div class="text-center">
 		        <p>Page 3 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-3', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-3', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -138,12 +195,7 @@ father(john, peter).
             <div class="text-center">
 		        <p>Page 4 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-4', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-4', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -186,12 +238,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 5 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-5', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-5', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -235,12 +282,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 6 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-6', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-6', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -267,12 +309,7 @@ father(bob, sarah)
             <div class="text-center">
 			        <p>Page 7 of 12</p>
 			    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-7', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-7', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -307,12 +344,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 8 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-8', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-8', false, -1)"> Next 
-            </a>
+           
         </div>
     </div>
 </section>
@@ -332,12 +364,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 9 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-9', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-9', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -358,12 +385,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 10 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-10', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-10', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -394,12 +416,7 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 11 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-11', false, -1)"> Previous
-            </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(1, 0, 'version-1-course-x-lesson-1-page-11', false, -1)"> Next 
-            </a>
+            
         </div>
     </div>
 </section>
@@ -424,15 +441,20 @@ father(bob, sarah)
             <div class="text-center">
 		        <p>Page 12 of 12</p>
 		    </div>
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(1, 0, 'version-1-course-x-lesson-1-page-12', false, -1)"> Previous
-            </a>
+            
            
-                <a class="btn btn-primary pull-right" href="../jsp/lesson2.jsp" onclick="reInitiateFreshPage()">Next</a>
+                <a class="btn btn-primary pull-right" href="../jsp/lesson2.jsp" onclick="reInitiateFreshPage()">Next Lesson</a>
                             </div>
         
     </div>
 </section>
+            
+            
+            <!-- Include other slides similarly -->
+        </div>
+    
+
+	   
   
 <!-- onlineSPARC -->
 <!-- skipped 23,24,25 pages -->

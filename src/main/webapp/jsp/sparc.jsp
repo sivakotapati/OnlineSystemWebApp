@@ -296,6 +296,40 @@
 	</div>
 
 <script type="text/javascript">	
+//Function to create and download a new file
+function createFile(fileName, content = "") {
+    var blob = new Blob([content], { type: "text/plain" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+}
+
+// Function to create a new folder (which is represented as an empty file)
+function createFolder(folderName) {
+    var fileName = folderName + "_folder";
+    createFile(fileName);
+}
+
+// Event listener for the "New Folder" button
+document.getElementById("newFolder").addEventListener("click", function() {
+    var folderName = prompt("Enter folder name:");
+    if (folderName !== null) {
+        createFolder(folderName);
+    }
+});
+
+// Event listener for the "New File" button
+document.getElementById("newFile").addEventListener("click", function() {
+    var fileName = prompt("Enter file name:");
+    if (fileName !== null) {
+        var fileContent = prompt("Enter file content:");
+        if (fileContent !== null) {
+            createFile(fileName, fileContent);
+        }
+    }
+});
+
 window.addEventListener('popstate', function (event) {
  // Redirect to your desired JSP file
  window.location.href = 'lesson.jsp';
