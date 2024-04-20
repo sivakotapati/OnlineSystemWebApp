@@ -123,125 +123,56 @@
 </section>
 </body>
 <script type="text/javascript">
-	    var form=document.getElementById('form');
-	    form.addEventListener('submit', function(e){
-	    	e.preventDefault()
-		 	var firstname=document.getElementById('firstname').value;
-	        var lastname=document.getElementById('lastname').value;
-	        var roles='';
-			/* var roles=document.getElementById('role').value; */
-	        var username=document.getElementById('username').value;
-	
-	        var email=document.getElementById('email').value;
-	        /* var courseId=document.getElementById('course').value; */
-	        if (document.getElementById('student').checked){
-	        	roles+='Student';
-	        }
-	        if (roles=='Student'){
-		    	   var isactive=true;
-		    	   }
-	        if (document.getElementById('teacher').checked){
-	        	roles+=',Teacher';
-	        }
-	        if (document.getElementById('courseDeveloper').checked){
-	        	roles+=',Course Developer';
-	        }
-	        var pwdObj = document.getElementById('password').value;	       	
-	       	
-	       /*--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-	        hashObj.update(pwdObj.value);
-	        var hash = hashObj.getHash("HEX");
-	        pwdObj.value = hash;
-	        console.log(pwdObj)-- */
-	
-	      /*--  var role=[];
-	        for(var i=0;i<roles.length;i++){
-	        	role.push({roles[i]})
-	        }-- */
-	        
-	
-	     /*   var isStudent=false;
-	
-	        if(role=="Student"){
-	
-	            isStudent=true;
-	
-	        }
-	
-	        console.log(isStudent)--
-	        */
-	
-	        console.log([roles]);
-	        //fetch post request
-			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
-             const signUpAPI = dotnet_endpoint+"api/User/Register";
-	        fetch(signUpAPI,{
-	            method:'POST',
-	            body: JSON.stringify({
-	            	"userName":username,
-	                "emailId":email,
-					"firstName":firstname,
-					"lastName":lastname,
-	                "password":pwdObj,
-	                "roles":roles
-	            }),
-		        headers:{
-		            "Content-Type":"application/json"
-		        }
-	        }).then(function(response){
-	            var resp=response.json();
-	       		if(response.status==200){
-	       			//US-13
-	       			resp.then((data)=>{       			 
-	       			 var userid = parseInt(data.content);
-	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
-	       			 var createRootFolderApi = new URL(createRootFolderAPI);
-	       			 var body = {
-	       					 		userId :userid
-	       					 	} 
-	       					 			
-	       			 //createRootFolderApi.search = new URLSearchParams(params).toString();
-					 console.log(createRootFolderApi);
-	       			 fetch(createRootFolderApi,{
-	       				 method:'POST',
-	       				 body: JSON.stringify(body),
-	       				headers: {
-	       				    'Content-type': 'application/json; charset=UTF-8',
-	       				  }
-	       			 }).then(function(response){
-	       				if(response.status==200){
-	       					console.log(data)
-	       					fetch(dotnet_endpoint+"api/User/"+userid,{
-	       						method: 'GET',
-	       						headers: {
-	    	       				    'Content-type': 'application/json; charset=UTF-8',
-	    	       				  }
-	       					}).then(function(response)
-	       							{
-	       						if(response.status==200){
-	       							console.log(data)
-	       							location.href="login.html"
-	       						}
-	       							}
-	       							)
-							
-	       				}
-	       			 });	       			
-	       			});
-	           	}
-	            else{
-	                if(response.status==400){
-	                	resp.then((data)=>{
-	                		alert(data.message)
-	                        location.href="register.html"
-	                    })
-	                }
-	            }   
-	            return response.json();
-	        }).then(function(data){
-	            console.log(data);
-	        })
-	    })
-	</script>
+    var form = document.getElementById('form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var firstname = document.getElementById('firstname').value;
+        var lastname = document.getElementById('lastname').value;
+        var roles = '';
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+
+        if (document.getElementById('student').checked) {
+            roles += 'Student';
+        }
+        if (document.getElementById('teacher').checked) {
+            roles += roles ? ',Teacher' : 'Teacher';
+        }
+        if (document.getElementById('courseDeveloper').checked) {
+            roles += roles ? ',Course Developer' : 'Course Developer';
+        }
+        var pwdObj = document.getElementById('password').value;
+
+        const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+        const signUpAPI = dotnet_endpoint + "api/User/Register";
+
+        fetch(signUpAPI, {
+            method: 'POST',
+            body: JSON.stringify({
+                "userName": username,
+                "emailId": email,
+                "firstName": firstname,
+                "lastName": lastname,
+                "password": pwdObj,
+                "roles": roles
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function(response) {
+            return response.json().then((data) => {
+                if (response.status == 200) {
+                    alert('Success: ' + data.message);
+                    location.href = "login.html";
+                } else if (response.status == 400) {
+                    alert('Error: ' + data.message); 
+                } else {
+                    alert('Registration failed: ' + data.message);
+                }
+            });
+        });
+    })
+</script>
 
 </html>
