@@ -178,11 +178,10 @@
 	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
+	            	"userName":username,
+	                "emailId":email,
 					"firstName":firstname,
 					"lastName":lastname,
-	                "userName":username,
-	                "emailId":email,
-					/* "isactive":isactive, */
 	                "password":pwdObj,
 	                "roles":roles
 	            }),
@@ -199,7 +198,7 @@
 	       			 var createRootFolderApi = new URL(createRootFolderAPI);
 	       			 var body = {
 	       					 		userId :userid
-	       					 	} // or:
+	       					 	} 
 	       					 			
 	       			 //createRootFolderApi.search = new URLSearchParams(params).toString();
 					 console.log(createRootFolderApi);
@@ -212,7 +211,7 @@
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)
-	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
+	       					fetch(dotnet_endpoint+"api/User/"+userid,{
 	       						method: 'GET',
 	       						headers: {
 	    	       				    'Content-type': 'application/json; charset=UTF-8',
@@ -221,7 +220,7 @@
 	       							{
 	       						if(response.status==200){
 	       							console.log(data)
-	       							location.href="login.jsp"
+	       							location.href="login.html"
 	       						}
 	       							}
 	       							)
@@ -234,7 +233,7 @@
 	                if(response.status==400){
 	                	resp.then((data)=>{
 	                		alert(data.message)
-	                        location.href="register.jsp"
+	                        location.href="register.html"
 	                    })
 	                }
 	            }   
