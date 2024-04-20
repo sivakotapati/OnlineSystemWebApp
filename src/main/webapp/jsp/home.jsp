@@ -43,7 +43,7 @@
 							alt="lessons" style="width: 100%">
 						<div class="card-body">
 							<p class="card-text">Click below to view lessons</p>
-							<a href="lessonslist.html" class="btn btn-primary">Lessons</a>
+							<a href="lesson.jsp" class="btn btn-primary">Lessons</a>
 						</div>
 					</form>
 				</div>
