@@ -496,11 +496,15 @@ atomicNumber(E, N) means the atomic number of element E is N.
                     <li>We have reviewed the unknown variables and studied the methodology for using unknown variables and queries to answer questions.
                     </li>                    
                                          </ul>
-                <div class="d-flex justify-content-between">
+                <!-- <div class="d-flex justify-content-between">
                                 <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-10', false, -1)">Previous</button>
     
                                 <a class="btn btn-primary" href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Next</a>
-                            </div>
+                            </div> -->
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(11, 0, 'version-1-course-x-lesson-11-page-10', false, -1)">Previous</button>
+<!--                                 <button class="btn btn-primary" onclick="gotoNext(18, 0, 'version-1-course-x-lesson-18-page-1', false, -1)">Next</button>
+ -->                            </div>
             </div>
         </div>
     </section>

@@ -332,7 +332,7 @@ document.getElementById("newFile").addEventListener("click", function() {
 
 window.addEventListener('popstate', function (event) {
  // Redirect to your desired JSP file
- window.location.href = 'lesson.jsp';
+ window.location.href = 'lessonslist.html';
 
 });
 	let currentLearningOutcomeNumber = sessionStorage.getItem(sessionKeyCurrentLearningOutcomeNumber);
@@ -366,7 +366,7 @@ window.addEventListener('popstate', function (event) {
 	}	
 	
 	function redirectToLessonPage() {
- 		window.location.href = 'lesson.jsp';
+ 		window.location.href = 'lessonslist.html';
 	}
 	
 	function execute(){
