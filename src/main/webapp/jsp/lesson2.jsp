@@ -71,12 +71,29 @@
 }
    
 }   
+.slide-buttons{
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }
+
     </style>
 
 </head>
 
 <body>
     <script type="text/javascript"> 
+    function gotoPage(pageId) {
+        // Hide all pages
+        var allPages = document.querySelectorAll('.pages section');
+        allPages.forEach(function(page) {
+            page.hidden = true;
+        });
+
+        // Show the selected page
+        var selectedPage = document.getElementById(pageId);
+        selectedPage.hidden = false;
+    }
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -96,7 +113,28 @@
     </script>
     <%@ include file = "authRoutes.jsp" %>
 	<%@ include file = "header1.jsp" %>
-    <section id="version-1-course-x-lesson-2-page-1" hidden>
+	<div class="slide-buttons">
+        <!-- Slide buttons here -->
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-1')">Slide 1</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-2')">Slide 2</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-2.1')">Slide 3</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-3')">Slide 4</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-4')">Slide 5</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-5')">Slide 6</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-5.1')">Slide 7</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-6')">Slide 8</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-10')">Slide 9</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-11')">Slide 10</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-15')">Slide 11</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-16')">Slide 12</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-20')">Slide 13</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-21')">Slide 14</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-2-page-22')">Slide 15</button></br></br>
+        <!-- Add more slide buttons as needed -->
+    </div>
+	    <div class="col-md-9 pages">
+        <!-- Pages content here -->
+        <section id="version-1-course-x-lesson-2-page-1" hidden>
         <div class="row">
             <div class="container" >
             <h2 style="text-align:center">  Lesson 2:  </h2> <br>
@@ -104,12 +142,11 @@
             <div class="text-center">
         		<p>Page 1 of 15</p>
     		</div>
-            <button class="btn btn-primary btn-lg mx-auto" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)" style="display:flex; margin-top:50px;"> <p style="width:100%; text-align:center;margin:0">Next </p> </button>
+            <!--<button class="btn btn-primary btn-lg mx-auto" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-1', false, -1)" style="display:flex; margin-top:50px;"> <p style="width:100%; text-align:center;margin:0">Next </p> </button>-->
             </div>
         </div>
     </section>
-
-<section id="version-1-course-x-lesson-2-page-2" hidden>
+        <section id="version-1-course-x-lesson-2-page-2" hidden>
         <div class="row">
             <div class="container" >
                 <h1 class="text-primary" style="text-align:center"> Recall the family </h1>
@@ -140,14 +177,14 @@
         			<p>Page 2 of 15</p>
     			</div>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-2', false, -1)">Next</button>-->
     			</div>
     			
             </div>
         </div>
     </section>
-     <section id="version-1-course-x-lesson-2-page-2.1" hidden>
+         <section id="version-1-course-x-lesson-2-page-2.1" hidden>
     <div class="row ">
         <div class="container" >
             <h1 class="text-primary"> Representing Knowledge </h1>
@@ -170,16 +207,15 @@
           		<div class="text-center">
 	        		<p>Page 3 of 15</p>
 	    		</div>
-           		<div class="d-flex justify-content-between">
+           		<!-- <div class="d-flex justify-content-between">
         			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-2.1', false, -1)">Previous</button>
         			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-2.1', false, -1)">Next</button>
-    			</div>
+    			</div>-->
     			
         </div>
     </div>
 </section>
-
-    <section id="version-1-course-x-lesson-2-page-3" hidden>
+<section id="version-1-course-x-lesson-2-page-3" hidden>
         <div class="row">
             <div class="container" >
             <h2 class="text-primary"> Extend Our Model for Parent of Peter -- 1</h2>
@@ -207,14 +243,14 @@
 	        		<p>Page 4 of 15</p>
 	    		</div>
                	<div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-3', false, -1)">Previous</button>
-        			<button class="btn btn-primary"  id="iNextBtn"onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-3', true, 1)" >Next</button>
+        			<!-- <button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-3', false, -1)">Previous</button>-->
+        			<button class="btn btn-primary"  id="iNextBtn"onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-3', true, 1)" >Sparc Assisment</button>
     			</div> 
     			
             </div>
         </div>
     </section>
-
+      
     <section id="version-1-course-x-lesson-2-page-4" hidden>
         <div class="row">
             <div class="container" >
@@ -236,14 +272,13 @@
 	        		<p>Page 5 of 15</p>
 	    		</div>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-4', false, -1)">Next</button>-->
     			</div> 
     			
             </div>
         </div>
-    </section>
-
+    </section>  
     <section id="version-1-course-x-lesson-2-page-5" hidden>
         <div class="row">
             <div class="container" >
@@ -267,18 +302,14 @@
 	        		<p>Page 6 of 15</p>
 	    		</div>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5', false, -1)">Next</button>-->
     			</div> 
     			
             </div>
         </div>
     </section>
-  
-   
-
-    
-     <section id="version-1-course-x-lesson-2-page-5.1" hidden>
+         <section id="version-1-course-x-lesson-2-page-5.1" hidden>
         <div class="row">
             <div class="container" >
                 <h1 class="text-primary"> Logic Programming Basic </h1>
@@ -315,16 +346,14 @@
 	        		<p>Page 7 of 15</p>
 	    		</div>	
                <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5.1', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5.1', true, 1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-5.1', false, -1)">Previous</button>-->
+        			<button class="btn btn-primary" onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-5.1', true, 1)">Sparc Assisment</button>
     			</div> 
     			 
             </div>
         </div>
     </section>
-
-
-    <section id="version-1-course-x-lesson-2-page-6" hidden>
+     <section id="version-1-course-x-lesson-2-page-6" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:20rem">
                 <h2 class="text-primary">Extent your model for the relation of mom</h2>
@@ -336,21 +365,16 @@
 		        		<p>Page 8 of 15</p>
 		    		</div>
                     <br>
-                    <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>
+                    <!--<a class="btn btn-primary pull-left"
+                    onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-6', false, -1)"> Previous </a>-->
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-6', 'program0')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-6', 'program0')"> Program0 </a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    <!-- Online SPARC -->
-    <!-- skipped 7,8,9 pages -->
-
-
-    <!-- learning outcome 1 -->
-    <section id="version-1-course-x-lesson-2-page-10" hidden>
+        <section id="version-1-course-x-lesson-2-page-10" hidden>
         <div class="row">
             <div class="container" >
             <h2 class="text-primary"> Learning outcome 1: Extend the Model for Parent relation</h2>
@@ -359,8 +383,8 @@
         		<p>Page 9 of 15</p>
     		</div>
             	<div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 1, 'version-1-course-x-lesson-2-page-10', false, -1)">Next</button>-->
     			</div> 
     			
             </div>
@@ -380,10 +404,10 @@
 	        		<p>Page 10 of 15</p>
 	    		</div>
                 <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(2, 1, 'version-1-course-x-lesson-2-page-11', false, -1)"> Previous </a>-->
                  <div class="text-center">
-	                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-11', 'program1')"> Submit</a>
+	                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-11', 'program1')"> Program1</a>
 	            </div>
            
             </form>
@@ -418,14 +442,13 @@
 	        		<p>Page 11 of 15</p>
 	    		</div>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 2, 'version-1-course-x-lesson-2-page-15', false, -1)">Next</button>-->
     			</div> 
     			
             </div>
         </div>
     </section>
-                
     <section id="version-1-course-x-lesson-2-page-16" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -441,10 +464,10 @@
 	        		<p>Page 12 of 15</p>
 	    		</div>
                 <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(2, 2, 'version-1-course-x-lesson-2-page-16', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-16', 'program2')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-16', 'program2')"> Program2</a>
                 </div>
             </form>
             <br>
@@ -452,12 +475,7 @@
             </div>
         </div>
     </section>
-    <!-- onlineSPARC -->
-    <!-- skipped 17,18,19 pages -->
-
-
-    <!-- learning outcome 3 -->
-        <section id="version-1-course-x-lesson-2-page-20" hidden>
+           <section id="version-1-course-x-lesson-2-page-20" hidden>
             <div class="row">
                 <div class="container" >
         <h2 class="text-primary">Learning outcome 3: Extending the model for new family </h2>
@@ -484,12 +502,81 @@
 	        		<p>Page 13 of 15</p>
 	    		</div>
        			<div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Next</button>
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" onclick="gotoNext(2, 3, 'version-1-course-x-lesson-2-page-20', false, -1)">Next</button>-->
     			</div> 
     			
     </div></div>
 </section>
+<section id="version-1-course-x-lesson-2-page-21" hidden>
+    <div class="row">
+        <div class="container" >
+            <h2 class="text-primary">Learning outcome 3: Extending the model for new family </h2>
+        <ul class="lesson-list">
+            <li><b> Assume we have the following relations </b> </li>
+            <ul class="sub-points">
+                <li> mother(X, Y)means person X is the mother of Y </li>
+                <li> mom(X, Y)means person X is the mom of Y </li> 
+            </ul>
+        </ul>
+         <ul class="lesson-list">
+        <li> <b>Write the Mom relation between joaan and Peter? </b></li>
+        <div id="motherrelation" class="form-group">
+					  <input id="fBox" type="text" class="form-control" required></div>
+					<div id="cAnswer"></div>
+	    </ul>
+        		<div class="text-center">
+	        		<p>Page 14 of 15</p>
+	    		</div>
+        		<div class="d-flex justify-content-between">
+        			<!--<button class="btn btn-primary" onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-21', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-primary" id="fNextBtn" onclick="gotoNext(2, 3, 'version-1-course-x-lesson-2-page-21', false, -1)" disabled>Next</button>-->
+    			</div> 
+    			
+    </div></div>
+</section>
+
+<section id="version-1-course-x-lesson-2-page-22" hidden>
+    <div class="row">
+        <div class="col-md-6 content" style="margin-left:20rem">
+        <h3> Extend Family Model for mother relation: </h3>
+        <br>
+        <h4> Extend your Model for the relation of mother: </h4>
+        <br>
+        <form action="">
+            <label for="ques1"> Representing knowledge as comment and fact </label>
+            <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
+            <br>
+            <div class="text-center">
+        		<p>Page 15 of 15</p>
+    		</div>
+            <br>
+            <!--<a class="btn btn-primary pull-left"
+            onclick="gotoPrevious(2, 3, 'version-1-course-x-lesson-2-page-22', false, -1)"> Previous </a>-->
+            <div class="text-center">
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-2-page-22', 'program3')"> Program3</a>
+            </div>
+        </form>
+        <br>
+        
+    </div></div>
+</section>
+        <!-- Add more sections for additional slides -->
+    </div>
+	
+    <!-- Online SPARC -->
+    <!-- skipped 7,8,9 pages -->
+
+
+ 
+                
+
+    <!-- onlineSPARC -->
+    <!-- skipped 17,18,19 pages -->
+
+
+    <!-- learning outcome 3 -->
+       
 
 <section id="version-1-course-x-lesson-2-page-21" hidden>
     <div class="row">

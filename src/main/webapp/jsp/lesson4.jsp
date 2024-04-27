@@ -67,6 +67,11 @@
 	        }
    
           }
+          .slide-buttons{
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }
 </style>
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../js/lessonDataStructureJSON.js"></script>
@@ -75,6 +80,17 @@
 
 <body>
     <script type="text/javascript"> 
+    function gotoPage(pageId) {
+        // Hide all pages
+        var allPages = document.querySelectorAll('.pages section');
+        allPages.forEach(function(page) {
+            page.hidden = true;
+        });
+
+        // Show the selected page
+        var selectedPage = document.getElementById(pageId);
+        selectedPage.hidden = false;
+    }
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -94,17 +110,36 @@
     </script>
     <%@ include file = "authRoutes.jsp" %>
 	<%@ include file = "header1.jsp" %>
+	<div class="slide-buttons">
+        <!-- Slide buttons here -->
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-1')">Slide 1</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-2')">Slide 2</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-3')">Slide 3</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-4')">Slide 4</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-5')">Slide 5</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-6')">Slide 6</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-10')">Slide 7</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-11')">Slide 8</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-15')">Slide 9</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-16')">Slide 10</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-20')">Slide 11</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-21')">Slide 12</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4-page-22')">Slide 13</button></br></br>
+
+        <!-- Add more slide buttons as needed -->
+    </div>
+    <div class="col-md-9 pages">
     <section id="version-1-course-x-lesson-4-page-1" hidden>
         <div class="row">
             <div class="container">
             <h1 style="text-align:center">  Lesson 4:  Modeling Dad using Variables and Rules</h1> <br>
             <div class="d-flex pull-right">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-1', false, -1)">Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-1', false, -1)">Next</button>-->
         	</div>
         </div>
+        </div>
     </section>
-
     <section id="version-1-course-x-lesson-4-page-2" hidden>
         <div class="row">
             <div class="container">
@@ -124,13 +159,12 @@
                         </ul>
              </ul>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)">Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)">Previous</button>-->
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-2', false, -1)">Next</button>-->
     			</div>
             </div>
         </div>
     </section>
-
     <section id="version-1-course-x-lesson-4-page-3" hidden>
         <div class="row">
             <div class="container">   
@@ -153,13 +187,12 @@
 		            </ul>
 		        <br>
 		         <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" id="nextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-3', true, 1)" disabled>Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-3', false, -1)">Previous</button>-->
+        			<button class="btn btn-lg btn-primary" id="nextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-3', true, 1)" >Next</button>
     			</div>
             </div>
         </div>
     </section>
-
     <section id="version-1-course-x-lesson-4-page-4" hidden>
         <div class="row">
             <div class="container">
@@ -173,7 +206,7 @@
                 </ul>
                 <br>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-4', false, -1)">Previous</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-4', false, -1)">Previous</button>-->
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-4', true, 1)">Next</button>
     			</div>
             </div>
@@ -197,7 +230,7 @@
                 <br>
                 
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-5', false, -1)">Previous</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-5', false, -1)">Previous</button>-->
         			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 0, 'version-1-course-x-lesson-4-page-5', true, 1)">Next</button>
     			</div>
             </div>
@@ -215,20 +248,15 @@
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
-                    <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-6', false, -1)"> Previous </a>
+                    <!--<a class="btn btn-primary pull-left"
+                    onclick="gotoPrevious(4, 0, 'version-1-course-x-lesson-4-page-6', false, -1)"> Previous </a>-->
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-6', 'program0')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-6', 'program0')"> Program0 </a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    <!-- Online SPARC -->
-    <!-- skipped 7,8,9 pages -->
-
-
-    <!-- learning outcome 1 -->
     <section id="version-1-course-x-lesson-4-page-10" hidden>
         <div class="row">
             <div class="container">
@@ -243,8 +271,8 @@
 			  </div>
 			</ul>
                 <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" id="yBoxNextButton" disabled style="background-color:#1b84f5" onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Previous</button>
+        			<button class="btn btn-lg btn-primary" id="yBoxNextButton" disabled style="background-color:#1b84f5" onclick="gotoNext(4, 1, 'version-1-course-x-lesson-4-page-10', false, -1)">Next</button>-->
     			</div>
             </div>
         </div>  
@@ -262,21 +290,16 @@
                     <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-11', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(4, 1, 'version-1-course-x-lesson-4-page-11', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-11', 'program1')"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-11', 'program1')"> Program1</a>
             </div>
            
             </form>
           </div>
         </div>  
     </section>
-    <!-- onlineSPARC -->
-    <!-- skipped 12,13,14 pages -->
-
-
-    <!-- learning outcome 2 -->
     <section id="version-1-course-x-lesson-4-page-15" hidden>
         <div class="row">
             <div class="container">
@@ -300,8 +323,8 @@
 				</ul>
 				
 				<div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" disabled id="iBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Previous</button>
+        			<button class="btn btn-lg btn-primary" disabled id="iBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 2, 'version-1-course-x-lesson-4-page-15', false, -1)">Next</button>-->
     			</div>
             </div>
         </div>
@@ -319,10 +342,10 @@
                 <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-16', false, -1)"> Previous </a>
+               <!-- <a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(4, 2, 'version-1-course-x-lesson-4-page-16', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-16', 'program2')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-16', 'program2')"> Program2</a>
                 </div>
             </form>
             <br>
@@ -330,12 +353,7 @@
             </div>
         </div>
     </section>
-    <!-- onlineSPARC -->
-    <!-- skipped 17,18,19 pages -->
-
-
-    <!-- learning outcome 3 -->
-        <section id="version-1-course-x-lesson-4-page-20" hidden>
+    <section id="version-1-course-x-lesson-4-page-20" hidden>
             <div class="row">
                 <div class="container" >
         <h2 class="text-primary" style="text-align:center;">Learning outcome 3: Extending the model for father relation</h2>
@@ -355,8 +373,8 @@
 					</ul>
         
         	    <div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary"  style="background-color:#1b84f5" onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" id="exBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)" disabled>Next</button>
+        			<!--<button class="btn btn-lg btn-primary"  style="background-color:#1b84f5" onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)">Previous</button>
+        			<button class="btn btn-lg btn-primary" id="exBoxNextButton" style="background-color:#1b84f5" onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-20', false, -1)" disabled>Next</button>-->
     			</div>
     </div>
     </div>
@@ -392,8 +410,8 @@
 				<br>
 				
 				<div class="d-flex justify-content-between">
-        			<button class="btn btn-lg btn-primary"  style="background-color:#1b84f5" onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)">Previous</button>
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)" disabled>Next</button>
+        			<!--<button class="btn btn-lg btn-primary"  style="background-color:#1b84f5" onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)">Previous</button>
+        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5" onclick="gotoNext(4, 3, 'version-1-course-x-lesson-4-page-21', false, -1)" disabled>Next</button>-->
     			</div>
     			
 			</div>
@@ -412,13 +430,39 @@
                 <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-22', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(4, 3, 'version-1-course-x-lesson-4-page-22', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-22', 'program3')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-4-page-22', 'program3')"> Program3</a>
         
     </div></div>
 </section>
+    </div>
+    
+
+    
+
+    
+
+    
+    <!-- Online SPARC -->
+    <!-- skipped 7,8,9 pages -->
+
+
+    <!-- learning outcome 1 -->
+    
+    <!-- onlineSPARC -->
+    <!-- skipped 12,13,14 pages -->
+
+
+    <!-- learning outcome 2 -->
+    
+    <!-- onlineSPARC -->
+    <!-- skipped 17,18,19 pages -->
+
+
+    <!-- learning outcome 3 -->
+        
 
         
 <!-- onlineSPARC -->

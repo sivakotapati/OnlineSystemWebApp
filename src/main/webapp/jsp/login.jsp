@@ -36,7 +36,7 @@
  	    <br>
 	    <br>
             <input type="submit"  value="Login" >  <br>
-            <a href="forgotPassword.jsp">Forgot Password?</a><br>
+            <a href="logicOTP.html">Forgot Password?</a><br>
             <a href="register.jsp">Create New Account</a>  <br>
           </form>
           <br>
