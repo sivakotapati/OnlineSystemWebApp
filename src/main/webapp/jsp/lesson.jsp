@@ -52,7 +52,7 @@ a.disabled {
 <p></p>
 <li><a href="../jsp/lesson12.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 12!</a></li>
 <p></p>
-<li><a href="../jsp/lesson18.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 18!</a></li>
+<li><a href="../jsp/lesson18.jsp" onclick="reInitiateFreshPage()">Click here to View Lesson 13!</a></li>
 </ul>
 
 <!-- <ul id="lessonList"></ul> -->
