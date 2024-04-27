@@ -7,6 +7,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file ="authRoutes.jsp" %>
 <%@ include file = "header.jsp" %>
 </head>
 <body>

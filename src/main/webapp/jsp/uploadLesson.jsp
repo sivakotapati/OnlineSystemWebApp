@@ -16,6 +16,7 @@
 </script>
 <meta charset="UTF-8">
 <title id="title"></title>
+<%@ include file = "authRoutes.jsp" %>
 <%@ include file = "header.jsp" %>
 </head>
 <body>

@@ -12,6 +12,7 @@
       <script type="text/javascript" src="../static/global.js"></script>
    </head>
    <body>
+   	  <%@ include file = "unAuthRoutes.jsp" %>
       <%@ include file="headerlog.jsp"%>
       <div class="container">
          <div class="regbox box">
@@ -127,7 +128,7 @@
 					"isStudent":isactive,
 	                "password":pwdObj,
 	            }),
-		        headers:{key
+		        headers:{
 		            "Content-Type":"application/json"
 		        }
 	        }).then(function(response){

@@ -16,6 +16,7 @@
 </script>
 <meta charset="UTF-8">
 <title>Logic DS Lessons</title>
+<%@ include file = "authRoutes.jsp" %>
 <%@ include file="header.jsp"%>
 <style>
 a.disabled {

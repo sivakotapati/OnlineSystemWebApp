@@ -8,6 +8,7 @@
 <!-- -->
 <meta charset="UTF-8">
 <title>Home</title>
+<%@ include file = "authRoutes.jsp" %>
 <%@ include file = "header.jsp" %>
 <style>
     .card {

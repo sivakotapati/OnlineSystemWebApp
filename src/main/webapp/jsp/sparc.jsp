@@ -150,6 +150,7 @@
 </style>
 </head>
 <body>
+	<%@ include file = "authRoutes.jsp" %>
 	<div id="wrapper" class="toggled">
 		<div id="sidebar-wrapper">
 			<div class="easy-tree" id="directory">

@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <!-- Include header file -->
+    <%@ include file ="authRoutes.jsp" %>
     <%@ include file = "header.jsp" %>
     <!-- Custom CSS -->
     <style>

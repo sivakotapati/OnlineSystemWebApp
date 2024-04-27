@@ -12,6 +12,7 @@ pageEncoding="ISO-8859-1"%>
 
 </head>
 <body>
+<jsp:include page ="authRoutes.jsp" />
 <jsp:include page="header.jsp"/>
 
 

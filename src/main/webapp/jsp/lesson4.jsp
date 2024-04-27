@@ -92,6 +92,7 @@
   		}           
     });    
     </script>
+    <%@ include file = "authRoutes.jsp" %>
 	<%@ include file = "header1.jsp" %>
     <section id="version-1-course-x-lesson-4-page-1" hidden>
         <div class="row">

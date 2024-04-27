@@ -16,6 +16,7 @@
 </head>
 
 <body>
+	<%@ include file = "authRoutes.jsp" %>
     <%@ include file = "header.jsp" %>
 
     <section id="nextbutton" class="container">

@@ -53,7 +53,7 @@
         document.getElementById(pageId).hidden = false;
     }
 </script>
-
+	<%@ include file = "authRoutes.jsp" %>
 	<%@ include file="header.jsp"%>
 
 	<section id="version-1-course-lds-lesson-4-page-1" class="container"

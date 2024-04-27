@@ -13,6 +13,7 @@
   </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file ="authRoutes.jsp" %>
 <%@ include file = "header.jsp" %>
 <style>
 a.disabled {

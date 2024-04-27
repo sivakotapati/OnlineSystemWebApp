@@ -21,6 +21,7 @@
 <title>Student Details</title>
 </head>
 <body>
+<jsp:include page="authRoutes.jsp"/>
 <jsp:include page="header.jsp"/>
 <div id="student-progress-table" style="width:80%;margin:2% 10%;">
 </div>

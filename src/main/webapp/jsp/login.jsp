@@ -14,6 +14,7 @@
     <link href="../styles/style.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
+  	<%@ include file = "unAuthRoutes.jsp" %>
     <%@ include file = "headerlog.jsp" %>
     <h2>Online LPK12</h2>
     <div class="row" style="margin-top:10rem">
@@ -82,12 +83,12 @@
             	console.log(data)
                 sessionStorage.setItem("username",data.content.username)
                 sessionStorage.setItem("userId",data.content.id)
-		sessionStorage.setItem("token",data.content.accessToken)
+				sessionStorage.setItem("token",data.content.accessToken)
                 console.log(sessionStorage.getItem("userId"))	
                 console.log(data.roles)
               	if(data.content.roles=="Teacher"){
-		  sessionStorage.setItem("userRole","Teacher")
-              	  location.href='hometeacher.jsp'
+		  			sessionStorage.setItem("userRole","Teacher")
+              	  	location.href='hometeacher.jsp'
               	}
               	else if(data.content.roles=='Student'){
               		console.log(data.roles)

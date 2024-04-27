@@ -18,12 +18,12 @@
 			
 			} */
 			window.onload = function() {
-			    let usernameEle = document.getElementById("userName");
-			    let usernameSpan = document.getElementById("userNameSpan");
+			    //let usernameEle = document.getElementById("userName");
+			    //let usernameSpan = document.getElementById("userNameSpan");
 			    let username = sessionStorage.getItem("username");
 
-			    usernameEle.innerHTML = username;
-			    usernameSpan.innerHTML = username;
+			    //usernameEle.innerHTML = username;
+			    //usernameSpan.innerHTML = username;
 
 			    let homepagelink = document.getElementById("homepagelink");
 			    homepagelink.href = sessionStorage.getItem("userRole") == "Teacher" ? "hometeacher.jsp" : 
