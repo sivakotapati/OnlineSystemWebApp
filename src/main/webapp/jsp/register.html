@@ -132,6 +132,24 @@
         var roles = '';
         var username = document.getElementById('username').value;
         var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var repeatPassword = document.getElementById('repeatpassword').value;
+        
+        
+        // Password validation regular expression
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
+
+        // Check if password meets the criteria
+        if (!passwordRegex.test(password)) {
+            alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
+            return;
+        }
+
+        // Check if passwords match
+        if (password !== repeatPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
 
         if (document.getElementById('student').checked) {
             roles += 'Student';
