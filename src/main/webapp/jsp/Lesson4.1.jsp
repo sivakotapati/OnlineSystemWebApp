@@ -74,6 +74,11 @@
 	        }
    
           }
+          .slide-buttons{
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }
     </style>
 
     <link rel="stylesheet" href="../styles/style.css">
@@ -82,6 +87,17 @@
 </head>
 <body>
     <script type="text/javascript"> 
+    function gotoPage(pageId) {
+        // Hide all pages
+        var allPages = document.querySelectorAll('.pages section');
+        allPages.forEach(function(page) {
+            page.hidden = true;
+        });
+
+        // Show the selected page
+        var selectedPage = document.getElementById(pageId);
+        selectedPage.hidden = false;
+    }
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -100,20 +116,37 @@
     });    
     </script>
 	<%@ include file = "header1.jsp" %>
-	 <section id="version-1-course-x-lesson-4.1-page-1" hidden>
+		<div class="slide-buttons">
+        <!-- Slide buttons here -->
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-1')">Slide 1</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-2')">Slide 2</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-3')">Slide 3</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-4')">Slide 4</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-5')">Slide 5</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-6')">Slide 6</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-7')">Slide 7</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-8')">Slide 8</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-9')">Slide 9</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-10')">Slide 10</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-11')">Slide 11</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-4.1-page-12')">Slide 12</button></br></br>
+
+        <!-- Add more slide buttons as needed -->  
+    </div>
+    <div class="col-md-9 pages">
+    <section id="version-1-course-x-lesson-4.1-page-1" hidden> 
         <div class="row">
             <div class="container">
             <h1 style="text-align:center">  Lesson 4.1:  Variables and Rules</h1> <br>
             <div class="d-flex pull-right">
-        			<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-1', false, -1)">Next</button>
+        			<!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-1', false, -1)">Next</button>--> 
         	</div>
             
             </div>
         </div>
     </section>
-    
-        <section id="version-1-course-x-lesson-4.1-page-2" hidden>
+    <section id="version-1-course-x-lesson-4.1-page-2" hidden>
         <div class="row">
             <div class="container">
             <h2 class="text-primary" style="text-align:center;">Recall The Family Example</h2>
@@ -133,10 +166,10 @@
                     <br>
                 
            <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
         			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-2', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-2', false, -1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-2', false, -1)">Next</button>--> 
         	</div> 
             </div>
         </div>
@@ -168,10 +201,10 @@
 		        </ul>
 		        <br>
 		        <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', true, 1)">Sparc Assisment</button>
         	</div> 
                 <!-- <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)"> Previous
@@ -199,10 +232,10 @@
 		        </ul>
 		        <br>
 		        <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', true, 1)">Sparc Assisment</button>
         	</div> 
         	
                 <!-- <a class="btn btn-primary pull-left"
@@ -236,10 +269,10 @@
 		        </ul>
 		        <br>
 		         <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', true, 1)">Sparc Assisment</button>
         	</div> 
             </div>
         </div>
@@ -290,10 +323,10 @@
 		        <br>
 		        
 		         <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', true, 1)">Sparc Assisment</button>
         	</div> 
         	
        
@@ -347,10 +380,10 @@
 		        <br>
 		        
 		   <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', true, 1)">Sparc Assisment</button>
         	</div> 
 		        
             </div>
@@ -377,10 +410,10 @@
                </ul>
 		        <br>
 		   <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', true, 1)">Sparc assisment</button>
         	</div> 
         	
             </div>
@@ -454,10 +487,10 @@
                
 		        <br>
 		        <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', true, 1)">Sparc assisment</button>
         	</div> 
         	
             </div>
@@ -492,10 +525,10 @@
                </ul>
 		        <br>
 		          <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', true, 1)">Sparc Assisment</button>
         	</div> 
                 
             </div>
@@ -515,10 +548,10 @@
                </ul>
 		        <br>
 		         <div class="d-flex justify-content-between">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', false, -1)">Previous</button>--> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', true, 1)">Next</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', true, 1)">Sparc Assisment</button>
         	</div> 
                 
          
@@ -550,8 +583,8 @@
                </ul>
 		        <br>
 		         <div class="d-flex pull-left">
-           <button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-12', false, -1)">Previous</button>
+           <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-12', false, -1)">Previous</button>--> 
         	
         	</div> 
                 <!-- <a class="btn btn-primary pull-left"
@@ -563,10 +596,7 @@
             </div>
         </div>
     </section>
-    
-
-
-
+    </div>
 <%@ include file = "footer1.jsp" %>
 <script src="../js/lesson4.1/validations.js" type="text/javascript">  </script>
 </body>

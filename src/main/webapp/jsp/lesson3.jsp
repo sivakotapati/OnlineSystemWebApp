@@ -16,7 +16,43 @@
     <script src="../js/script.js"></script>  
 <style>
         /* Applying colors and reducing margins for H1 and H2 */
-   
+   .lesson-nav {
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }
+
+        .slide-btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #337ab7; /* Bootstrap primary color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slide-btn:hover {
+            background-color: #286090; /* Darker shade of primary color */
+        }
+
+        /* Styles for lesson slides */
+        .lesson-slides {
+            float: left;
+            width: 80%; /* Adjust width as needed */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .lesson-slides section {
+            display: none;
+        }
+        .lesson-slides section:first-child {
+            display: block;
+        }
  
  
     </style>
@@ -25,6 +61,14 @@
 
 <body>
     <script type="text/javascript"> 
+    $(document).ready(function() {
+        // Add event listener for slide buttons
+        $('.slide-btn').click(function() {
+            var slideId = $(this).data('slide-id');
+            $('.lesson-slides section').hide(); // Hide all slides
+            $('#' + slideId).show(); // Show the clicked slide
+        });
+    });
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -43,18 +87,34 @@
     });    
     </script>
 	<%@ include file = "header1.jsp" %>
-    <section id="version-1-course-x-lesson-3-page-1" class="container" hidden>
+	<div class="lesson-nav">
+            <!-- Include navigation content -->
+            <!-- You can implement navigation buttons here -->
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-1">Slide 1</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-2">Slide 2</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-3">Slide 3</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-4">Slide 4</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-5">Slide 5</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-6">Slide 6</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-9">Slide 7</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-10">Slide 8</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-13">Slide 9</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-14">Slide 10</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-17">Slide 11</button>
+            <button class="slide-btn" data-slide-id="version-1-course-x-lesson-3-page-18">Slide 12</button>
+            <!-- Include other slide buttons similarly -->
+        </div>
+        <div class="lesson-slides">
+        <section id="version-1-course-x-lesson-3-page-1" class="container" hidden>
         <div class="row">
             <div class="col-md-8 content" style="margin-left:20rem">
             <h1 style="text-align:center">  <b>Lesson 3</b></h1> 
              <h1 style="text-align:center"> Variables and Queries </h1> </br>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-1', false, -1)"> Next </a>
+            <!--<a class="btn btn-primary pull-right"
+                onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-1', false, -1)"> Next </a>-->
             </div>
         </div>
     </section>
-
-
     <section id="version-1-course-x-lesson-3-page-2" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -73,16 +133,15 @@
                             <li> Who is the mother of Peter? </li>
                         </ul>
                 </ul>
-                <a class="btn btn-primary pull-left"
+                <!--<a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-2', false, -1)"> Previous
-                </a>
-                <a class="btn btn-primary pull-right"
+                </a>-->
+               <!-- <a class="btn btn-primary pull-right"
                     onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-2', false, -1)"> Next 
-                </a>
+                </a>-->
             </div>
         </div>
     </section>
-
     <section id="version-1-course-x-lesson-3-page-3" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -99,11 +158,11 @@
 					  </div>
 					<div id="exAnswer"></div>
                     </ul>
-                <a class="btn btn-primary pull-left"
+                <!--<a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-3', false, -1)"> Previous
-                </a>
+                </a>-->
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-3', true, 1)"> Next
+                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-3', true, 1)"> Sparc Assisment
                 </a>
             </div>
         </div>
@@ -124,11 +183,11 @@
                 	<li>In this case, the <b>answer from our model</b> will be of the form <FONT COLOR="#ff0000">X</FONT> = john.</li>                	
                 </ul>
                 <br>
-                <a class="btn btn-primary pull-left"
+                <!--<a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-4', false, -1)"> Previous
-                </a>
+                </a>-->
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-4', true, 1)"> Next
+                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-4', true, 1)"> Sparc Assisment
                 </a>
             </div>
         </div>
@@ -151,11 +210,11 @@
                 </ul>
                
                 <br>
-                <a class="btn btn-primary pull-left"
+                <!--<a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-5', false, -1)"> Previous
-                </a>
+                </a>-->
                 <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-5', true, 1)"> Next
+                    onclick="gotoNext(3, 0, 'version-1-course-x-lesson-3-page-5', true, 1)"> Sparc Assisment
                 </a>
             </div>
         </div>
@@ -172,19 +231,15 @@
                     <textarea id="program0" name="program0" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
-                    <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-6', false, -1)"> Previous </a>
+                    <!--<a class="btn btn-primary pull-left"
+                    onclick="gotoPrevious(3, 0, 'version-1-course-x-lesson-3-page-6', false, -1)"> Previous </a>-->
                     <div class="text-center">
-                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-6', 'program0')"> Submit </a>
+                        <a class="btn btn-primary" style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-6', 'program0')"> Program0 </a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    <!-- page-7 status page -->
-    <!-- page-8 Online SPARC -->
-
-    <!-- learning outcome 1 -->
     <section id="version-1-course-x-lesson-3-page-9" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -204,16 +259,14 @@
              	 	<div id="knowledgeAssignment" class="form-group">
 					  <input id="yBox" type="text" class="form-control" style="margin-left:2rem" required>
 					</div>
-					<div id="zAnswer"></div>			
-
-            <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Previous </a>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Next </a>
+					<div id="zAnswer"></div>
+					<!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Previous </a>-->
+            <!--<a class="btn btn-primary pull-right"
+                onclick="gotoNext(3, 1, 'version-1-course-x-lesson-3-page-9', false, -1)"> Next </a>-->
             </div>
         </div>  
     </section>
-
     <section id="version-1-course-x-lesson-3-page-10" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -226,20 +279,16 @@
                     <textarea id="program1" name="program1" rows="4" cols="50" class="knowledge-check-input"></textarea>
                     <br><br>
                     <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-10', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(3, 1, 'version-1-course-x-lesson-3-page-10', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-10', 'program1')"> Submit</a>
+                <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-10', 'program1')"> Program1</a>
             </div>
            
             </form>
           </div>
         </div>  
     </section>
-    <!-- page-11 status page -->
-    <!-- page-12 onlineSPARC -->
-
-    <!-- learning outcome 2 -->
     <section id="version-1-course-x-lesson-3-page-13" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -260,14 +309,13 @@
 					<input id="fBox" type="text" class="form-control"required></div>
 					<div id="cAnswer"></div>
 
-                <a class="btn btn-primary pull-left"
-                    onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Previous </a>
-                <a class="btn btn-primary pull-right"
-                    onclick="gotoNext(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Next </a>
+                <!--<a class="btn btn-primary pull-left"
+                    onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Previous </a>-->
+                <!--<a class="btn btn-primary pull-right"
+                    onclick="gotoNext(3, 2, 'version-1-course-x-lesson-3-page-13', false, -1)"> Next </a>-->
             </div>
         </div>
     </section>
-                
     <section id="version-1-course-x-lesson-3-page-14" class="container" hidden>
         <div class="row">
             <div class="col-md-6 content" style="margin-left:35rem">
@@ -280,10 +328,10 @@
                 <textarea id="program2" name="program2" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
                 <br>
                 <br>
-                <a class="btn btn-primary pull-left"
-                onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-14', false, -1)"> Previous </a>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(3, 2, 'version-1-course-x-lesson-3-page-14', false, -1)"> Previous </a>-->
                 <div class="text-center">
-                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-14', 'program2')"> Submit</a>
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-14', 'program2')"> Program2</a>
                 </div>
             </form>
             <br>
@@ -291,12 +339,7 @@
             </div>
         </div>
     </section>
-    
-    <!-- page-15 status page -->
-    <!-- page-16 onlineSPARC -->
-
-    <!-- learning outcome 3 -->
-	<section id="version-1-course-x-lesson-3-page-17" class="container"
+    <section id="version-1-course-x-lesson-3-page-17" class="container"
 		hidden>
 		<div class="row">
 			<div class="col-md-6 content" style="margin-left: 35rem">
@@ -309,14 +352,61 @@
 				<li>Who is the dad of peter?</li> <input id="gBox" type="text" style="margin-left:2rem"
 					class="form-control" required><br>
 				<div id="nAnswer"></div>
-				<a class="btn btn-primary pull-left"
+				<!--<a class="btn btn-primary pull-left"
 					onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)">
 					Previous </a> <a class="btn btn-primary pull-right"
 					onclick="gotoNext(3, 3, 'version-1-course-x-lesson-3-page-17', false, -1)">
-					Next </a>
+					Next </a>-->
 			</div>
 		</div>
 	</section>
+	<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
+    <div class="row">
+        <div class="col-md-6 content" style="margin-left:35rem">
+            <h2 style="text-align:center">Learning outcome 3: Extending the model for Dad relation </h2>
+            <br>
+            <h4> Extend your Model for "Who is the Dad of Peter?" </h4>
+            <br>
+            <form action="">
+                <label for="ques1"> Representing knowledge as comment and fact </label>
+                <textarea id="program3" name="program3" rows="4" cols="50" class="knowledge-check-input"></textarea><br><br>
+                <br>
+                <br>
+                <!--<a class="btn btn-primary pull-left"
+                onclick="gotoPrevious(3, 3, 'version-1-course-x-lesson-3-page-18', false, -1)"> Previous </a>-->
+                <div class="text-center">
+                    <a class="btn btn-primary"  style="margin-left: -15rem;" onclick="submitAssessment('version-1-course-x-lesson-3-page-18', 'program3')"> Program3</a>
+        
+    </div>
+</section>
+        </div>
+    
+
+
+
+    
+    <!-- page-7 status page -->
+    <!-- page-8 Online SPARC -->
+
+    <!-- learning outcome 1 -->
+    			
+
+            
+
+   
+    <!-- page-11 status page -->
+    <!-- page-12 onlineSPARC -->
+
+    <!-- learning outcome 2 -->
+    
+                
+    
+    
+    <!-- page-15 status page -->
+    <!-- page-16 onlineSPARC -->
+
+    <!-- learning outcome 3 -->
+	
 
 	<section id="version-1-course-x-lesson-3-page-18" class="container" hidden>
     <div class="row">

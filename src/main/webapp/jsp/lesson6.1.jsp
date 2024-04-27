@@ -67,12 +67,28 @@
     padding-left: 20px; /* Add some padding to the sub-points for hierarchy */
 }
    
-}   
+} 
+.slide-buttons{
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }   
     </style>    
 </head>
 
 <body>
     <script type="text/javascript"> 
+    function gotoPage(pageId) {
+        // Hide all pages
+        var allPages = document.querySelectorAll('.pages section');
+        allPages.forEach(function(page) {
+            page.hidden = true;
+        });
+
+        // Show the selected page
+        var selectedPage = document.getElementById(pageId);
+        selectedPage.hidden = false;
+    }
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -91,6 +107,26 @@
     });    
     </script>
 	<%@ include file = "header1.jsp" %>
+	<div class="slide-buttons">
+        <!-- Slide buttons here -->
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-1')">Slide 1</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-2')">Slide 2</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-3')">Slide 3</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-4')">Slide 4</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-5')">Slide 5</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-6')">Slide 6</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-7')">Slide 7</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-8')">Slide 8</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-9')">Slide 9</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-10')">Slide 10</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-11')">Slide 11</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-12')">Slide 12</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-13')">Slide 13</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-14')">Slide 14</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-6-page-15')">Slide 15</button></br></br>
+        <!-- Add more slide buttons as needed -->  
+    </div>
+    <div class="col-md-9 pages">
     <section id="version-1-course-x-lesson-6-page-1" hidden>
         <div class="row">
         <div class="container">
@@ -117,7 +153,7 @@
                 </button>
             </div>
         </div>
-        </div>
+        
     </section>
     
     <section id="version-1-course-x-lesson-6-page-3" hidden>
@@ -147,7 +183,7 @@
                 </button>
             </div>
             </div>
-        </div>
+        
     </section>
     
     <section id="version-1-course-x-lesson-6-page-4"  hidden>
@@ -513,7 +549,8 @@
                 </div>   
             </div>
         </div>
-    </section> 
+    </section></div>
+     
 
  
 <%@ include file = "footer1.jsp" %>

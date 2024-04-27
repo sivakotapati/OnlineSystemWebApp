@@ -111,7 +111,11 @@
   list-style-type: square; /* Square for sub-sub points */
 }
 }
-}   
+.slide-buttons{
+            float: left;
+            width: 20%; /* Adjust width as needed */
+            padding: 20px;
+        }   
     </style>
 
 </head>
@@ -121,6 +125,17 @@
 
 <body>
     <script type="text/javascript"> 
+    function gotoPage(pageId) {
+        // Hide all pages
+        var allPages = document.querySelectorAll('.pages section');
+        allPages.forEach(function(page) {
+            page.hidden = true;
+        });
+
+        // Show the selected page
+        var selectedPage = document.getElementById(pageId);
+        selectedPage.hidden = false;
+    }
         $( document ).ready(function() { 
             sessionStorage.removeItem(sessionKeyIsAssessmentPassed);
             sessionStorage.removeItem(sessionKeyIsSparcPassed);
@@ -144,23 +159,23 @@
     });    
     </script>
 	<%@ include file = "header1.jsp" %>
-  <!--   <section id="version-1-course-x-lesson-10-page-1" class="container" hidden>
-        <div class="row">
-            <div class="col-md-8 content" style="margin-left:20rem">
-            <h1 style="text-align:center">  Lesson 10: </h1> 
-            <h1 style="text-align:center">  Modeling Periodic Table </h1> <br>
-            <a class="btn btn-primary pull-right"
-                onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-1', false, -1)"> Next </a>
-            </div>
+	<div class="slide-buttons">
+        <!-- Slide buttons here -->
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-1')">Slide 1</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-2')">Slide 2</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-3')">Slide 3</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-4')">Slide 4</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-5')">Slide 5</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-6')">Slide 6</button></br></br>
+        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-10-page-7')">Slide 7</button></br></br>
         </div>
-    </section> -->
-    
-    <section id="version-1-course-x-lesson-10-page-1" hidden>
+        <div class="pages">
+        <section id="version-1-course-x-lesson-10-page-1" hidden>
         <div class="row">
             <div class="container" >
             <h2 style="text-align:center">  Lesson10:  </h2> <br>
             <h2 style="text-align:center">  Modeling Periodic Table </h2>
-            <button class="btn btn-primary btn-lg mx-auto pull-right" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-1', false, -1)" style="display:flex; margin-top:50px;"> <p style="width:100%; text-align:center;margin:0">Next </p> </button>
+            <!-- <button class="btn btn-primary btn-lg mx-auto pull-right" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-1', false, -1)" style="display:flex; margin-top:50px;"> <p style="width:100%; text-align:center;margin:0">Next </p> </button> -->
             </div>
         </div>
     </section>
@@ -198,8 +213,8 @@
                     onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)"> Next 
                 </a> -->
               <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Next</button>
+        			<!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Previous</button>
+        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-2', false, -1)">Next</button> -->
     			</div>
             </div>
         </div>
@@ -237,8 +252,8 @@
                     onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)"> Next
                 </a> -->
               <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Next</button>
+        			<!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Previous</button>
+        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-3', false, -1)">Next</button> -->
     			</div>
             </div>
         </div>
@@ -300,8 +315,8 @@
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Next</button>
+        			<!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Previous</button>
+        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-4', false, -1)">Next</button> -->
     			</div>
             </div>
         </div>  
@@ -348,8 +363,8 @@
             <a class="btn btn-primary pull-right"
                 onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)"> Next </a> -->
              <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Next</button>
+        			<!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Previous</button>
+        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-5', false, -1)">Next</button> -->
     			</div>
             </div>
             </div>
@@ -402,8 +417,8 @@
             <a class="btn btn-primary pull-right" id="nextButton" disabled
                 onclick="gotoNext(10, 2, 'version-1-course-x-lesson-10-page-6', false, -1)"> Next </a> -->
             <div class="d-flex justify-content-between">
-        			<button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Previous</button>
-        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Next</button>
+        			<!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Previous</button>
+        			<button class="btn btn-primary" onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-6', false, -1)">Next</button> -->
     			</div>
             </div>
         </div>  
@@ -417,13 +432,25 @@
      
                             
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)">Previous</button>
+                                <!-- <button class="btn btn-primary" style="background-color:#1b84f5;" onclick="gotoPrevious(10, 0, 'version-1-course-x-lesson-10-page-7', false, -1)">Previous</button> -->
     
-                                <a class="btn btn-primary" href="../jsp/lesson11.jsp" onclick="reInitiateFreshPage()">Next</a>
+                                <a class="btn btn-primary" href="../jsp/lesson11.jsp" onclick="reInitiateFreshPage()">Next Lesson</a>
                             </div>
             </div>
         </div>
-    </section>
+    </section></div>
+  <!--   <section id="version-1-course-x-lesson-10-page-1" class="container" hidden>
+        <div class="row">
+            <div class="col-md-8 content" style="margin-left:20rem">
+            <h1 style="text-align:center">  Lesson 10: </h1> 
+            <h1 style="text-align:center">  Modeling Periodic Table </h1> <br>
+            <a class="btn btn-primary pull-right"
+                onclick="gotoNext(10, 0, 'version-1-course-x-lesson-10-page-1', false, -1)"> Next </a>
+            </div>
+        </div>
+    </section> -->
+    
+    
     
     
      
