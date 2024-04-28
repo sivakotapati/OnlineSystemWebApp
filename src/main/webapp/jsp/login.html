@@ -183,9 +183,9 @@
       fetch(signInAPI, {
         method: "POST",
         body: JSON.stringify({
-          roleType: role,
-          userName: username,
-          password: password,
+          "roleType":role,
+          "userName":username,
+          "password":password
         }),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -203,6 +203,10 @@
               if (data.content.roles == "Teacher") {
                 sessionStorage.setItem("userRole", "Teacher");
                 location.href = "hometeacher.jsp";
+              else if (data.content.roles=="Course Developer"){
+                sessionStorage.setItem("userRole","Course Developer")
+                  location.href='CoursesDashboard.jsp'
+              	}
               } else if (data.content.roles == "Student") {
                 sessionStorage.setItem("userRole", "Student");
                 if (data.content.enrolledCourses == "OnlineLPK12") {
