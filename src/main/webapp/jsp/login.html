@@ -202,7 +202,7 @@
               console.log(sessionStorage.getItem("userId"));
               if (data.content.roles == "Teacher") {
                 sessionStorage.setItem("userRole", "Teacher");
-                location.href = "hometeacher.jsp";
+                location.href = "hometeacher.jsp"; }
               else if (data.content.roles=="Course Developer"){
                 sessionStorage.setItem("userRole","Course Developer")
                   location.href='CoursesDashboard.jsp';
