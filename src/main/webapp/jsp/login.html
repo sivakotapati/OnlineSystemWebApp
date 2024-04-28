@@ -205,8 +205,7 @@
                 location.href = "hometeacher.jsp";
               else if (data.content.roles=="Course Developer"){
                 sessionStorage.setItem("userRole","Course Developer")
-                  location.href='CoursesDashboard.jsp'
-              	}
+                  location.href='CoursesDashboard.jsp';
               } else if (data.content.roles == "Student") {
                 sessionStorage.setItem("userRole", "Student");
                 if (data.content.enrolledCourses == "OnlineLPK12") {
