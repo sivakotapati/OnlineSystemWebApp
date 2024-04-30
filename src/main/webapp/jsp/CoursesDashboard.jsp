@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/global.js"></script>
     <!-- JavaScript function to clear session -->
     <script type="text/javascript">
         function reInitiateFreshPage(){
@@ -102,10 +103,13 @@
 
     <!-- JavaScript function to save the course -->
     <script type="text/javascript">
+    
+    window.onload = function() {
+    	getCoursesList();
+    };
     function saveCourse() {
         // Retrieve the course name from the input field
         var courseName = $("#courseName").val();
-
         // Create a new row element with the course name and buttons
         var newRow = $("<li class='course-item'></li>");
         newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
@@ -137,6 +141,66 @@
 
         // Clear the input field for the next entry
         $("#courseName").val("");
+    }
+    
+    function getCoursesList() {
+    	const getCoursesAPI = dotnet_endpoint + "api/Course/"+sessionStorage.getItem("userId");
+        
+        fetch(getCoursesAPI, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error from the System.');
+            }
+            return response.json();
+        })
+        .then(data => {
+        	
+        	var errorsList=data.errors
+        	if(errorsList.length>0){
+        		errorsList.forEach(x =>{
+        			console.log("Error:"+x);
+        		} )
+        	}
+            var coursesList=data.content
+            coursesList.forEach( course => {
+            	console.log(course.courseId)
+            	var newRow = $("<li class='course-item'></li>");
+                newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
+                // Append the course name to the new row
+                newRow.append("<span>" + course.courseName + "</span>");
+                // Add buttons for publish, edit, and delete
+                var buttons = $("<div class='course-buttons'></div>");
+                if(course.isCourseAvailable){
+                buttons.append("<button class='btn btn-success'style='border-radius:999px'>Publish/UnPublish</button>");
+                }
+                else{
+                	buttons.append("<button class='btn btn-danger'style='border-radius:999px'>Publish/UnPublish</button>");
+                }
+                var editButton = $("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>Edit</button>");
+                editButton.on("click", function() {
+                    // Navigate to lessoneditor.html
+                    window.location.href = "lessonEditor.html";
+                });
+                buttons.append(editButton);
+                buttons.append("<button class='btn btn-danger'style='margin-left: 5px;border-radius:999px'>Delete</button>");
+
+                // Append buttons to the new row
+                newRow.append(buttons);
+
+                // Append the new row to the course list
+                $("#courseList").append(newRow);
+            	})
+        })
+        .catch(error => {
+            console.error('There was a problem with the get courses operation:', error);
+            
+        });
+    	
     }
 
     </script>
