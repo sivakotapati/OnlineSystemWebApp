@@ -101,7 +101,11 @@
         .getElementById("generateOTP")
         .addEventListener("click", function () {
           var email = document.getElementById("email").value;
-          fetch("https://localhost:7155/api/User/SendOTP?emailId=" + email, {
+          
+          
+         
+          const logicOTPAPI = dotnet_endpoint + "api/User/SendOTP?emailId=" + email ;
+          fetch(logicOTPAPI, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -113,6 +117,7 @@
               console.log(response.status);
               if (response.status === 200) {
                 resp.then((data) => {
+                	alert("OTP sent!")
                   sessionStorage.setItem("username", data.username);
                   sessionStorage.setItem("generated_otp", data.otp);
                 });
