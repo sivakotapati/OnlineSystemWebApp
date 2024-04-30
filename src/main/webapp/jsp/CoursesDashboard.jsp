@@ -117,13 +117,7 @@
         // Add buttons for publish, edit, and delete
         var buttons = $("<div class='course-buttons'></div>");
         buttons.append("<button class='btn btn-success'style='border-radius:999px'>Publish/UnPublish</button>");
-        
-        var editButton = $("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>Edit</button>");
-        editButton.on("click", function() {
-            // Navigate to lessoneditor.html
-            window.location.href = "lessonEditor.html";
-        });
-        buttons.append(editButton);
+        buttons.append("<button class='btn btn-warning'style='margin-left: 5px; border-radius:999px'>Edit</button>");
         buttons.append("<button class='btn btn-danger'style='margin-left: 5px;border-radius:999px'>Delete</button>");
 
         // Append buttons to the new row
