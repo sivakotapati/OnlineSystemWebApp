@@ -153,6 +153,9 @@
                 const editButton = document.createElement('button');
                 editButton.classList.add('btn', 'btn-info');
                 editButton.textContent = 'Edit';
+                editButton.onclick = function() {
+                    window.location.href = 'lessonEditor.html';
+                };
 
                 // Append buttons to lesson actions
                 lessonActions.appendChild(editButton)
