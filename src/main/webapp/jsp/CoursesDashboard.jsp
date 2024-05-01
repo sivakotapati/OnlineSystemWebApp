@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../static/global.js"></script>
     <!-- JavaScript function to clear session -->
     <script type="text/javascript">
         function reInitiateFreshPage(){
@@ -101,102 +100,120 @@
     <!-- Include footer file -->
     <%@ include file = "footer.jsp" %>
 
-    <!-- JavaScript function to save the course -->
-    <script type="text/javascript">
-    
-    window.onload = function() {
-    	getCoursesList();
-    };
+
+<script type="text/javascript">
+    // Session variable for userId, assumed to be stored when the user logs in
+    const userId = sessionStorage.getItem("userId");
+
+    $(document).ready(function() {
+        fetchCourses();
+    });
+
     function saveCourse() {
-        // Retrieve the course name from the input field
         var courseName = $("#courseName").val();
-        // Create a new row element with the course name and buttons
-        var newRow = $("<li class='course-item'></li>");
-        newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
-        
+        var postData = {
+            "courseName": courseName,
+            "semester": "Fall", // Assuming a default value
+            "year": 2024, // Assuming a default value
+            "createdBy": userId,
+            "createdAt": new Date().toISOString(),
+            "modifiedBy": userId,
+            "modifiedAt": new Date().toISOString(),
+            "isCourseAvailable": true
+        };
 
-        // Append the course name to the new row
-        newRow.append("<span>" + courseName + "</span>");
-
-        // Add buttons for publish, edit, and delete
-        var buttons = $("<div class='course-buttons'></div>");
-        buttons.append("<button class='btn btn-success'style='border-radius:999px'>Publish/UnPublish</button>");
-        buttons.append("<button class='btn btn-warning'style='margin-left: 5px; border-radius:999px'>Edit</button>");
-        buttons.append("<button class='btn btn-danger'style='margin-left: 5px;border-radius:999px'>Delete</button>");
-
-        // Append buttons to the new row
-        newRow.append(buttons);
-
-        // Append the new row to the course list
-        $("#courseList").append(newRow);
-
-        // Close the modal
-        $("#createCourseModal").modal("hide");
-
-        // Clear the input field for the next entry
-        $("#courseName").val("");
-    }
-    
-    function getCoursesList() {
-    	const getCoursesAPI = dotnet_endpoint + "api/Course/"+sessionStorage.getItem("userId");
-        
-        fetch(getCoursesAPI, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        $.ajax({
+            url: "https://localhost:7155/api/Course/CreateCourse",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(postData),
+            success: function(data) {
+                fetchCourses(); 
+                $("#createCourseModal").modal("hide"); 
+                $("#courseName").val(''); 
+                alert("Course created successfully.");
             },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error from the System.');
+            error: function(error) {
+                alert("Failed to create course: " + error.responseText);
             }
-            return response.json();
-        })
-        .then(data => {
-        	
-        	var errorsList=data.errors
-        	if(errorsList.length>0){
-        		errorsList.forEach(x =>{
-        			console.log("Error:"+x);
-        		} )
-        	}
-            var coursesList=data.content
-            coursesList.forEach( course => {
-            	console.log(course.courseId)
-            	var newRow = $("<li class='course-item'></li>");
-                newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
-                // Append the course name to the new row
-                newRow.append("<span>" + course.courseName + "</span>");
-                // Add buttons for publish, edit, and delete
-                var buttons = $("<div class='course-buttons'></div>");
-                if(course.isCourseAvailable){
-                buttons.append("<button class='btn btn-success'style='border-radius:999px'>Publish/UnPublish</button>");
-                }
-                else{
-                	buttons.append("<button class='btn btn-danger'style='border-radius:999px'>Publish/UnPublish</button>");
-                }
-                var editButton = $("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>Edit</button>");
-                editButton.on("click", function() {
-                    // Navigate to lessoneditor.html
-                    window.location.href = "lessonEditor.html";
-                });
-                buttons.append(editButton);
-                buttons.append("<button class='btn btn-danger'style='margin-left: 5px;border-radius:999px'>Delete</button>");
-
-                // Append buttons to the new row
-                newRow.append(buttons);
-
-                // Append the new row to the course list
-                $("#courseList").append(newRow);
-            	})
-        })
-        .catch(error => {
-            console.error('There was a problem with the get courses operation:', error);
-            
         });
-    	
     }
 
-    </script>
+    function fetchCourses() {
+        $.ajax({
+            url: `https://localhost:7155/api/Course/${userId}`, 
+            type: "GET",
+            contentType: "application/json",
+            success: function(data) {
+                $("#courseList").empty();
+                data.content.forEach(function(course) {
+                    var listItem = $("<li class='course-item'></li>")
+                        .append($("<span>").text(course.courseName))
+                        .append(
+                            $("<div class='course-buttons'>")
+                            .append($("<button class='btn btn-success' style='border-radius:999px'>").text("Publish/UnPublish"))
+                            .append($("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>").text("Edit").click(function() { editCourse(course.courseId); }))
+                            .append($("<button class='btn btn-danger' style='margin-left: 5px; border-radius:999px'>").text("Delete").click(function() { deleteCourse(course.courseId); }))
+                        );
+
+                    $("#courseList").append(listItem);
+                });
+            },
+            error: function() {
+                alert("Failed to load courses.");
+            }
+        });
+    }
+
+//     function updateCourse(courseId) {
+//         var newName = prompt("Enter new course name:");
+//         if (newName) {
+//             $.ajax({
+//                 url: `https://localhost:7155/api/Course/UpdateCourse?courseId=${courseId}`,
+//                 type: "PUT",
+//                 contentType: "application/json",
+//                 data: JSON.stringify({
+//                     "courseName": newName,
+//                     "modifiedBy": userId,
+//                     "modifiedAt": new Date().toISOString(),
+//                     "isCourseAvailable": true
+//                 }),
+//                 success: function() {
+//                     alert("Course updated successfully.");
+//                     fetchCourses();
+//                 },
+//                 error: function(error) {
+//                     alert("Failed to update course: " + error.responseText);
+//                 }
+//             });
+//         }
+//     }
+
+	function editCourse(courseId) {
+    	window.location.href = `Lesson_Dashboard.jsp?courseId=${courseId}`;
+    }
+
+
+    function deleteCourse(courseId) {
+        if (confirm("Are you sure you want to delete this course?")) {
+            $.ajax({
+                url: `https://localhost:7155/api/Course/DeleteCourse/${courseId}`,
+                type: "DELETE",
+                success: function() {
+                    alert("Course deleted successfully.");
+                    fetchCourses();
+                },
+                error: function(xhr) {
+                    if(xhr.status === 404) {
+                        alert("Course not found.");
+                    } else {
+                        alert("Failed to delete course: " + xhr.statusText);
+                    }
+                }
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
