@@ -59,7 +59,7 @@
             
              <div style="display: flex; margin: 10px 0px;">
                     <!-- Search bar -->
-                    <input type="text" class="form-control search-bar" placeholder="Search...">
+                    <input type="text" class="form-control search-bar" placeholder="Search..." id="searchInput">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#createCourseModal"style='border-radius:999px'>Create Course</button>
                     <!-- Button for creating a course -->
                 </div>
@@ -107,6 +107,13 @@
 
     $(document).ready(function() {
         fetchCourses();
+
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#courseList li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
     });
 
     function saveCourse() {
@@ -128,9 +135,9 @@
             contentType: "application/json",
             data: JSON.stringify(postData),
             success: function(data) {
-                fetchCourses(); 
-                $("#createCourseModal").modal("hide"); 
-                $("#courseName").val(''); 
+                fetchCourses();
+                $("#createCourseModal").modal("hide");
+                $("#courseName").val('');
                 alert("Course created successfully.");
             },
             error: function(error) {
@@ -141,23 +148,28 @@
 
     function fetchCourses() {
         $.ajax({
-            url: `https://localhost:7155/api/Course/${userId}`, 
+            url: `https://localhost:7155/api/Course/${userId}`,
             type: "GET",
             contentType: "application/json",
             success: function(data) {
                 $("#courseList").empty();
-                data.content.forEach(function(course) {
-                    var listItem = $("<li class='course-item'></li>")
-                        .append($("<span>").text(course.courseName))
-                        .append(
-                            $("<div class='course-buttons'>")
-                            .append($("<button class='btn btn-success' style='border-radius:999px'>").text("Publish/UnPublish"))
-                            .append($("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>").text("Edit").click(function() { editCourse(course.courseId); }))
-                            .append($("<button class='btn btn-danger' style='margin-left: 5px; border-radius:999px'>").text("Delete").click(function() { deleteCourse(course.courseId); }))
-                        );
+                if (data && data.content) {
+                    data.content.forEach(function(course) {
+                        var listItem = $("<li class='course-item'></li>")
+                            .append($("<span>").text(course.courseName))
+                            .append($("<span class='courseId'>").text(course.courseId).hide()) // Hide course ID
+                            .append(
+                                $("<div class='course-buttons'>")
+                                .append($("<button class='btn btn-success publish-toggle' style='border-radius: 999px'>").text(course.isCourseAvailable ? "Unpublish" : "Publish"))
+                                .append($("<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px'>").text("Edit").click(function() { editCourse(course.courseId); }))
+                                .append($("<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px'>").text("Delete").click(function() { deleteCourse(course.courseId); }))
+                            );
 
-                    $("#courseList").append(listItem);
-                });
+                        $("#courseList").append(listItem);
+                    });
+                } else {
+                    console.log("No courses found.");
+                }
             },
             error: function() {
                 alert("Failed to load courses.");
@@ -165,34 +177,9 @@
         });
     }
 
-//     function updateCourse(courseId) {
-//         var newName = prompt("Enter new course name:");
-//         if (newName) {
-//             $.ajax({
-//                 url: `https://localhost:7155/api/Course/UpdateCourse?courseId=${courseId}`,
-//                 type: "PUT",
-//                 contentType: "application/json",
-//                 data: JSON.stringify({
-//                     "courseName": newName,
-//                     "modifiedBy": userId,
-//                     "modifiedAt": new Date().toISOString(),
-//                     "isCourseAvailable": true
-//                 }),
-//                 success: function() {
-//                     alert("Course updated successfully.");
-//                     fetchCourses();
-//                 },
-//                 error: function(error) {
-//                     alert("Failed to update course: " + error.responseText);
-//                 }
-//             });
-//         }
-//     }
-
-	function editCourse(courseId) {
-    	window.location.href = `Lesson_Dashboard.jsp?courseId=${courseId}`;
+    function editCourse(courseId) {
+        window.location.href = `Lesson_Dashboard.jsp?courseId=${courseId}`;
     }
-
 
     function deleteCourse(courseId) {
         if (confirm("Are you sure you want to delete this course?")) {
@@ -213,6 +200,28 @@
             });
         }
     }
+
+
+
+
+    $(document).on("click", ".publish-toggle", function() {
+        var buttonText = $(this).text();
+        var courseId = $(this).closest('.course-item').find('.courseId').text();
+        var isCourseAvailable = buttonText === "Publish" ? true : false;
+
+        $.ajax({
+            url: `https://localhost:7155/api/Course/UpdateAvailability/${courseId}?isCourseAvailable=${isCourseAvailable}`,
+            type: "PUT",
+            success: function() {
+                // Toggle the button text
+                $(this).text(isCourseAvailable ? "Unpublish" : "Publish");
+            },
+            error: function(xhr) {
+                console.error("Failed to update course availability:", xhr.statusText);
+                alert("Failed to update course availability.");
+            }
+        });
+    });
 </script>
 
 </body>
