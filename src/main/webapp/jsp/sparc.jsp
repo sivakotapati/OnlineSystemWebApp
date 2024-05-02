@@ -38,7 +38,7 @@
 	position: fixed;
 	margin: 0;
 	float: left;
-	width: 58%;
+	width: 40%;
 	height: 100%;
 	top: 50;
 }
@@ -542,6 +542,19 @@ window.addEventListener('popstate', function (event) {
           }
           return Math.ceil(currentLearningOutcomeNumber / 2);
       }
+
+      $(document).on("change", "#new_fontsize", function() {
+		    let font_size = $(this).val();
+		    setEditorFontSize(font_size);
+		});
+
+		var setEditorFontSize = function(font_size) {
+		    if (font_size < 0 || font_size > 72) {
+		        return;
+		    }
+
+		    document.getElementById('editor').style.fontSize = font_size + 'px';
+		};
 
 	function SubmitSparc() {	
 		let _isSparcPassed = false;
