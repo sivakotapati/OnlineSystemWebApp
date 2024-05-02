@@ -113,7 +113,10 @@
 
     function fetchLessons(courseId) {
         $.ajax({
-            url: `https://localhost:7155/api/CourseLesson/get?courseId=${courseId}`,
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
+            url: `https://localhost:7155/api/Course/GetLessonsToEditById/${courseId}`,
             type: "GET",
             success: function(data) {
                 if (data && data.content) {
@@ -131,12 +134,13 @@
 
     function createLessonElement(lesson) {
         var buttons = $("<div class='lesson-buttons'></div>");
-        buttons.append(`<button class='btn btn-success publish-toggle' style='border-radius: 999px;'>${lesson.is_lesson_available ? "Unpublish" : "Publish"}</button>`);
+        <%--buttons.append(`<button class='btn btn-success publish-toggle' style='border-radius: 999px;'>${lesson.isLessonAvailable ? "Unpublish" : "Publish"}</button>`);--%>
+        buttons.append($("<button class='btn publish-toggle' style='border-radius:999px'>").text(lesson.isLessonAvailable?"Published":"UnPublish").addClass(lesson.isLessonAvailable?"btn-success" : "btn-danger"))
         buttons.append(`<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px;' onclick='editLesson(${lesson.id})'>Edit</button>`);
         buttons.append(`<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px;' onclick='deleteLesson(${lesson.id})'>Delete</button>`);
         
         return $("<li class='lesson-item' style='background-color: #f2f2f2'></li>")
-            .append(`<span>${lesson.lesson_name}</span>`)
+            .append(`<span>${lesson.lessonName}</span>`)
             .append(buttons);
     }
     
@@ -165,12 +169,10 @@
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
-                "lesson_name": lessonName,
-                "created_by": userId,
-                "created_at": new Date().toISOString(),
-                "modified_by": userId,
-                "modified_at": new Date().toISOString(),
-                "is_lesson_available": true
+                "lessonName": lessonName,
+                "createdBy": userId,
+                "modifiedBy": userId,
+                "isLessonAvailable": true
             }),
             success: function(response) {
                 console.log("Lesson saved successfully:", response);
