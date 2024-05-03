@@ -106,76 +106,127 @@
 
     <!-- JavaScript Logic -->
     <script>
-        var slideCount = 0; // Slide count for unique titles
+    var slideCount = 0; // Track the number of slides
+    var selectedSlideId = 4; // Set to the ID of the slide you want to update
 
-        // Function to deselect all slides
-        function deselectAllSlides() {
-            var slideList = document.getElementById("slideList");
-            var slideButtons = Array.from(slideList.children);
-            slideButtons.forEach(button => {
-                button.classList.remove("selected");
-            });
+    // Function to set the correct slide ID when a slide is selected
+    function setSelectedSlideId() {
+        var selectedSlide = document.querySelector(".sidebar .selected");
+        if (selectedSlide) {
+            selectedSlideId = selectedSlide.getAttribute("data-slide-id");
+        }
+    }
+
+    document.getElementById("save").addEventListener("click", function() {
+        setSelectedSlideId();
+        
+        var editorContent = document.getElementById("editor").value; // Ensure the editor's content is captured
+        var previewContent = document.getElementById("preview").innerHTML; // Retrieve preview content
+        
+        if (!previewContent) {
+            displayMessage("No content in the preview to save.", "error");
+            return; // Prevent saving if the preview is empty
         }
 
-        // Function to create a new slide and append it to the sidebar
-        function addNewSlide() {
-            slideCount++; // Increment the slide count
-            var slideList = document.getElementById("slideList");
-            var newSlideButton = document.createElement("button");
-            newSlideButton.className = "btn btn-primary mb-2";
-            newSlideButton.textContent = "Slide " + slideCount;
-            
-            // Set up event listeners for selecting and deselecting slides
-            newSlideButton.addEventListener("click", function() {
-                deselectAllSlides(); // Deselect all existing slides
-                this.classList.add("selected"); // Mark this slide as selected
-            });
+        var userId = 73;
+        var modifiedAt = new Date().toISOString();
 
-            slideList.appendChild(newSlideButton); // Append to sidebar
-            
-            // Optionally auto-select the newly created slide
-            deselectAllSlides(); // Deselect all existing slides
-            newSlideButton.classList.add("selected"); // Select the new slide
-        }
+        var requestData = {
+            "slide_html_format": previewContent,
+            "slide_markdown_format": editorContent, // Send editor content as markdown
+            "modified_by": userId,
+            "modified_at": modifiedAt,
+            "created_by": userId,
+            "created_at": modifiedAt    
+        };
 
-        // Function to delete the selected slide
-        function deleteSelectedSlide() {
-            var slideList = document.getElementById("slideList");
-            var selectedSlide = Array.from(slideList.children).find(button => button.classList.contains("selected"));
-            
-            if (!selectedSlide) { // If no slide is selected
-                displayMessage("No slide selected.", "error");
-                return;
+        console.log("Request Data:", requestData); // Debug information
+        
+        $.ajax({
+            url: `https://localhost:7155/api/lessonslide/update?slideId=6`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(response) {
+                console.log("Response:", response); // Debug information
+                if (response.success) {
+                    displayMessage("Slide updated successfully.", "success");
+                } else {
+                    displayMessage("Failed to update the slide.", "error");
+                }
+            },
+            error: function() {
+                displayMessage("Error occurred while updating the slide.", "error");
             }
+        });
+    });
 
-            slideList.removeChild(selectedSlide); // Delete the selected slide
-            slideCount--; // Decrement the slide count
-            displayMessage("Selected slide deleted.", "success");
-        }
 
-        // Add event listeners for "New Slide" and "Delete Slide"
-        document.getElementById("newSlide").addEventListener("click", addNewSlide);
-        document.getElementById("deleteSlide").addEventListener("click", deleteSelectedSlide);
+    // Display status messages
+    function displayMessage(message, type) {
+        var statusMessage = document.getElementById("statusMessage");
+        statusMessage.innerHTML = message;
+        statusMessage.className = "status-message " + type + "-message";
+        statusMessage.style.display = "block";
+        setTimeout(function() {
+            statusMessage.style.display = "none";
+            statusMessage.innerHTML = "";
+        }, 3000);
+    }
 
-        // Compile button logic
-        document.getElementById("compile").addEventListener("click", function() {
-            var editorContent = document.getElementById("editor").value;
-            var previewContent = editorContent.replace(/\n/g, "<br>");
-            document.getElementById("preview").innerHTML = previewContent;
-            displayMessage("Compiled successfully!", "success");
+    // Set the slide ID when a slide is selected
+    var slideButtons = document.querySelectorAll(".sidebar .btn-primary");
+    slideButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            setSelectedSlideId(); // Ensure `selectedSlideId` is correct
+        });
+    });
+
+    // Additional event listeners (Compile, New Slide, etc.)
+    document.getElementById("compile").addEventListener("click", function() {
+        var editorContent = document.getElementById("editor").value;
+        var previewContent = editorContent.replace(/\n/g, "<br>");
+        document.getElementById("preview").innerHTML = previewContent;
+        displayMessage("Compiled successfully!", "success");
+    });
+
+    // Function to add a new slide and set the ID
+    function addNewSlide() {
+        slideCount++; // Increment the slide count
+        var slideList = document.getElementById("slideList");
+        var newSlideButton = document.createElement("button");
+        newSlideButton.className = "btn btn-primary mb-2";
+        newSlideButton.textContent = "Slide " + slideCount;
+        newSlideButton.setAttribute("data-slide-id", slideCount); // Set a unique ID for each slide
+        
+        // Slide selection handler
+        newSlideButton.addEventListener("click", function() {
+            // Deselect other slides
+            Array.from(slideList.children).forEach(btn => btn.classList.remove("selected"));
+            this.classList.add("selected");
+            setSelectedSlideId(); // Update the ID of the selected slide
         });
 
-        // Function to display status messages
-        function displayMessage(message, type) {
-            var statusMessage = document.getElementById("statusMessage");
-            statusMessage.innerHTML = message;
-            statusMessage.className = "status-message " + type + "-message";
-            statusMessage.style.display = "block";
-            setTimeout(function() {
-                statusMessage.innerHTML = "";
-                statusMessage.style.display = "none";
-            }, 3000);
+        slideList.appendChild(newSlideButton); // Add the new slide button to the list
+    }
+
+    // Add event listeners for other controls
+    document.getElementById("newSlide").addEventListener("click", addNewSlide);
+    document.getElementById("deleteSlide").addEventListener("click", function() {
+        var slideList = document.getElementById("slideList");
+        var selectedSlide = Array.from(slideList.children).find(button => button.classList.contains("selected"));
+
+        if (!selectedSlide) {
+            displayMessage("No slide selected.", "error");
+            return;
         }
-    </script>
+
+        slideList.removeChild(selectedSlide); // Delete the selected slide
+        slideCount--; // Decrement the slide count
+        selectedSlideId = null; // Clear the selected slide ID
+        displayMessage("Slide deleted successfully.", "success");
+    });
+
+</script>
 </body>
 </html>
