@@ -198,7 +198,43 @@ function saveLesson() {
 }
 
 function editLesson(lessonId) {
-    window.location.href = `Compiled.jsp?lessonId=${lessonId}`;
+    const editLessonAPI = `https://localhost:7155/api/CourseLesson/update?lessonId=${lessonId}`;
+
+    // Assuming you have some mechanism to retrieve the updated lesson data
+
+    // Example: Replace this with your logic to retrieve the updated lesson data
+    const updatedLesson = {
+        // Include the updated properties of the lesson
+        // For example:
+        lessonName: "Updated Lesson Name",
+        isLessonAvailable: true
+    };
+
+    fetch(editLessonAPI, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedLesson)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Lesson updated successfully.");
+            // Assuming you want to refresh the lesson list after editing
+            const courseId = new URLSearchParams(window.location.search).get('courseId');
+            if (!courseId) {
+                alert("Course ID is not specified.");
+                return;
+            }
+            fetchLessons(courseId);
+        } else {
+            throw new Error('Failed to update lesson: ' + response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error("Error updating lesson:", error);
+        alert(error.message);
+    });
 }
 
 
