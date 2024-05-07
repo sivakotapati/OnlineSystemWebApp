@@ -166,6 +166,9 @@
         console.log("Saving lesson:", lessonName, "for course ID:", courseId, "by user ID:", userId);
 
         $.ajax({
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
             url: `https://localhost:7155/api/CourseLesson/add?courseId=${courseId}`,
             type: "POST",
             contentType: "application/json",
@@ -196,6 +199,9 @@
     function deleteLesson(lessonId) {
         if (confirm("Are you sure you want to delete this lesson?")) {
             $.ajax({
+                headers:{
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
+                },
                 url: `https://localhost:7155/api/CourseLesson/delete?userId=${userId}&lessonId=${lessonId}`,
                 type: "DELETE",
                 success: function() {

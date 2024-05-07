@@ -130,6 +130,10 @@
         };
 
         $.ajax({
+
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
             url: "https://localhost:7155/api/Course/CreateCourse",
             type: "POST",
             contentType: "application/json",
@@ -184,6 +188,9 @@
     function deleteCourse(courseId) {
         if (confirm("Are you sure you want to delete this course?")) {
             $.ajax({
+                headers:{
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
+                },
                 url: `https://localhost:7155/api/Course/DeleteCourse/${courseId}`,
                 type: "DELETE",
                 success: function() {
@@ -210,6 +217,9 @@
         var isCourseAvailable = buttonText === "Publish" ? true : false;
 
         $.ajax({
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
             url: `https://localhost:7155/api/Course/UpdateAvailability/${courseId}?isCourseAvailable=${isCourseAvailable}`,
             type: "PUT",
             success: function() {
