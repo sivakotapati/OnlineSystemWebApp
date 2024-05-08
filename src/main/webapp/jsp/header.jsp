@@ -48,10 +48,9 @@
 			<!-- <h2 id="title" style="color: white">Welcome to Online LPK12
 				Course</h2> -->
 				<h2 id="title" style="margin-top: 0px; color: white">Welcome to Online LPK12 Course</h2>
-				
 		</div>
 		<div class="col-md-3 d-flex justify-content-end">
-                <div class="user-info" style="margin-left:0px; ">
+                <div class="user-info" style="position: absolute; top: 0; right: 100px; padding: 10px;">
                     <h4><span id="userNameSpan"></span></h4>
                 </div>
                 <button onclick="sessionclear()" class="btn btn-warning" style="margin-left: 200px; margin-bottom: 15px;">Logout</button>
