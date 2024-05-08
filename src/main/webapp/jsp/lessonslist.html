@@ -364,15 +364,15 @@ htmlTable += '</table>';
 $('#student-progress-table').html(htmlTable);
 }
 
-const usernameStoredInSession = sessionStorage.getItem("username");
-const userRoleStoredInSession = sessionStorage.getItem("UserRole");
-const tokenStoredInSession = sessionStorage.getItem("token")
+const username = sessionStorage.getItem("username");
+const userRole = sessionStorage.getItem("UserRole");
+const token = sessionStorage.getItem("token")
 
 function validateRoutes() {
 
-	if (tokenStoredInSession) {
-        window.location.href = "home.jsp"; // Redirect to login page if no token
-		alert('You are already Logged In, please logout to signIn with a new account')
+	if (!token) {
+        window.location.href = "login.html"; // Redirect to login page if no token
+		alert('Please Login first to access this particular Resource')
     }
 	
 	
