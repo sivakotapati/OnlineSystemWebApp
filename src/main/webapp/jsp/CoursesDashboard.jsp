@@ -59,7 +59,7 @@
             
              <div style="display: flex; margin: 10px 0px;">
                     <!-- Search bar -->
-                    <input type="text" class="form-control search-bar" placeholder="Search...">
+                    <input type="text" class="form-control search-bar" placeholder="Search..." id="searchInput">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#createCourseModal"style='border-radius:999px'>Create Course</button>
                     <!-- Button for creating a course -->
                 </div>
@@ -100,45 +100,139 @@
     <!-- Include footer file -->
     <%@ include file = "footer.jsp" %>
 
-    <!-- JavaScript function to save the course -->
-    <script type="text/javascript">
-    function saveCourse() {
-        // Retrieve the course name from the input field
-        var courseName = $("#courseName").val();
 
-        // Create a new row element with the course name and buttons
-        var newRow = $("<li class='course-item'></li>");
-        newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
-        
+<script type="text/javascript">
+    // Session variable for userId, assumed to be stored when the user logs in
+    const userId = sessionStorage.getItem("userId");
 
-        // Append the course name to the new row
-        newRow.append("<span>" + courseName + "</span>");
+    $(document).ready(function() {
+        fetchCourses();
 
-        // Add buttons for publish, edit, and delete
-        var buttons = $("<div class='course-buttons'></div>");
-        buttons.append("<button class='btn btn-success'style='border-radius:999px'>Publish/UnPublish</button>");
-        
-        var editButton = $("<button class='btn btn-warning' style='margin-left: 5px; border-radius:999px'>Edit</button>");
-        editButton.on("click", function() {
-            // Navigate to lessoneditor.html
-            window.location.href = "lessonEditor.html";
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#courseList li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
         });
-        buttons.append(editButton);
-        buttons.append("<button class='btn btn-danger'style='margin-left: 5px;border-radius:999px'>Delete</button>");
+    });
 
-        // Append buttons to the new row
-        newRow.append(buttons);
+    function saveCourse() {
+        var courseName = $("#courseName").val();
+        var postData = {
+            "courseName": courseName,
+            "semester": "Fall", // Assuming a default value
+            "year": 2024, // Assuming a default value
+            "createdBy": userId,
+            "createdAt": new Date().toISOString(),
+            "modifiedBy": userId,
+            "modifiedAt": new Date().toISOString(),
+            "isCourseAvailable": true
+        };
 
-        // Append the new row to the course list
-        $("#courseList").append(newRow);
+        $.ajax({
 
-        // Close the modal
-        $("#createCourseModal").modal("hide");
-
-        // Clear the input field for the next entry
-        $("#courseName").val("");
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
+            url: "https://localhost:7155/api/Course/CreateCourse",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(postData),
+            success: function(data) {
+                fetchCourses();
+                $("#createCourseModal").modal("hide");
+                $("#courseName").val('');
+                alert("Course created successfully.");
+            },
+            error: function(error) {
+                alert("Failed to create course: " + error.responseText);
+            }
+        });
     }
 
-    </script>
+    function fetchCourses() {
+        $.ajax({
+            url: `https://localhost:7155/api/Course/${userId}`,
+            type: "GET",
+            contentType: "application/json",
+            success: function(data) {
+                $("#courseList").empty();
+                if (data && data.content) {
+                    data.content.forEach(function(course) {
+                        var listItem = $("<li class='course-item'></li>")
+                            .append($("<span>").text(course.courseName))
+                            .append($("<span class='courseId'>").text(course.courseId).hide()) // Hide course ID
+                            .append(
+                                $("<div class='course-buttons'>")
+                                .append($("<button class='btn btn-success publish-toggle' style='border-radius: 999px'>").text(course.isCourseAvailable ? "Unpublish" : "Publish"))
+                                .append($("<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px'>").text("Edit").click(function() { editCourse(course.courseId); }))
+                                .append($("<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px'>").text("Delete").click(function() { deleteCourse(course.courseId); }))
+                            );
+
+                        $("#courseList").append(listItem);
+                    });
+                } else {
+                    console.log("No courses found.");
+                }
+            },
+            error: function() {
+                alert("Failed to load courses.");
+            }
+        });
+    }
+
+    function editCourse(courseId) {
+        window.location.href = `Lesson_Dashboard.jsp?courseId=${courseId}`;
+    }
+
+    function deleteCourse(courseId) {
+        if (confirm("Are you sure you want to delete this course?")) {
+            $.ajax({
+                headers:{
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
+                },
+                url: `https://localhost:7155/api/Course/DeleteCourse/${courseId}`,
+                type: "DELETE",
+                success: function() {
+                    alert("Course deleted successfully.");
+                    fetchCourses();
+                },
+                error: function(xhr) {
+                    if(xhr.status === 404) {
+                        alert("Course not found.");
+                    } else {
+                        alert("Failed to delete course: " + xhr.statusText);
+                    }
+                }
+            });
+        }
+    }
+
+
+
+
+    $(document).on("click", ".publish-toggle", function() {
+        var buttonText = $(this).text();
+        var courseId = $(this).closest('.course-item').find('.courseId').text();
+        var isCourseAvailable = buttonText === "Publish" ? true : false;
+
+        $.ajax({
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
+            url: `https://localhost:7155/api/Course/UpdateAvailability/${courseId}?isCourseAvailable=${isCourseAvailable}`,
+            type: "PUT",
+            success: function() {
+                // Toggle the button text
+                $(this).text(isCourseAvailable ? "Unpublish" : "Publish");
+            },
+            error: function(xhr) {
+                console.error("Failed to update course availability:", xhr.statusText);
+                alert("Failed to update course availability.");
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

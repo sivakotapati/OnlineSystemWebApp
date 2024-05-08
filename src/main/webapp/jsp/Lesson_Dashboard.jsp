@@ -19,7 +19,6 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <!-- Include header file -->
-    <%@ include file ="authRoutes.jsp" %>
     <%@ include file = "header.jsp" %>
     <!-- Custom CSS -->
     <style>
@@ -96,57 +95,137 @@
     <!-- Include footer file -->
     <%@ include file = "footer.jsp" %>
 
-    <!-- JavaScript function to save the lesson -->
-    <script type="text/javascript">
-        function saveLesson() {
-            // Retrieve the lesson name from the input field
-            var lessonName = $("#lessonName").val();
 
-            // Create a new row element with the lesson name and buttons
-            var newRow = $("<li class='lesson-item'></li>");
-            newRow.css("background-color", "#f2f2f2"); // Set background color to ash color
-
-            // Append the lesson name to the new row
-            newRow.append("<span>" + lessonName + "</span>");
-
-            // Add buttons for publish/unpublish, edit, and delete
-            var buttons = $("<div class='lesson-buttons'></div>");
-            buttons.append("<button class='btn btn-success publish-toggle' style='border-radius: 999px;'>Publish</button>");
-            buttons.append("<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px;'>Edit</button>");
-            buttons.append("<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px;'>Delete</button>");
-
-            // Append buttons to the new row
-            newRow.append(buttons);
-
-            // Append the new row to the lesson list
-            $("#lessonList").append(newRow);
-
-            // Close the modal
-            $("#createLessonModal").modal("hide");
-
-            // Clear the input field for the next entry
-            $("#lessonName").val("");
+<script type="text/javascript">
+    var courseId;
+    $(document).ready(function() {
+         courseId = new URLSearchParams(window.location.search).get('courseId');
+        if (courseId) {
+            fetchLessons(courseId);
         }
 
-        // Function to toggle publish/unpublish button
-        $(document).on("click", ".publish-toggle", function() {
-            var buttonText = $(this).text();
-            if (buttonText === "Publish") {
-                $(this).removeClass("btn-success").addClass("btn-secondary").text("Unpublish");
-            } else {
-                $(this).removeClass("btn-secondary").addClass("btn-success").text("Publish");
-            }
-        });
-
-        // Function to handle search functionality
-        $(document).ready(function(){
-            $("#searchInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#lessonList li").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#lessonList li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-    </script>
+    });
+
+    function fetchLessons(courseId) {
+        $.ajax({
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
+            url: `https://localhost:7155/api/Course/GetLessonsToEditById/${courseId}`,
+            type: "GET",
+            success: function(data) {
+                if (data && data.content) {
+                    data.content.forEach(function(lesson) {
+                        var lessonElement = createLessonElement(lesson);
+                        $("#lessonList").append(lessonElement);
+                    });
+                }
+            },
+            error: function() {
+                alert('Failed to load lessons.');
+            }
+        });
+    }
+
+    function createLessonElement(lesson) {
+        var buttons = $("<div class='lesson-buttons'></div>");
+        <%--buttons.append(`<button class='btn btn-success publish-toggle' style='border-radius: 999px;'>${lesson.isLessonAvailable ? "Unpublish" : "Publish"}</button>`);--%>
+        buttons.append($("<button class='btn publish-toggle' style='border-radius:999px'>").text(lesson.isLessonAvailable?"Published":"UnPublish").addClass(lesson.isLessonAvailable?"btn-success" : "btn-danger"))
+        buttons.append(`<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px;' onclick='editLesson(${lesson.id})'>Edit</button>`);
+        buttons.append(`<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px;' onclick='deleteLesson(${lesson.id})'>Delete</button>`);
+
+        return $("<li class='lesson-item' style='background-color: #f2f2f2'></li>")
+            .append(`<span>${lesson.lessonName}</span>`)
+            .append(buttons);
+    }
+
+    function saveLesson() {
+        var lessonName = $("#lessonName").val();
+        if (!lessonName) {
+            alert("Please enter a lesson name.");
+            return;
+        }
+        var courseId = new URLSearchParams(window.location.search).get('courseId');
+        if (!courseId) {
+            alert("Course ID is not specified.");
+            return;
+        }
+
+        var userId = sessionStorage.getItem("userId");
+        if (!userId) {
+            alert("User ID is not available. Please ensure you're logged in.");
+            return;
+        }
+
+        console.log("Saving lesson:", lessonName, "for course ID:", courseId, "by user ID:", userId);
+
+        $.ajax({
+            headers:{
+                'Authorization': "Bearer "+ sessionStorage.getItem("token")
+            },
+            url: `https://localhost:7155/api/CourseLesson/add?courseId=${courseId}`,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "lessonName": lessonName,
+                "createdBy": userId,
+                "modifiedBy": userId,
+                "isLessonAvailable": true
+            }),
+            success: function(response) {
+                console.log("Lesson saved successfully:", response);
+                $("#createLessonModal").modal("hide");
+                $("#lessonName").val('');
+                alert("Lesson added successfully.");
+                fetchLessons(courseId);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error saving lesson:", xhr.responseText, "Status:", status, "Error:", error);
+                alert("Failed to add lesson: " + xhr.responseText);
+            }
+        });
+    }
+
+    function editLesson(lessonId) {
+        window.location.href = `Compiled.jsp?lessonId=${lessonId}&courseId=${courseId}`;
+    }
+
+    function deleteLesson(lessonId) {
+        if (confirm("Are you sure you want to delete this lesson?")) {
+            $.ajax({
+                headers:{
+                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
+                },
+                url: `https://localhost:7155/api/CourseLesson/delete?userId=${userId}&lessonId=${lessonId}`,
+                type: "DELETE",
+                success: function() {
+                    alert("Lesson deleted successfully.");
+                    fetchLessons(courseId);
+                },
+                error: function(error) {
+                    alert("Failed to delete lesson: " + error.responseText);
+                }
+            });
+        }
+    }
+
+
+    $(document).on("click", ".publish-toggle", function() {
+        var buttonText = $(this).text();
+        if (buttonText === "Publish") {
+            $(this).removeClass("btn-success").addClass("btn-secondary").text("Unpublish");
+        } else {
+            $(this).removeClass("btn-secondary").addClass("btn-success").text("Publish");
+        }
+    });
+</script>
+
+
 </body>
 </html>

@@ -118,13 +118,84 @@
     <!-- Your custom JavaScript logic (if needed) -->
     <script>
       // Add your JavaScript logic here
-      $(document).ready(function () {
+     <!--  $(document).ready(function () {
         $("#compile").click(function () {
           var markdownContent = $("#editor").val();
           var htmlContent = marked(markdownContent);
           $("#preview").html(htmlContent);
         });
-      });
+      });-->
+   // Add your JavaScript logic here
+      $(document).ready(function () {
+
+        let currentSlideNumber = 1;
+ 
+        // Function to compile and display slide content
+        function displaySlide() {
+          // Compile markdown content
+          const markdownContent = `# Slide ${currentSlideNumber}`;
+          const htmlContent = marked(markdownContent);
+ 
+          // Display compiled content
+          $("#preview").html(htmlContent);
+        }
+ 
+        // Display initial slide
+        displaySlide();
+ 
+        
+        // Function to handle click on "Compile" button
+        $("#compile").click(function () {
+          // Compile and display slide content
+          displaySlide();
+        });
+
+
+ 
+        // Function to handle click on "New Slide" button
+
+        $("#newSlide").click(function () {
+
+            // Define the endpoint URL
+            const NewSlideAPI = dotnet_endpoint + "api/lessonslide/add?courseId=1&lessonId=4";
+            // Prepare the data to send
+            const slideData = {
+                "slide_html_format": "HTML content of the slide",
+                "slide_markdown_format": "Markdown content of the slide",
+                "created_by": "User ID of the creator",
+                "created_at": "datetime",
+                "modified_by": "User ID of the modifier",
+                "modified_at": "datetime"
+            };
+ 
+            // Fetch API call to create a new slide
+            fetch(NewSlideAPI, {
+                method: 'POST',
+                body: JSON.stringify(slideData),
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create new slide');
+                }
+                // Handle success response
+                return response.json();
+            })
+            .then(data => {
+                // Optionally, handle the response data if needed
+                console.log('New slide created:', data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error creating new slide:', error);
+            });
+         // Increment slide number
+            currentSlideNumber++;
+            displaySlide();
+        });
+      
       // For example, handling button clicks, compiling content, etc.
     </script>
   </body>
