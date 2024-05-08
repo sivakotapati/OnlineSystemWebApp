@@ -58,14 +58,12 @@
             background-color: #e2e6ea; /* Light gray background */
         }
     </style>
+    <!-- Include header file -->
+    <%@ include file = "header.jsp" %>
+    <!-- Custom CSS -->
 </head>
 <body>
     <div class="container-fluid">
-        <div class="header bg-primary text-white p-2">            
-            <a href="#" onclick="history.back()"><img height="30" width="40" src="../images/back.png"></a>
-            <a href="home.jsp"><img height="30" width="40" src="../images/home.png"></a>
-            <span style="margin-left: 1rem;">Lesson Name</span>
-        </div>
         <div class="row mt-2 ml-2">
             <div class="col-sm-3 sidebar">
                 <div class="d-flex justify-content-between">
@@ -117,52 +115,115 @@
         }
     }
 
+    function getUrlParams(url) {
+        var params = {};
+        var parser = document.createElement('a');
+        parser.href = url;
+        var query = parser.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+    }
+
     document.getElementById("save").addEventListener("click", function() {
         setSelectedSlideId();
-        
-        var editorContent = document.getElementById("editor").value; // Ensure the editor's content is captured
-        var previewContent = document.getElementById("preview").innerHTML; // Retrieve preview content
-        
+
+        var editorContent = document.getElementById("editor").value; 
+        var previewContent = document.getElementById("preview").innerHTML;
         if (!previewContent) {
             displayMessage("No content in the preview to save.", "error");
-            return; // Prevent saving if the preview is empty
+            return; 
         }
 
-        var userId = 73;
-        var modifiedAt = new Date().toISOString();
+        var userId = sessionStorage.getItem('userId'); 
+        var modifiedAt = new Date().toISOString(); 
+
+        var url = window.location.href;
+        var params = getUrlParams(url);
+        var lessonId = params['lessonId'];
+        var courseId = params['courseId'];
 
         var requestData = {
-            "slide_html_format": previewContent,
-            "slide_markdown_format": editorContent, // Send editor content as markdown
-            "modified_by": userId,
-            "modified_at": modifiedAt,
-            "created_by": userId,
-            "created_at": modifiedAt    
+            slideHtmlFormat: previewContent,
+            slideMarkdownFormat: editorContent,
+            createdBy: userId,
+            createdAt: modifiedAt,
+            modifiedBy: userId,
+            modifiedAt: modifiedAt
         };
 
-        console.log("Request Data:", requestData); // Debug information
+        var apiUrl = `https://localhost:7155/api/LessonSlide/add?courseId=${courseId}&lessonId=${lessonId}`;
+
+        console.log("Request Data:", requestData); 
+        console.log("API URL:", apiUrl);
         
         $.ajax({
-            url: `https://localhost:7155/api/lessonslide/update?slideId=6`,
-            type: 'PUT',
+            url: apiUrl,
+            type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(requestData),
             success: function(response) {
-                console.log("Response:", response); // Debug information
+                console.log("Response:", response);
                 if (response.success) {
-                    displayMessage("Slide updated successfully.", "success");
+                    displayMessage("Slide added successfully.", "success");
                 } else {
-                    displayMessage("Failed to update the slide.", "error");
+                    displayMessage("Failed to add the slide.", "error");
                 }
             },
-            error: function() {
-                displayMessage("Error occurred while updating the slide.", "error");
+            error: function(xhr, status, error) {
+                console.log("Error:", xhr.responseText);
+                displayMessage("Error occurred while adding the slide: " + xhr.responseText, "error");
             }
         });
     });
 
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchSlidesForLesson();
+    });
 
-    // Display status messages
+    function fetchSlidesForLesson() {
+        var url = window.location.href;
+        var params = getUrlParams(url);
+        var lessonId = params['lessonId'];
+        var courseId = params['courseId'];
+
+        if (!lessonId || !courseId) {
+            displayMessage("Lesson ID or Course ID is missing.", "error");
+            return;
+        }
+
+        var apiUrl = `https://localhost:7155/api/LessonSlides/getAll?courseId=${courseId}&lessonId=${lessonId}`;
+
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            success: function(response) {
+                console.log("Fetched Slides:", response);
+                displaySlides(response);
+                displayMessage("Slides fetched successfully.", "success");
+            },
+            error: function(xhr) {
+                console.log("Error fetching slides:", xhr);
+                displayMessage("Failed to fetch slides.", "error");
+            }
+        });
+    }
+
+    function displaySlides(slides) {
+        var slidesContainer = document.getElementById("slidesContainer");
+        slidesContainer.innerHTML = ""; 
+
+        slides.forEach(slide => {
+            var slideElement = document.createElement("div");
+            slideElement.innerHTML = `<h3>${slide.title}</h3><p>${slide.slideHtmlFormat}</p>`;
+            slidesContainer.appendChild(slideElement);
+        });
+    }
+
     function displayMessage(message, type) {
         var statusMessage = document.getElementById("statusMessage");
         statusMessage.innerHTML = message;
