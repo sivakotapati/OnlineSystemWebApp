@@ -88,6 +88,45 @@
     .vertical-slide {
         margin-bottom: 20px; /* Adjust the margin between slides */
     }
+          .lesson-nav {
+        float: left;
+        width: 20%; /* Adjust width as needed */
+        padding: 20px;
+      }
+
+      .slide-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #337ab7; /* Bootstrap primary color */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .slide-btn:hover {
+        background-color: #286090; /* Darker shade of primary color */
+      }
+
+      /* Styles for lesson slides */
+      .lesson-slides {
+        float: left;
+        width: 80%; /* Adjust width as needed */
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .lesson-slides section {
+        display: none;
+      }
+
+      /* Show the first slide initially */
+      .lesson-slides section:first-child {
+        display: block;
+      }
    
     </style>
 
@@ -138,27 +177,27 @@
         </div>
     </section> -->
     <div class="slide-container">
-    <div class="col-md-3 slide-buttons">
+    <div class="col-md-3 lesson-nav">
         <!-- Slide buttons here -->
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-1')">Slide 1</button></br></br>
-             <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-2')">Slide 2</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-3')">Slide 3</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-4')">Slide 4</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-7')">Slide 5</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-8')">Slide 6</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-9')">Slide 7</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-12')">Slide 8</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-13')">Slide 9</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-14')">Slide 10</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-15')">Slide 11</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-16')">Slide 12</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-17')">Slide 13</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-20')">Slide 14</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-21')">Slide 15</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-22')">Slide 16</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-23')">Slide 17</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-24')">Slide 18</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-7-page-27')">Slide 19</button></br></br>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-1">Slide 1</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-2">Slide 2</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-3">Slide 3</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-4">Slide 4</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-7">Slide 5</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-8">Slide 6</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-9">Slide 7</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-12">Slide 8</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-13">Slide 9</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-14">Slide 10</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-15">Slide 11</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-16">Slide 12</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-17">Slide 13</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-20">Slide 14</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-21">Slide 15</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-22">Slide 16</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-23">Slide 17</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-24">Slide 18</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-7-page-27">Slide 19</button>
    
         <!-- Add more slide buttons as needed -->  
     </div>
