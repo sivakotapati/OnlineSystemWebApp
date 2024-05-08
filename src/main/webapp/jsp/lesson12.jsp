@@ -88,6 +88,45 @@
             width: 20%; /* Adjust width as needed */
             padding: 20px;
         }  
+              .lesson-nav {
+        float: left;
+        width: 20%; /* Adjust width as needed */
+        padding: 20px;
+      }
+
+      .slide-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #337ab7; /* Bootstrap primary color */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .slide-btn:hover {
+        background-color: #286090; /* Darker shade of primary color */
+      }
+
+      /* Styles for lesson slides */
+      .lesson-slides {
+        float: left;
+        width: 80%; /* Adjust width as needed */
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .lesson-slides section {
+        display: none;
+      }
+
+      /* Show the first slide initially */
+      .lesson-slides section:first-child {
+        display: block;
+      }
  
     </style>
 
@@ -125,18 +164,18 @@
     </script>
     <%@ include file = "authRoutes.jsp" %>
 	<%@ include file = "header1.jsp" %>
-	<div class="slide-buttons">
+	<div class="lesson-nav">
         <!-- Slide buttons here -->
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-1')">Slide 1</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-2')">Slide 2</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-3')">Slide 3</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-4')">Slide 4</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-5')">Slide 5</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-6')">Slide 6</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-7')">Slide 7</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-10')">Slide 8</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-11')">Slide 9</button></br></br>
-        <button class="btn btn-primary" onclick="gotoPage('version-1-course-x-lesson-12-page-12')">Slide 10</button></br>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-1">Slide 1</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-2">Slide 2</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-3">Slide 3</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-4">Slide 4</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-5">Slide 5</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-6">Slide 6</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-7">Slide 7</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-10">Slide 8</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-11">Slide 9</button>
+        <button class="slide-btn" data-slide-id="version-1-course-x-lesson-12-page-12">Slide 10</button>
 </div>
         
     <!-- <section id="version-1-course-x-lesson-12-page-1" class="container" hidden>
