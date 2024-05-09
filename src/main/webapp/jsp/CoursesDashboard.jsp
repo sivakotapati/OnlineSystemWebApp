@@ -47,7 +47,21 @@
     list-style-position: inside; /* Ensure bullets are displayed inside the flex container */
 }
 
-        
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+    body {
+        margin-bottom: 40px; 
+        margin-top: 100px;
+    }
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 40px;
+        background-color: #f5f5f5;
+    }
         
     </style>
 </head>
@@ -98,7 +112,10 @@
     <!-- End Create Course Modal -->
 
     <!-- Include footer file -->
+    <div class="footer">
     <%@ include file = "footer.jsp" %>
+    </div>
+    
 
 
 <script type="text/javascript">

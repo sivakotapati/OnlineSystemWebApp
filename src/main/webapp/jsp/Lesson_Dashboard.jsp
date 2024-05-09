@@ -125,6 +125,9 @@
                         var lessonElement = createLessonElement(lesson);
                         $("#lessonList").append(lessonElement);
                     });
+                }else {
+                    alert('No lessons to load.');
+                    
                 }
             },
             error: function() {
