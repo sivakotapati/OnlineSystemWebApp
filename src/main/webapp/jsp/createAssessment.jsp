@@ -91,6 +91,7 @@
 </head>
 <body>
 	    <%@ include file = "authRoutes.jsp" %>
+	    <%@ include file = "AuthTeacher.jsp" %>
 	<%@ include file = "header1.jsp" %>
 	  <div class="container">
 					<div class="head">
@@ -118,7 +119,7 @@
 					<input class="richTextEditor" contenteditable="true" id="assessment_desc" placeholder = "Assessment Description Content Editor"></input>
 
 				<div class="displayContent"></div>
-				<div class="col-8"><input class="richTextEditor" contenteditable="true" id="codeEditor" placeholder = "Code Snippet Editor for the assessment"></input></div>
+				<input class="richTextEditor" contenteditable="true" id="codeEditor" placeholder = "Code Snippet Editor for the assessment"></input>
 				
 					
 
@@ -137,7 +138,8 @@
 	const courses = document.getElementById('courses');
 	const question = document.getElementById('assessment_desc');
 	const answer = document.getElementById('codeEditor')
-	const userId = sessionStorage.getItem("userId");
+	const userIdInSession = sessionStorage.getItem("userId");
+	const userRoleInSession = sessionStorage.getItem("userRole");
 
 	
 	var optionsArr = []
@@ -161,6 +163,11 @@
 			return;
 		}
 		
+		if(userRoleInSession !== "Teacher"){
+			alert("Only teacher can create assessments, no authorization for others")
+			return;
+		}
+		
 		if(question.value == '' || answer.value == '') {
 			alert('The question and answer field cannot be empty');
 			return;
@@ -172,8 +179,8 @@
 				courseId: parseInt(selectedCourse),
 				question: question.value,
 				answer: answer.value,
-				createdBy: userId,
-				modifiedBy: userId
+				createdBy: userIdInSession,
+				modifiedBy: userIdInSession
 		}
 		
 		console.log(requestData)
@@ -188,7 +195,10 @@
 	            success: function(response) {
 	                console.log("Response:", response);
 	                if (response.errors.length == 0) {
-	                    alert(response.message);
+	                	if(response.message == "An error occurred while saving the entity changes. See the inner exception for details.") {
+	                		alert("Only the teacher who created this lesson can create an assessment for this, you are not eligible")
+	                	}
+	                	else alert(response.message);
 	                } else {
 	                    alert("Failed to add the Assessment.");
 	                }

@@ -76,6 +76,7 @@
 </head>
 <body>
     <%@ include file = "authRoutes.jsp" %>
+    <%@ include file = "AuthTeacher.jsp" %>
 	<%@ include file = "header1.jsp" %>
 	  <div class="container">
 	  <a href="createAssessment.jsp">
