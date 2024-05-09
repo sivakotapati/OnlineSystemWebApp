@@ -148,9 +148,9 @@
         console.log(resp)
         if(response.status==200){
             resp.then((data)=>{
-                sessionStorage.setItem("username",data.username)
-                sessionStorage.setItem("userId",data.id)
-        sessionStorage.setItem("token",data.accessToken)
+                sessionStorage.setItem("username",data.content.username)
+                sessionStorage.setItem("userId",data.content.id)
+        sessionStorage.setItem("token",data.content.accessToken)
                 console.log(sessionStorage.getItem("userId"))	
               	if(data.content.roles=="Teacher"){
           sessionStorage.setItem("userRole","Teacher")
