@@ -14,7 +14,6 @@
 </body>
 <script type="text/javascript">
 	const username = sessionStorage.getItem("username");
-	const userRole = sessionStorage.getItem("UserRole");
 	const token = sessionStorage.getItem("token")
 
 	function validateRoutes() {

@@ -143,6 +143,7 @@
 
         var url = window.location.href;
         var params = getUrlParams(url);
+        console.log(params, url)
         var lessonId = params['lessonId'];
         var courseId = params['courseId'];
 
@@ -155,10 +156,8 @@
             modifiedAt: modifiedAt
         };
 
-        var apiUrl = `https://localhost:7155/api/LessonSlide/add?courseId=${courseId}&lessonId=${lessonId}`;
+        var apiUrl = //`https://localhost:7155/api/LessonSlide/add?courseId=${courseId}&lessonId=${lessonId}`;
 
-        console.log("Request Data:", requestData); 
-        console.log("API URL:", apiUrl);
         
         $.ajax({
             url: apiUrl,
@@ -270,6 +269,28 @@
 
         slideList.appendChild(newSlideButton); // Add the new slide button to the list
     }
+    
+
+    
+ 	// Function to append a parameter to the current URL
+    function redirectToNewUrl(lesson, course) {
+	      // Get the current URL as an object
+	      let currentUrl = new URL(window.location.href);
+	
+	      // Define your query parameter key-value pairs
+	      let params = {
+	        lessonId: lesson, 
+	        courseId: course
+	      };
+	
+	      // Add each key-value pair to the URL's search params
+	      for (const [key, value] of Object.entries(params)) {
+	        currentUrl.searchParams.set(key, value);
+	      }
+	
+	      // Update the address bar URL without reloading the page
+	      window.history.replaceState({}, '', currentUrl);
+ 	}
 
     // Add event listeners for other controls
     document.getElementById("newSlide").addEventListener("click", addNewSlide);
