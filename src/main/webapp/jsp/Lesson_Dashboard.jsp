@@ -98,6 +98,7 @@
 
 <script type="text/javascript">
     var courseId;
+    var userId = sessionStorage.getItem("userId");
     $(document).ready(function() {
          courseId = new URLSearchParams(window.location.search).get('courseId');
         if (courseId) {
@@ -113,35 +114,40 @@
     });
 
     function fetchLessons(courseId) {
-        $.ajax({
-            headers:{
-                'Authorization': "Bearer "+ sessionStorage.getItem("token")
-            },
-            url: `https://localhost:7155/api/Course/GetLessonsToEditById/${courseId}`,
-            type: "GET",
-            success: function(data) {
-                if (data && data.content) {
-                    data.content.forEach(function(lesson) {
-                        var lessonElement = createLessonElement(lesson);
-                        $("#lessonList").append(lessonElement);
-                    });
-                }else {
+            $.ajax({
+                headers: {
+                    'Authorization': "Bearer " + sessionStorage.getItem("token")
+                },
+                url: `https://localhost:7155/api/Course/GetLessonsToEditById/${courseId}`,
+                type: "GET",
+                success: function(data) {
+                    $("#lessonList").empty();
+                    if (data && data.content) {
+                        data.content.forEach(function(lesson) {
+                            var lessonElement = createLessonElement(lesson);
+                            $("#lessonList").append(lessonElement);
+                        });
+                    }else {
+                    	console.log("No lessons found.");
+                    }
+                },
+                error: function() {
                     alert('No lessons to load.');
-                    
                 }
-            },
-            error: function() {
-                alert('Failed to load lessons.');
-            }
-        });
+            });
     }
+
 
     function createLessonElement(lesson) {
         var buttons = $("<div class='lesson-buttons'></div>");
         <%--buttons.append(`<button class='btn btn-success publish-toggle' style='border-radius: 999px;'>${lesson.isLessonAvailable ? "Unpublish" : "Publish"}</button>`);--%>
         buttons.append($("<button class='btn publish-toggle' style='border-radius:999px'>").text(lesson.isLessonAvailable?"Published":"UnPublish").addClass(lesson.isLessonAvailable?"btn-success" : "btn-danger"))
         buttons.append(`<button class='btn btn-warning' style='margin-left: 5px; border-radius: 999px;' onclick='editLesson(${lesson.id})'>Edit</button>`);
-        buttons.append(`<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px;' onclick='deleteLesson(${lesson.id})'>Delete</button>`);
+        buttons.append(
+        	    $("<button class='btn btn-danger' style='margin-left: 5px; border-radius: 999px'>")
+        	        .text("Delete")
+        	        .click(function() { deleteLesson(lesson.id, userId); }) // Pass userId as a parameter
+        	);
 
         return $("<li class='lesson-item' style='background-color: #f2f2f2'></li>")
             .append(`<span>${lesson.lessonName}</span>`)
@@ -199,11 +205,15 @@
         window.location.href = `Compiled.jsp?lessonId=${lessonId}&courseId=${courseId}`;
     }
 
-    function deleteLesson(lessonId) {
+    function deleteLesson(lessonId, userId) {
+    	if (!userId) {
+            alert("User ID is not available. Please ensure you're logged in.");
+            return;
+        }
         if (confirm("Are you sure you want to delete this lesson?")) {
             $.ajax({
-                headers:{
-                    'Authorization': "Bearer "+ sessionStorage.getItem("token")
+                headers: {
+                    'Authorization': "Bearer " + sessionStorage.getItem("token")
                 },
                 url: `https://localhost:7155/api/CourseLesson/delete?userId=${userId}&lessonId=${lessonId}`,
                 type: "DELETE",
@@ -211,8 +221,12 @@
                     alert("Lesson deleted successfully.");
                     fetchLessons(courseId);
                 },
-                error: function(error) {
-                    alert("Failed to delete lesson: " + error.responseText);
+                error: function(xhr) {
+                    if (xhr.status === 404) {
+                        alert("Lesson not found.");
+                    } else {
+                        alert("Failed to delete lesson: " + xhr.statusText);
+                    }
                 }
             });
         }
