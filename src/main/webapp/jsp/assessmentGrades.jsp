@@ -1,4 +1,4 @@
- <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,66 +78,59 @@
     <%@ include file = "authRoutes.jsp" %>
     <%@ include file = "AuthTeacher.jsp" %>
 	<%@ include file = "header1.jsp" %>
-	  <div class="container">
-	  <a href="createAssessment.jsp">
-	  	<button id="createAssessment">Create Assessment</button>
-	  </a>
-  <div class="row">
-    <div class="col-4">
-	    <div class="courseList">
-	    	<div class="selectHead">Select Courses</div>
-	    	<div class="selectContent">
-				<select name="courses" id="courses">
-				  <option value="1">OnlineLPK12</option>
-				  <option value="2">LogicDS</option>
-				</select>
-	    	</div>
-	    </div>
-	    <div class="lessonList">
-	    	<h3 class="selectHead">Select Lessons</h3>
-	    	<div class="selectContent">
-	    		<select name="lesson" id="lessons">
-				 
-				  
-				</select>
-	    	</div>
-	    </div>
-	    <button id="fetchAssessment">Fetch Assessments</button>
+	  
+    <div class="container">
+        <table id="gradeTable" class="table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Student ID</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
-    <div class="col-8">
-    <h2>Assessments</h2>
-      <div id="cardContainer" class="cardContainer">
-      </div>
-    </div>
-
-  </div>
-</div>
-    
-
-
 
 <%@ include file = "footer1.jsp" %>
 <script type="text/javascript">
-	const container = document.getElementById("cardContainer");
-	const lessons = document.getElementById('lessons')
-	const courses = document.getElementById('courses')
+	var params;
+	const gradeTableBody = document.querySelector('#gradeTable tbody');
 	
-	var optionsArr = []
-	
-	for(var i = 1; i<=200; i++ ){
-		optionsArr.push(i)
+	//Function to retrieve query parameters
+	function getQueryParams() {
+	    // Retrieve the query string from the URL, excluding the leading '?'
+	    const queryString = window.location.search.substring(1);
+	    
+	    // Split the string into key-value pairs
+	    const params = queryString.split('&');
+	    
+	    // Create an object to hold the key-value pairs
+	    const queryParams = {};
+	    
+	    params.forEach(pair => {
+	        // Split each pair into key and value
+	        const [key, value] = pair.split('=');
+	        
+	        // Decode the value and assign it to the key
+	        queryParams[decodeURIComponent(key)] = decodeURIComponent(value);
+	    });
+	    
+	    return queryParams;
 	}
 	
-	optionsArr.forEach(data => {
-		const newOption = new Option('Lesson ' + data, data)
-		lessons.add(newOption)
-	})
-
-    
-    function fetchAllAssessments(){
-    	var apiUrl = 'https://localhost:7155/api/LessonAssessment/getAllAssessments' + '?courseId=' + parseInt(courses.value) + '&lessonId=' + parseInt(lessons.value)
-    	    
-    	
+	function loadParams(){
+		// Use the function to obtain parameters
+		params = getQueryParams();
+		console.log(params); // Will display an object with the query parameters
+		
+		fetchAllGrades(params)
+	}
+	
+	function fetchAllGrades(params){
+		var parameters = "courseId=" + params.courseId + "&assessmentId=" + params.assessmentId + "&lessonId=" + params.lessonId
+		var apiUrl = 'https://localhost:7155/api/LessonAssessment/getAssessmentGrades?' + parameters
+	    	    
     	$.ajax({
             url: apiUrl,
             type: 'GET',
@@ -145,8 +138,7 @@
             success: function(response) {
                 console.log("Response:", response);
                 if (response.errors.length == 0) {
-                	createCards(response.content)
-                	console.log(response)
+                    renderGradesTable(response.content);
                 } else {
                     alert("Failed to fetch the Assessments.");
                 }
@@ -156,35 +148,17 @@
                 alert("Error occurred while fetching the Assessments: " + xhr.responseText, "error");
             }
         });
-    }
+	}
 	
-    function createCards(items){
-    	container.innerHTML = ""; // Clear previous content
-    	if(items.length == 0) {
-    		container.innerHTML = 'No assessments to display'
-    	}
-    	items.forEach(function(item) {
-            var card = document.createElement("div");
-            card.classList.add("card");
-
-            // Create anchor element
-            var link = document.createElement("a");
-            var params = "courseId=" + item.courseId + "&assessmentId=" + item.assessmentId + "&lessonId=" + item.lessonId
-            var url = 'http://localhost:8080/OnlineSystemWebApp/jsp/assessmentGrades.jsp?' + params
-            link.href = url; // Dynamically set href
-            link.textContent = "Assessment " + item.assessmentId;
-
-            // Append anchor element to card
-            card.appendChild(link);
-            
-            // Append card to container
-            container.appendChild(card);
-        });
-    }
-    
-    document.getElementById('fetchAssessment').addEventListener('click', fetchAllAssessments)
-
-
+	function renderGradesTable(grades) {
+	    var tableHtml = '';
+	    grades.forEach(function(grade, index) {
+	    	tableHtml += '<tr><td>' + (index + 1) + '</td><td><a href="gradeAssessment.jsp?' + $.param(params) + '&studentId=' + grade.studentId + '&submissionId=' + grade.submissionId + '">' + grade.studentId + '</a></td><td>' + grade.grade + '</td></tr>';
+	    });
+	    gradeTableBody.innerHTML = tableHtml;
+	}
+	
+	window.addEventListener('DOMContentLoaded', loadParams)
 </script>
 <script src="../js/lesson4.1/validations.js" type="text/javascript">  </script>
 </body>
