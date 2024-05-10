@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <!-- Include header file -->
+    <%@ include file = "authCourseDeveloper.jsp" %>
     <%@ include file = "header.jsp" %>
     <!-- Custom CSS -->
     <style>
@@ -75,6 +76,11 @@
                     <!-- Search bar -->
                     <input type="text" class="form-control search-bar" placeholder="Search..." id="searchInput">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#createCourseModal"style='border-radius:999px'>Create Course</button>
+                   <div style="padding-left:8px">
+                   <a href="assessmentListViewDev.jsp">
+					  	<button class="btn btn-primary submit_btn my-4 centered-text" style="padding: 8px; font-size: 13px; width: 140px; border-radius:999px;" id="createAssessment">Create Assessment</button>
+					  </a>
+                   </div> 
                     <!-- Button for creating a course -->
                 </div>
             </div>

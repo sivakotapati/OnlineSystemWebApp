@@ -76,14 +76,14 @@
 </head>
 <body>
     <%@ include file = "authRoutes.jsp" %>
-    <%@ include file = "AuthTeacher.jsp" %>
+    <%@ include file = "authCourseDeveloper.jsp" %>
 	<%@ include file = "header1.jsp" %>
 	  <div class="container">
-<!-- 	  <div style="text-align:right;" >
+<div style="text-align:right;" >
 	  <a href="createAssessment.jsp">
 	  	<button class="btn btn-primary submit_btn my-4 centered-text" style="padding: 8px; font-size: 13px; width: 140px;" id="createAssessment">Create Assessment</button>
 	  </a>
-	  </div> -->
+	  </div>
   <div class="row">
     <div class="col-4">
 	    <div class="courseList">

@@ -39,6 +39,9 @@
 </form>
 </div>
 </div>
+<div>
+<a href="../jsp/assessmentListView.jsp" class="col-sm-12" style="text-align:center; font-size:21px;">Navigate to Assessment grading</a>
+</div>
 
 </div>
 </div>
