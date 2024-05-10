@@ -71,7 +71,7 @@
                     <button type="button" id="deleteSlide" class="btn btn-danger">Delete Slide</button>
                 </div>
                 <br>
-                <div id="slideList" class="d-flex flex-column">
+                <div id="slidesContainer" class="d-flex flex-column">
                     <!-- Slide buttons will be added dynamically -->
                 </div>
             </div>
@@ -128,100 +128,106 @@
         return params;
     }
 
-    document.getElementById("save").addEventListener("click", function() {
-        setSelectedSlideId();
+document.getElementById("save").addEventListener("click", function() {
+    setSelectedSlideId();
 
-        var editorContent = document.getElementById("editor").value; 
-        var previewContent = document.getElementById("preview").innerHTML;
-        if (!previewContent) {
-            displayMessage("No content in the preview to save.", "error");
-            return; 
-        }
+    var editorContent = document.getElementById("editor").value; 
+    var previewContent = document.getElementById("preview").innerHTML;
+    if (!previewContent) {
+        displayMessage("No content in the preview to save.", "error");
+        return; 
+    }
 
-        var userId = sessionStorage.getItem('userId'); 
-        var modifiedAt = new Date().toISOString(); 
+    var userId = sessionStorage.getItem('userId'); 
+    var modifiedAt = new Date().toISOString(); 
 
-        var url = window.location.href;
-        var params = getUrlParams(url);
-        console.log(params, url)
-        var lessonId = params['lessonId'];
-        var courseId = params['courseId'];
+    var url = window.location.href;
+    var params = getUrlParams(url);
+    var lessonId = params['lessonId'];
+    var courseId = params['courseId'];
 
-        var requestData = {
-            slideHtmlFormat: previewContent,
-            slideMarkdownFormat: editorContent,
-            createdBy: userId,
-            createdAt: modifiedAt,
-            modifiedBy: userId,
-            modifiedAt: modifiedAt
-        };
+    var requestData = {
+        slideHtmlFormat: previewContent,
+        slideMarkdownFormat: editorContent,
+        createdBy: userId,
+        createdAt: modifiedAt,
+        modifiedBy: userId,
+        modifiedAt: modifiedAt
+    };
 
-        var apiUrl = //`https://localhost:7155/api/LessonSlide/add?courseId=${courseId}&lessonId=${lessonId}`;
-
-        
-        $.ajax({
-            url: apiUrl,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(requestData),
-            success: function(response) {
-                console.log("Response:", response);
-                if (response.success) {
-                    displayMessage("Slide added successfully.", "success");
-                } else {
-                    displayMessage("Failed to add the slide.", "error");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("Error:", xhr.responseText);
-                displayMessage("Error occurred while adding the slide: " + xhr.responseText, "error");
-            }
-        });
-    });
+    var apiUrl = `https://localhost:7155/api/LessonSlide/add?courseId=${courseId}&lessonId=${lessonId}`;
 
     
-    document.addEventListener("DOMContentLoaded", function() {
-        fetchSlidesForLesson();
-    });
-
-    function fetchSlidesForLesson() {
-        var url = window.location.href;
-        var params = getUrlParams(url);
-        var lessonId = params['lessonId'];
-        var courseId = params['courseId'];
-
-        if (!lessonId || !courseId) {
-            displayMessage("Lesson ID or Course ID is missing.", "error");
-            return;
-        }
-
-        var apiUrl = `https://localhost:7155/api/LessonSlides/getAll?courseId=${courseId}&lessonId=${lessonId}`;
-
-        $.ajax({
-            url: apiUrl,
-            type: 'GET',
-            success: function(response) {
-                console.log("Fetched Slides:", response);
-                displaySlides(response);
-                displayMessage("Slides fetched successfully.", "success");
-            },
-            error: function(xhr) {
-                console.log("Error fetching slides:", xhr);
-                displayMessage("Failed to fetch slides.", "error");
+    $.ajax({
+        url: apiUrl,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        success: function(response) {
+            console.log("Response:", response);
+            if (response.success) {
+                displayMessage("Slide added successfully.", "success");
+            } else {
+                displayMessage("Failed to add the slide.", "error");
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.log("Error:", xhr.responseText);
+            displayMessage("Error occurred while adding the slide: " + xhr.responseText, "error");
+        }
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetchSlidesForLesson();
+});
+
+function fetchSlidesForLesson() {
+    var url = window.location.href;
+    var params = getUrlParams(url);
+    var lessonId = params['lessonId'];
+    var courseId = params['courseId'];
+
+    if (!lessonId || !courseId) {
+        displayMessage("Lesson ID or Course ID is missing.", "error");
+        return;
     }
 
-    function displaySlides(slides) {
-        var slidesContainer = document.getElementById("slidesContainer");
-        slidesContainer.innerHTML = ""; 
+    var apiUrl = `https://localhost:7155/api/courselesson/GetSlidesToEditById/${courseId}/${lessonId}`;
 
-        slides.forEach(slide => {
-            var slideElement = document.createElement("div");
-            slideElement.innerHTML = `<h3>${slide.title}</h3><p>${slide.slideHtmlFormat}</p>`;
-            slidesContainer.appendChild(slideElement);
-        });
+    $.ajax({
+        url: apiUrl,
+        type: 'GET',
+        success: function(response) {
+            console.log("Fetched Slides:", response);
+            displaySlides(response.content); // Pass the slides array to the displaySlides function
+            displayMessage("Slides fetched successfully.", "success");
+        },
+        error: function(xhr) {
+            console.log("Error fetching slides:", xhr);
+            displayMessage("Failed to fetch slides.", "error");
+        }
+    });
+}
+
+function displaySlides(slides) {
+    var slidesContainer = document.getElementById("slidesContainer");
+    
+    // Check if slidesContainer exists
+    if (!slidesContainer) {
+        console.error("Slides container not found.");
+        return;
     }
+
+    slidesContainer.innerHTML = ""; 
+
+    slides.forEach(slide => {
+        var slideElement = document.createElement("div");
+        slideElement.innerHTML = `<h3>${slide.id}</h3><p>${slide.slideHtmlFormat}</p>`;
+        slidesContainer.appendChild(slideElement);
+    });
+}
 
     function displayMessage(message, type) {
         var statusMessage = document.getElementById("statusMessage");
@@ -253,7 +259,7 @@
     // Function to add a new slide and set the ID
     function addNewSlide() {
         slideCount++; // Increment the slide count
-        var slideList = document.getElementById("slideList");
+        var slidesContainer = document.getElementById("slidesContainer");
         var newSlideButton = document.createElement("button");
         newSlideButton.className = "btn btn-primary mb-2";
         newSlideButton.textContent = "Slide " + slideCount;
@@ -262,12 +268,12 @@
         // Slide selection handler
         newSlideButton.addEventListener("click", function() {
             // Deselect other slides
-            Array.from(slideList.children).forEach(btn => btn.classList.remove("selected"));
+            Array.from(slidesContainer.children).forEach(btn => btn.classList.remove("selected"));
             this.classList.add("selected");
             setSelectedSlideId(); // Update the ID of the selected slide
         });
 
-        slideList.appendChild(newSlideButton); // Add the new slide button to the list
+        slidesContainer.appendChild(newSlideButton); // Add the new slide button to the list
     }
     
 
@@ -295,15 +301,15 @@
     // Add event listeners for other controls
     document.getElementById("newSlide").addEventListener("click", addNewSlide);
     document.getElementById("deleteSlide").addEventListener("click", function() {
-        var slideList = document.getElementById("slideList");
-        var selectedSlide = Array.from(slideList.children).find(button => button.classList.contains("selected"));
+        var slidesContainer = document.getElementById("slidesContainer");
+        var selectedSlide = Array.from(slidesContainer.children).find(button => button.classList.contains("selected"));
 
         if (!selectedSlide) {
             displayMessage("No slide selected.", "error");
             return;
         }
 
-        slideList.removeChild(selectedSlide); // Delete the selected slide
+        slidesContainer.removeChild(selectedSlide); // Delete the selected slide
         slideCount--; // Decrement the slide count
         selectedSlideId = null; // Clear the selected slide ID
         displayMessage("Slide deleted successfully.", "success");
