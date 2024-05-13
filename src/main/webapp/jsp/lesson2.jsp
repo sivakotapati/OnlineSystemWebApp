@@ -283,7 +283,7 @@
 	    		</div>
                	<div class="d-flex justify-content-between">
         			<!-- <button class="btn btn-primary" onclick="gotoPrevious(2, 0, 'version-1-course-x-lesson-2-page-3', false, -1)">Previous</button>-->
-        			<button class="btn btn-primary"  id="iNextBtn"onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-3', true, 1)" >Sparc Assisment</button>
+        			<button class="btn btn-primary"  id="iNextBtn"onclick="gotoNext(2, 0, 'version-1-course-x-lesson-2-page-3', true, 1)" >Sparc Assesment</button>
     			</div> 
     			
             </div>
