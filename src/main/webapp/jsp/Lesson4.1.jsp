@@ -237,9 +237,9 @@
 		        <br>
 		        <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', true, 1)">Sparc Assisment</button>--> 
         	</div> 
                 <!-- <a class="btn btn-primary pull-left"
                     onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-3', false, -1)"> Previous
@@ -268,9 +268,9 @@
 		        <br>
 		        <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-4', true, 1)">Sparc Assisment</button>--> 
         	</div> 
         	
                 <!-- <a class="btn btn-primary pull-left"
@@ -305,9 +305,9 @@
 		        <br>
 		         <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-5', true, 1)">Sparc Assisment</button>--> 
         	</div> 
             </div>
         </div>
@@ -359,9 +359,9 @@
 		        
 		         <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-6', true, 1)">Sparc Assisment</button>--> 
         	</div> 
         	
        
@@ -416,9 +416,9 @@
 		        
 		   <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', false, -1)">Previous</button> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-7', true, 1)">Sparc Assisment</button>-->
         	</div> 
 		        
             </div>
@@ -446,9 +446,9 @@
 		        <br>
 		   <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', false, -1)">Previous</button>
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', true, 1)">Sparc assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-8', true, 1)">Sparc assisment</button>--> 
         	</div> 
         	
             </div>
@@ -523,9 +523,9 @@
 		        <br>
 		        <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', false, -1)">Previous</button> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', true, 1)">Sparc assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-9', true, 1)">Sparc assisment</button>-->
         	</div> 
         	
             </div>
@@ -561,9 +561,9 @@
 		        <br>
 		          <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', false, -1)">Previous</button> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-10', true, 1)">Sparc Assisment</button>-->
         	</div> 
                 
             </div>
@@ -584,9 +584,9 @@
 		        <br>
 		         <div class="d-flex justify-content-between">
            <!--<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', false, -1)">Previous</button>--> 
+        			onclick="gotoPrevious(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', false, -1)">Previous</button> 
         	<button class="btn btn-lg btn-primary" style="background-color:#1b84f5"
-        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', true, 1)">Sparc Assisment</button>
+        			onclick="gotoNext(4.1, 0, 'version-1-course-x-lesson-4.1-page-11', true, 1)">Sparc Assisment</button>-->
         	</div> 
                 
          
