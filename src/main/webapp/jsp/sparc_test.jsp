@@ -53,7 +53,7 @@
 </style>
 </head>
 <body>
-
+<%@ include file ="authRoutes.jsp" %>
 <div id="wrapper" class="toggled">
 	<div id="wrap">
 		<div id="navbar">
@@ -203,6 +203,9 @@
         $.ajax({
        	 contentType:'application/x-www-form-urlencoded',
             data: request,
+			headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   		},
             success: function (data) {
                 res= data;
             },

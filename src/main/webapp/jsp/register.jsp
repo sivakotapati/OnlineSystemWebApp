@@ -9,8 +9,10 @@
          rel="stylesheet">
       <link href="../styles/style-login-register.css" rel="stylesheet"
          type="text/css" />
+      <script type="text/javascript" src="../static/global.js"></script>
    </head>
    <body>
+   	  <%@ include file = "unAuthRoutes.jsp" %>
       <%@ include file="headerlog.jsp"%>
       <div class="container">
          <div class="regbox box">
@@ -23,6 +25,13 @@
                   <option value="Teacher">Teacher</option>
                </select>
                <br> &nbsp;
+			   <label for="course" required>Course:</label> 
+               <select id="course"
+                  name="course">
+                  <option value="3">LPK12</option>
+                  <option value="4">Online Lpk12</option>
+               </select>
+               <br> &nbsp;
                <p>FirstName</p>
                <input type="text" placeholder="FirstName" id="firstname" required>
                <p>LastName</p>
@@ -30,14 +39,28 @@
                <p>UserName</p>
                <input type="text" placeholder="Username" id="username" required>
                <p>Useremail</p>
-               <input type="text" placeholder="Useremail" id="email" required>
+               <input type="email" placeholder="Useremail" id="email" required>
                <p>Password</p>
-               <input type="password" placeholder="Password" id="password" required>
+               <input type="password" placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}" title="Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character" required>  
+               <p style="text-align:center">Show Password</p>
+               <input type="checkbox"  onclick="myFunction()"> 
+               
                <input type="submit" value="Register"> <a href="login.jsp">Already
                have Account?</a>
             </form>
          </div>
       </div>
+       <!-- toggle password -->  
+     <script>
+         function myFunction() {
+         var x = document.getElementById("password");
+         if(x.type==="password") {
+             x.type = "text";}
+         else {
+           x.type = "password";
+          }
+     }
+  </script>
       <br>
       <%@ include file="footer.jsp"%>
    </body>
@@ -52,10 +75,19 @@
 	        var username=document.getElementById('username').value;
 	
 	        var email=document.getElementById('email').value;
+	        var courseId=document.getElementById('course').value;
 	        
 	        var pwdObj = document.getElementById('password').value;
+	        //password validation 
+	        var passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
+
+	        if (passwordValidation.test(password)==true) {
+	            alert("Password must contain min of 8 and a max of 15 characters,  one uppercase letter, one lowercase letter, one numeric , and one special character");
+	            return; 
+	        }
+	        var isactive=false;
 	       	if (roles=='Student'){
-	    	   var isactive=true;
+	    	   isactive=true;
 	       	}
 	       <%--  var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
 	        hashObj.update(pwdObj.value);
@@ -80,19 +112,20 @@
 	        console.log(isStudent)--%>
 	
 	        console.log([roles])
+	        console.log(isactive)
 	
 	        //fetch post request
-	
-	        fetch("https://onlinelpk12node.azurewebsites.net/api/auth/signup",{
+			 const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+             const signUpAPI = dotnet_endpoint+"api/User/Register";
+             console.log(dotnet_endpoint)
+	        fetch(signUpAPI,{
 	            method:'POST',
 	            body: JSON.stringify({
 					"firstname":firstname,
 					"lastname":lastname,
 	                "username":username,
-	                "email":email,
-					"role":roles,
-					"isactive":isactive,
-					"roles":[roles],
+	                "EmailId":email,
+					"isStudent":isactive,
 	                "password":pwdObj,
 	            }),
 		        headers:{
@@ -103,17 +136,38 @@
 	       		if(response.status==200){
 	       			//US-13
 	       			resp.then((data)=>{       			 
-	       			 var userid = data.userId;
-	       			 var createRootFolderApi = new URL('https://onlinelpk12dotnetapi.azurewebsites.net/api/SparcFileSystem/createrootfolder');
-	       			 var params = {userId:userid} // or:
-	       			 createRootFolderApi.search = new URLSearchParams(params).toString();
+	       			 var userid = parseInt(data.content);
+	       			 const createRootFolderAPI = dotnet_endpoint+"api/SparcFileSystem/createrootfolder";
+	       			 var createRootFolderApi = new URL(createRootFolderAPI);
+	       			 var body = {
+	       					 		userId :userid
+	       					 	} // or:
+	       					 			
+	       			 //createRootFolderApi.search = new URLSearchParams(params).toString();
 					 console.log(createRootFolderApi);
 	       			 fetch(createRootFolderApi,{
-	       				 method:'POST'
+	       				 method:'POST',
+	       				 body: JSON.stringify(body),
+	       				headers: {
+	       				    'Content-type': 'application/json; charset=UTF-8',
+	       				  }
 	       			 }).then(function(response){
 	       				if(response.status==200){
 	       					console.log(data)
-							location.href="login.jsp"
+	       					fetch(dotnet_endpoint+"api/User/"+userid+"/course/"+courseId,{
+	       						method: 'GET',
+	       						headers: {
+	    	       				    'Content-type': 'application/json; charset=UTF-8',
+	    	       				  }
+	       					}).then(function(response)
+	       							{
+	       						if(response.status==200){
+	       							console.log(data)
+	       							location.href="login.jsp"
+	       						}
+	       							}
+	       							)
+							
 	       				}
 	       			 });	       			
 	       			});

@@ -4,49 +4,113 @@
 <head>
 <meta charset="UTF-8">
 <title>Online LPK12 Course</title>
+<style>
+    /* Global Styles */
+    body {
+        margin: 0;
+        padding-top: 60px; 
+        font-family: Arial, sans-serif;
+    }
+    
+    /* Header Styles */
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #2196F3;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 1000;
+    }
+    
+    .header img {
+        width: 30px;
+        height: auto;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    
+    .header h2 {
+        margin: 0;
+    }
+    
+    .user-info {
+        margin-right: 20px;
+    }
+    
+    .logout-btn button {
+        border: none;
+        background-color: transparent;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .header {
+            height: 80px;
+        }
+        
+        .header h2 {
+            font-size: 18px;
+        }
+    }
+</style>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header">
+                <div class="col-md-3">
+                    <a href="#" id="goBackButton" onclick="history.back()">
+                        <img src="../images/back.png" alt="Go Back">
+                    </a>
+                    <a id="homepagelink" href="home.jsp">
+                        <img src="../images/home.png" alt="Home">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <h2>Welcome to Online LPK12 Course</h2>
+                </div>
+                <div class="col-md-3 d-flex justify-content-end">
+                    <div class="user-info">
+                        <h4><span id="userNameSpan"></span></h4>
+                    </div>
+                    <div class="logout-btn">
+                        <button onclick="sessionclear()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
-window.onload = function(){
-	let usernameEle = document.getElementById("userName");
-	usernameEle.innerHTML = sessionStorage.getItem("username");
-	
-	let homepagelink = document.getElementById("homepagelink");
-	homepagelink.href = sessionStorage.getItem("userRole") == "Teacher" ? "hometeacher.jsp": "home.jsp";
-	
-	}
-	
+    window.onload = function() {
+        let usernameSpan = document.getElementById("userNameSpan");
+        let username = sessionStorage.getItem("username");
+
+        if (!username) {
+            window.location.href = "login.html"; // Redirect to login if no username is found
+        } else {
+            usernameSpan.innerHTML = username;
+        }
+
+        let homepagelink = document.getElementById("homepagelink");
+        homepagelink.href = sessionStorage.getItem("userRole") === "Teacher" ? "hometeacher.jsp" :
+            sessionStorage.getItem("enrolledCourses") === "LPK12" ? "home_student_logicds.jsp" :
+            sessionStorage.getItem("enrolledCourses") === "OnlineLPK12" ? "home_student_onlinelpk12.jsp" : "home.jsp";
+    }
+
+    function sessionclear() {
+        sessionStorage.clear();
+        window.location.href = "login.html"; 
+    }
 </script>
-
-<div class="container pt-5 my-10 bg-primary text-white" style="width:100%; height:10%; margin-bottom:5%">
-
-
- <div class="col-sm-3">
-  <form action="header.jsp">
-  	  <a href="#" id="goBackButton" onclick="history.back()" style="margin-top:25px"><img height="30" width="40" src="../images/back.png" style="margin-top:25px" ></a>
-  	  <a id="homepagelink" href="home.jsp" style="margin-top:25px"><img height="30" width="40" src="../images/home.png" style="margin-top:25px"></a>
-      </form>
-  </div>
-
-
-<div class="col-sm-6" style="text-align:center">
-     
-<h2 id="title"> Welcome to Online LPK12 Course</h2>
-</div>
-
-<div class="col-sm-2" style="margin-top:30px">
-<h4 id="userName"> </h4>
-</div>
-<div class="col-sm-1">
-<a onclick="sessionclear()" style="margin-top:30px" class="btn btn-warning">Logout</a>
-</div>
-</div>
 </body>
-<script type="text/javascript">
-function sessionclear(){
-	
-	sessionStorage.clear();
-	window.location.href="login.jsp"
-}
-</script>
 </html>

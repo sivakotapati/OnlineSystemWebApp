@@ -11,6 +11,7 @@
     </head>
 
     <body> 
+    	<jsp:include page ="authRoutes.jsp" />
         <jsp:include page="header.jsp" />
 
         <div class="row">
@@ -71,6 +72,9 @@
                             showErrorsInUI(error);
                         }
                     },
+                    headers: {
+				'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        	        },
                     url: getQuizApiUrl,
                     async: false,
                     type: 'GET',
@@ -232,6 +236,9 @@
                 contentType: 'application/json',
                 data: JSON.stringify(submitQuizRequest),
                 dataType: 'json',
+                headers: {
+				'Authorization': "Bearer "+ sessionStorage.getItem("token")
+        	    },
                 success: function (data) {
                     let score = isNullOrUndefined(data.content.quizScore) ? 0 : data.content.quizScore;
                         showScoreToUser(score);                    

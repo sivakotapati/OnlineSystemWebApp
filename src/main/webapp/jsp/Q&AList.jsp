@@ -10,7 +10,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/global.js"></script>
+
 
 <style>
 .table-styled {
@@ -21,6 +22,7 @@ border-collapse: collapse
 <title>Student Details</title>
 </head>
 <body>
+<jsp:include page ="authRoutes.jsp" />
 <jsp:include page="header.jsp"/>
 <div id="student-progress-table" style="width:80%;margin:2% 10%">
 
@@ -32,9 +34,9 @@ border-collapse: collapse
 <script type="text/javascript">
 
 $(function(){
-	verifytoken();
 	getApiData();
 });
+
 
 function getApiData()
 {
@@ -44,9 +46,15 @@ let userName = sessionStorage.getItem("studentUserName");
 let studentid=sessionStorage.getItem("studentid");
 let lessonid=sessionStorage.getItem("lessonID");
 let lessonoutcome=sessionStorage.getItem("lessonOutcome");
-const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/assessment/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const teacher_url = dotnet_endpoint+"api/Teacher/"+studentid+"/assessment/lessson/"+lessonid+"/learningoutcome/"+lessonoutcome;
 
 
+$.ajaxSetup({
+   headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   }
+});
 $.get(teacher_url, function(data, status){
 	buildLessonList(data);
 });
@@ -63,8 +71,8 @@ function buildLessonList(response){
 	for(let i=0; i<response.content.questionAnswers.length;i++)
 	{
 	let row = `<tr>`
-		+ `<td> ${response.content.questionAnswers[i]?.question}</td>`
-		+ `<td> ${response.content.questionAnswers[i]?.answer} </td>`
+		+ `<td> ${response.content.questionAnswers[i]?.question}</td>`		
+		+ `<td> ${response.content.questionAnswers[i]?.answer.split('\n').map(e => `<p>${e}</p>`).join('')} </td>`
 		+ `</tr>`;
 		htmlTable+=row;
 	}

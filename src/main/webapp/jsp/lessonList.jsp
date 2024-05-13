@@ -10,7 +10,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
- <script src="../js/verifytoken.js" type="text/javascript"></script>
+<script type="text/javascript" src="../static/global.js"></script>
+
 <style>
 .table-styled {
 border-collapse: collapse
@@ -20,6 +21,7 @@ border-collapse: collapse
 <title>Student Details</title>
 </head>
 <body>
+<jsp:include page="authRoutes.jsp"/>
 <jsp:include page="header.jsp"/>
 <div id="student-progress-table" style="width:80%;margin:2% 10%;">
 
@@ -32,7 +34,6 @@ border-collapse: collapse
 <script type="text/javascript">
 
 window.onload = function() {
-	 verifytoken();
 	getApiData();
 	
 }
@@ -42,11 +43,18 @@ function getApiData()
 //let user_id = sessionStorage.getItem("userId");
 //let user_id="14";
 let studentid=sessionStorage.getItem("studentid");
-const teacher_url = "https://onlinelpk12dotnetapi.azurewebsites.net/api/Teacher/"+studentid+"/lessonprogress";
+const corsProxy = "https://onlinelpk12-corsproxy.herokuapp.com/";
+const teacher_url = dotnet_endpoint+"api/Teacher/"+studentid+"/lessonprogress";
 
 
 var response = null;
-$.get(teacher_url, function(data, status){
+
+$.ajaxSetup({
+   headers:{
+      'Authorization': "Bearer "+ sessionStorage.getItem("token")
+   }
+});
+$.get(teacher_url,function(data, status){
 response = data
 buildLessonList(response);
 });
